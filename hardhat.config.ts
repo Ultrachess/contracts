@@ -110,6 +110,15 @@ const config: HardhatUserConfig = {
           },
         },
       },
+      {
+        // Required by Augur
+        version: "0.5.15",
+        settings: {
+          optimizer: {
+            enabled: true,
+          },
+        },
+      },
     ],
   },
   paths: {
