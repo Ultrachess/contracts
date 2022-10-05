@@ -1,0 +1,44 @@
+{
+  "contractName": "SafeCast",
+  "sourceName": "contracts/depends/openzeppelin-v3/utils/SafeCast.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212200e802ff2ee3103ca3c637df959b77b9c497b438c864bf48dcef19bd03c9e4ba964736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212200e802ff2ee3103ca3c637df959b77b9c497b438c864bf48dcef19bd03c9e4ba964736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Wrappers over Solidity's uintXX/intXX casting operators with added overflow checks. Downcasting from uint256/int256 in Solidity does not revert on overflow. This can easily result in undesired exploitation or bugs, since developers usually assume that overflows raise errors. `SafeCast` restores this intuition by reverting the transaction when such an operation overflows. Using this library instead of the unchecked operations eliminates an entire class of bugs, so it's recommended to use it always. Can be combined with {SafeMath} and {SignedSafeMath} to extend it to smaller types, by performing all math on `uint256` and `int256` and then downcasting.",
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "toInt128(int256)": "infinite",
+        "toInt16(int256)": "infinite",
+        "toInt256(uint256)": "infinite",
+        "toInt32(int256)": "infinite",
+        "toInt64(int256)": "infinite",
+        "toInt8(int256)": "infinite",
+        "toUint128(uint256)": "infinite",
+        "toUint16(uint256)": "infinite",
+        "toUint256(int256)": "infinite",
+        "toUint32(uint256)": "infinite",
+        "toUint64(uint256)": "infinite",
+        "toUint8(uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

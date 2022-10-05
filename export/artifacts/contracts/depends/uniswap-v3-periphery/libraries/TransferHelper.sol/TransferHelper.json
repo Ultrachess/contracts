@@ -1,0 +1,35 @@
+{
+  "contractName": "TransferHelper",
+  "sourceName": "contracts/depends/uniswap-v3-periphery/libraries/TransferHelper.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212208ef55894383d77beef8676abbb73704cad9e78457361616ec31696fb52287ecb64736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212208ef55894383d77beef8676abbb73704cad9e78457361616ec31696fb52287ecb64736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "safeApprove(address,address,uint256)": "infinite",
+        "safeTransfer(address,address,uint256)": "infinite",
+        "safeTransferETH(address,uint256)": "infinite",
+        "safeTransferFrom(address,address,address,uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

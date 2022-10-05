@@ -1,0 +1,43 @@
+{
+  "contractName": "Address",
+  "sourceName": "contracts/depends/openzeppelin-v3/utils/Address.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122037ae9719cdb6794ea27e4ed040d5e17b674a35c7c338e428d71ed394196b31d064736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122037ae9719cdb6794ea27e4ed040d5e17b674a35c7c338e428d71ed394196b31d064736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Collection of functions related to the address type",
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "_verifyCallResult(bool,bytes memory,string memory)": "infinite",
+        "functionCall(address,bytes memory)": "infinite",
+        "functionCall(address,bytes memory,string memory)": "infinite",
+        "functionCallWithValue(address,bytes memory,uint256)": "infinite",
+        "functionCallWithValue(address,bytes memory,uint256,string memory)": "infinite",
+        "functionDelegateCall(address,bytes memory)": "infinite",
+        "functionDelegateCall(address,bytes memory,string memory)": "infinite",
+        "functionStaticCall(address,bytes memory)": "infinite",
+        "functionStaticCall(address,bytes memory,string memory)": "infinite",
+        "isContract(address)": "infinite",
+        "sendValue(address payable,uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

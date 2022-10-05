@@ -1,0 +1,35 @@
+{
+  "contractName": "SqrtPriceMathPartial",
+  "sourceName": "contracts/depends/uniswap-v3-periphery/libraries/SqrtPriceMathPartial.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220e058b8b6bb062ec9ad44590abd762991b6702add1c4d8fa21d573b90fc4d077b64736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220e058b8b6bb062ec9ad44590abd762991b6702add1c4d8fa21d573b90fc4d077b64736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "title": "Functions based on Q64.96 sqrt price and liquidity",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Exposes two functions from ../uniswap-v3-core SqrtPriceMath that use square root of price as a Q64.96 and liquidity to compute deltas",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "getAmount0Delta(uint160,uint160,uint128,bool)": "infinite",
+        "getAmount1Delta(uint160,uint160,uint128,bool)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

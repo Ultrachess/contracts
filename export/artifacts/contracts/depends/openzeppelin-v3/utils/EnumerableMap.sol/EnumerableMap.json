@@ -1,0 +1,48 @@
+{
+  "contractName": "EnumerableMap",
+  "sourceName": "contracts/depends/openzeppelin-v3/utils/EnumerableMap.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212203a44f9ad1c81051c4b8c21e70e240f4aa258d00c5b28fd56608134e15f2287a564736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212203a44f9ad1c81051c4b8c21e70e240f4aa258d00c5b28fd56608134e15f2287a564736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Library for managing an enumerable variant of Solidity's https://solidity.readthedocs.io/en/latest/types.html#mapping-types[`mapping`] type. Maps have the following properties: - Entries are added, removed, and checked for existence in constant time (O(1)). - Entries are enumerated in O(n). No guarantees are made on the ordering. ``` contract Example {     // Add the library methods     using EnumerableMap for EnumerableMap.UintToAddressMap;     // Declare a set state variable     EnumerableMap.UintToAddressMap private myMap; } ``` As of v3.0.0, only maps of type `uint256 -> address` (`UintToAddressMap`) are supported.",
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "_at(struct EnumerableMap.Map storage pointer,uint256)": "infinite",
+        "_contains(struct EnumerableMap.Map storage pointer,bytes32)": "infinite",
+        "_get(struct EnumerableMap.Map storage pointer,bytes32)": "infinite",
+        "_get(struct EnumerableMap.Map storage pointer,bytes32,string memory)": "infinite",
+        "_length(struct EnumerableMap.Map storage pointer)": "infinite",
+        "_remove(struct EnumerableMap.Map storage pointer,bytes32)": "infinite",
+        "_set(struct EnumerableMap.Map storage pointer,bytes32,bytes32)": "infinite",
+        "_tryGet(struct EnumerableMap.Map storage pointer,bytes32)": "infinite",
+        "at(struct EnumerableMap.UintToAddressMap storage pointer,uint256)": "infinite",
+        "contains(struct EnumerableMap.UintToAddressMap storage pointer,uint256)": "infinite",
+        "get(struct EnumerableMap.UintToAddressMap storage pointer,uint256)": "infinite",
+        "get(struct EnumerableMap.UintToAddressMap storage pointer,uint256,string memory)": "infinite",
+        "length(struct EnumerableMap.UintToAddressMap storage pointer)": "infinite",
+        "remove(struct EnumerableMap.UintToAddressMap storage pointer,uint256)": "infinite",
+        "set(struct EnumerableMap.UintToAddressMap storage pointer,uint256,address)": "infinite",
+        "tryGet(struct EnumerableMap.UintToAddressMap storage pointer,uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

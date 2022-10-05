@@ -1,0 +1,35 @@
+{
+  "contractName": "Math",
+  "sourceName": "contracts/depends/openzeppelin-v3/math/Math.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220d8096d4ce9a4225f44d78513fcf6f4b35c95b7f9784ab7dd3e1c10eadbc7375364736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220d8096d4ce9a4225f44d78513fcf6f4b35c95b7f9784ab7dd3e1c10eadbc7375364736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Standard math utilities missing in the Solidity language.",
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "average(uint256,uint256)": "infinite",
+        "max(uint256,uint256)": "infinite",
+        "min(uint256,uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

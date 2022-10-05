@@ -1,0 +1,31 @@
+{
+  "contractName": "FixedPoint128",
+  "sourceName": "contracts/depends/uniswap-v3-core/libraries/FixedPoint128.sol",
+  "abi": [],
+  "bytecode": "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220bfe964109812e4c7ed759e9240a4b689f95dfd2d8802bc578d17e5717d0379ba64736f6c63430008100033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220bfe964109812e4c7ed759e9240a4b689f95dfd2d8802bc578d17e5717d0379ba64736f6c63430008100033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "title": "FixedPoint128",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "A library for handling binary fixed point numbers, see https://en.wikipedia.org/wiki/Q_(number_format)",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "103",
+        "totalCost": "17303"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "contractName": "ITickLens",
+  "sourceName": "contracts/depends/uniswap-v3-periphery/interfaces/ITickLens.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "pool",
+          "type": "address"
+        },
+        {
+          "internalType": "int16",
+          "name": "tickBitmapIndex",
+          "type": "int16"
+        }
+      ],
+      "name": "getPopulatedTicksInWord",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "int24",
+              "name": "tick",
+              "type": "int24"
+            },
+            {
+              "internalType": "int128",
+              "name": "liquidityNet",
+              "type": "int128"
+            },
+            {
+              "internalType": "uint128",
+              "name": "liquidityGross",
+              "type": "uint128"
+            }
+          ],
+          "internalType": "struct ITickLens.PopulatedTick[]",
+          "name": "populatedTicks",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "This avoids the waterfall of fetching the tick bitmap, parsing the bitmap to know which ticks to fetch, and then sending additional multicalls to fetch the tick data",
+    "kind": "dev",
+    "methods": {
+      "getPopulatedTicksInWord(address,int16)": {
+        "params": {
+          "pool": "The address of the pool for which to fetch populated tick data",
+          "tickBitmapIndex": "The index of the word in the tick bitmap for which to parse the bitmap and fetch all the populated ticks"
+        },
+        "returns": {
+          "populatedTicks": "An array of tick data for the given word in the tick bitmap"
+        }
+      }
+    },
+    "title": "Tick Lens",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "getPopulatedTicksInWord(address,int16)": {
+        "notice": "Get all the tick data for the populated ticks from a word of the tick bitmap of a pool"
+      }
+    },
+    "notice": "Provides functions for fetching chunks of tick data for a pool",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "getPopulatedTicksInWord(address,int16)": "351fb478"
+    }
+  }
+}

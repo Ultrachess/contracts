@@ -1,0 +1,214 @@
+{
+  "contractName": "IQuoter",
+  "sourceName": "contracts/depends/uniswap-v3-periphery/interfaces/IQuoter.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "path",
+          "type": "bytes"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountIn",
+          "type": "uint256"
+        }
+      ],
+      "name": "quoteExactInput",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountOut",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tokenIn",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "tokenOut",
+          "type": "address"
+        },
+        {
+          "internalType": "uint24",
+          "name": "fee",
+          "type": "uint24"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountIn",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint160",
+          "name": "sqrtPriceLimitX96",
+          "type": "uint160"
+        }
+      ],
+      "name": "quoteExactInputSingle",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountOut",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "path",
+          "type": "bytes"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountOut",
+          "type": "uint256"
+        }
+      ],
+      "name": "quoteExactOutput",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountIn",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tokenIn",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "tokenOut",
+          "type": "address"
+        },
+        {
+          "internalType": "uint24",
+          "name": "fee",
+          "type": "uint24"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountOut",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint160",
+          "name": "sqrtPriceLimitX96",
+          "type": "uint160"
+        }
+      ],
+      "name": "quoteExactOutputSingle",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountIn",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "These functions are not marked view because they rely on calling non-view functions and reverting to compute the result. They are also not gas efficient and should not be called on-chain.",
+    "kind": "dev",
+    "methods": {
+      "quoteExactInput(bytes,uint256)": {
+        "params": {
+          "amountIn": "The amount of the first token to swap",
+          "path": "The path of the swap, i.e. each token pair and the pool fee"
+        },
+        "returns": {
+          "amountOut": "The amount of the last token that would be received"
+        }
+      },
+      "quoteExactInputSingle(address,address,uint24,uint256,uint160)": {
+        "params": {
+          "amountIn": "The desired input amount",
+          "fee": "The fee of the token pool to consider for the pair",
+          "sqrtPriceLimitX96": "The price limit of the pool that cannot be exceeded by the swap",
+          "tokenIn": "The token being swapped in",
+          "tokenOut": "The token being swapped out"
+        },
+        "returns": {
+          "amountOut": "The amount of `tokenOut` that would be received"
+        }
+      },
+      "quoteExactOutput(bytes,uint256)": {
+        "params": {
+          "amountOut": "The amount of the last token to receive",
+          "path": "The path of the swap, i.e. each token pair and the pool fee. Path must be provided in reverse order"
+        },
+        "returns": {
+          "amountIn": "The amount of first token required to be paid"
+        }
+      },
+      "quoteExactOutputSingle(address,address,uint24,uint256,uint160)": {
+        "params": {
+          "amountOut": "The desired output amount",
+          "fee": "The fee of the token pool to consider for the pair",
+          "sqrtPriceLimitX96": "The price limit of the pool that cannot be exceeded by the swap",
+          "tokenIn": "The token being swapped in",
+          "tokenOut": "The token being swapped out"
+        },
+        "returns": {
+          "amountIn": "The amount required as the input for the swap in order to receive `amountOut`"
+        }
+      }
+    },
+    "title": "Quoter Interface",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "quoteExactInput(bytes,uint256)": {
+        "notice": "Returns the amount out received for a given exact input swap without executing the swap"
+      },
+      "quoteExactInputSingle(address,address,uint24,uint256,uint160)": {
+        "notice": "Returns the amount out received for a given exact input but for a swap of a single pool"
+      },
+      "quoteExactOutput(bytes,uint256)": {
+        "notice": "Returns the amount in required for a given exact output swap without executing the swap"
+      },
+      "quoteExactOutputSingle(address,address,uint24,uint256,uint160)": {
+        "notice": "Returns the amount in required to receive the given exact output amount but for a swap of a single pool"
+      }
+    },
+    "notice": "Supports quoting the calculated amounts from exact input or exact output swaps",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "quoteExactInput(bytes,uint256)": "cdca1753",
+      "quoteExactInputSingle(address,address,uint24,uint256,uint160)": "f7729d43",
+      "quoteExactOutput(bytes,uint256)": "2f80bb1d",
+      "quoteExactOutputSingle(address,address,uint24,uint256,uint160)": "30d07f21"
+    }
+  }
+}

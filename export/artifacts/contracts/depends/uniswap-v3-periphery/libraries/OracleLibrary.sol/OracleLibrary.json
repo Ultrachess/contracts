@@ -1,0 +1,39 @@
+{
+  "contractName": "OracleLibrary",
+  "sourceName": "contracts/depends/uniswap-v3-periphery/libraries/OracleLibrary.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220023ccada850c6397cb94af001ee963d1b0cb2d246772ac8279e746154adb8bfa64736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220023ccada850c6397cb94af001ee963d1b0cb2d246772ac8279e746154adb8bfa64736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "title": "Oracle library",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Provides functions to integrate with V3 pool oracle",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "consult(address,uint32)": "infinite",
+        "getBlockStartingTickAndLiquidity(address)": "infinite",
+        "getChainedPrice(address[] memory,int24[] memory)": "infinite",
+        "getOldestObservationSecondsAgo(address)": "infinite",
+        "getQuoteAtTick(int24,uint128,address,address)": "infinite",
+        "getWeightedArithmeticMeanTick(struct OracleLibrary.WeightedTickData memory[] memory)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

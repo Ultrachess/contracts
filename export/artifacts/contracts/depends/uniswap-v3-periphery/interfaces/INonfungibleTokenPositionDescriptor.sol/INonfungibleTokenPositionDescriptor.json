@@ -1,0 +1,66 @@
+{
+  "contractName": "INonfungibleTokenPositionDescriptor",
+  "sourceName": "contracts/depends/uniswap-v3-periphery/interfaces/INonfungibleTokenPositionDescriptor.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "contract INonfungiblePositionManager",
+          "name": "positionManager",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "tokenURI",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "tokenURI(address,uint256)": {
+        "details": "Note this URI may be a data: URI with the JSON contents directly inlined",
+        "params": {
+          "positionManager": "The position manager for which to describe the token",
+          "tokenId": "The ID of the token for which to produce a description, which may not be valid"
+        },
+        "returns": {
+          "_0": "The URI of the ERC721-compliant metadata"
+        }
+      }
+    },
+    "title": "Describes position NFT tokens via URI",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "tokenURI(address,uint256)": {
+        "notice": "Produces the URI describing a particular token ID for a position manager"
+      }
+    },
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "tokenURI(address,uint256)": "e9dc6375"
+    }
+  }
+}

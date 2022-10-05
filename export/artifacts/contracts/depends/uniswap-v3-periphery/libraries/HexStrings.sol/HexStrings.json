@@ -1,0 +1,33 @@
+{
+  "contractName": "HexStrings",
+  "sourceName": "contracts/depends/uniswap-v3-periphery/libraries/HexStrings.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212206d8a0fb5ba66d42c0790789a6fd16055374141eddc8bcf13af25eec057655e1964736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212206d8a0fb5ba66d42c0790789a6fd16055374141eddc8bcf13af25eec057655e1964736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "toHexString(uint256,uint256)": "infinite",
+        "toHexStringNoPrefix(uint256,uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

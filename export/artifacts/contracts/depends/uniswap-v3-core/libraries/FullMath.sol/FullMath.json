@@ -1,0 +1,36 @@
+{
+  "contractName": "FullMath",
+  "sourceName": "contracts/depends/uniswap-v3-core/libraries/FullMath.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220a97a8c918a7c21e92c533c192c9862c5de0b121419397cc2d52aec5a24cb5cc164736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220a97a8c918a7c21e92c533c192c9862c5de0b121419397cc2d52aec5a24cb5cc164736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Handles \"phantom overflow\" i.e., allows multiplication and division where an intermediate value overflows 256 bits",
+    "kind": "dev",
+    "methods": {},
+    "title": "Contains 512-bit math functions",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Facilitates multiplication and division that can have overflow of an intermediate value without any loss of precision",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "mulDiv(uint256,uint256,uint256)": "infinite",
+        "mulDivRoundingUp(uint256,uint256,uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

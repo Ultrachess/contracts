@@ -1,0 +1,68 @@
+{
+  "contractName": "IERC1271",
+  "sourceName": "contracts/depends/uniswap-v3-periphery/interfaces/external/IERC1271.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "hash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes",
+          "name": "signature",
+          "type": "bytes"
+        }
+      ],
+      "name": "isValidSignature",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "magicValue",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Interface defined by EIP-1271",
+    "kind": "dev",
+    "methods": {
+      "isValidSignature(bytes32,bytes)": {
+        "details": "MUST return the bytes4 magic value 0x1626ba7e when function passes. MUST NOT modify state (using STATICCALL for solc < 0.5, view modifier for solc > 0.5). MUST allow external calls.",
+        "params": {
+          "hash": "Hash of the data to be signed",
+          "signature": "Signature byte array associated with _data"
+        },
+        "returns": {
+          "magicValue": "The bytes4 magic value 0x1626ba7e"
+        }
+      }
+    },
+    "title": "Interface for verifying contract-based account signatures",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "isValidSignature(bytes32,bytes)": {
+        "notice": "Returns whether the provided signature is valid for the provided data"
+      }
+    },
+    "notice": "Interface that verifies provided signature for the data",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "isValidSignature(bytes32,bytes)": "1626ba7e"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "contractName": "Path",
+  "sourceName": "contracts/depends/uniswap-v3-periphery/libraries/Path.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220462db712d3592fe97f5d00beacf44c7e75ddf930bbc3f1f91803e9faf5640c7764736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220462db712d3592fe97f5d00beacf44c7e75ddf930bbc3f1f91803e9faf5640c7764736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "stateVariables": {
+      "ADDR_SIZE": {
+        "details": "The length of the bytes encoded address"
+      },
+      "FEE_SIZE": {
+        "details": "The length of the bytes encoded fee"
+      },
+      "MULTIPLE_POOLS_MIN_LENGTH": {
+        "details": "The minimum length of an encoding that contains 2 or more pools"
+      },
+      "NEXT_OFFSET": {
+        "details": "The offset of a single token address and pool fee"
+      },
+      "POP_OFFSET": {
+        "details": "The offset of an encoded pool key"
+      }
+    },
+    "title": "Functions for manipulating path data for multihop swaps",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "decodeFirstPool(bytes memory)": "infinite",
+        "getFirstPool(bytes memory)": "infinite",
+        "hasMultiplePools(bytes memory)": "infinite",
+        "numPools(bytes memory)": "infinite",
+        "skipToken(bytes memory)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

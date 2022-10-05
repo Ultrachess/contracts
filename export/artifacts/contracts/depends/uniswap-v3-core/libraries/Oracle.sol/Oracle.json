@@ -1,0 +1,43 @@
+{
+  "contractName": "Oracle",
+  "sourceName": "contracts/depends/uniswap-v3-core/libraries/Oracle.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212205de1cca546e50c134695912bd8a68b7581e4f08d8bdb9b4a74dad7f97749698964736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212205de1cca546e50c134695912bd8a68b7581e4f08d8bdb9b4a74dad7f97749698964736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Instances of stored oracle data, \"observations\", are collected in the oracle array Every pool is initialized with an oracle array length of 1. Anyone can pay the SSTOREs to increase the maximum length of the oracle array. New slots will be added when the array is fully populated. Observations are overwritten when the full length of the oracle array is populated. The most recent observation is available, independent of the length of the oracle array, by passing 0 to observe()",
+    "kind": "dev",
+    "methods": {},
+    "title": "Oracle",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Provides price and liquidity data useful for a wide variety of system designs",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "binarySearch(struct Oracle.Observation storage ref[65535] storage pointer,uint32,uint32,uint16,uint16)": "infinite",
+        "getSurroundingObservations(struct Oracle.Observation storage ref[65535] storage pointer,uint32,uint32,int24,uint16,uint128,uint16)": "infinite",
+        "grow(struct Oracle.Observation storage ref[65535] storage pointer,uint16,uint16)": "infinite",
+        "initialize(struct Oracle.Observation storage ref[65535] storage pointer,uint32)": "infinite",
+        "lte(uint32,uint32,uint32)": "infinite",
+        "observe(struct Oracle.Observation storage ref[65535] storage pointer,uint32,uint32[] memory,int24,uint16,uint128,uint16)": "infinite",
+        "observeSingle(struct Oracle.Observation storage ref[65535] storage pointer,uint32,uint32,int24,uint16,uint128,uint16)": "infinite",
+        "transform(struct Oracle.Observation memory,uint32,int24,uint128)": "infinite",
+        "write(struct Oracle.Observation storage ref[65535] storage pointer,uint16,uint32,int24,uint128,uint16,uint16)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

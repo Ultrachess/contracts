@@ -1,0 +1,25 @@
+{
+  "contractName": "BlockTimestamp",
+  "sourceName": "contracts/depends/uniswap-v3-periphery/base/BlockTimestamp.sol",
+  "abi": [],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Base contract that is overridden for tests",
+    "kind": "dev",
+    "methods": {},
+    "title": "Function for getting block timestamp",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {}
+  }
+}

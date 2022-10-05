@@ -1,0 +1,37 @@
+{
+  "contractName": "TickBitmap",
+  "sourceName": "contracts/depends/uniswap-v3-core/libraries/TickBitmap.sol",
+  "abi": [],
+  "bytecode": "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220c0e1278e9c7ed9b1b7ca660ec23529859af6ce0e8a8424ab336a35a316672f8464736f6c63430008100033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220c0e1278e9c7ed9b1b7ca660ec23529859af6ce0e8a8424ab336a35a316672f8464736f6c63430008100033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "The mapping uses int16 for keys since ticks are represented as int24 and there are 256 (2^8) values per word.",
+    "kind": "dev",
+    "methods": {},
+    "title": "Packed tick initialized state library",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Stores a packed mapping of tick index to its initialized state",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "103",
+        "totalCost": "17303"
+      },
+      "internal": {
+        "flipTick(mapping(int16 => uint256),int24,int24)": "infinite",
+        "nextInitializedTickWithinOneWord(mapping(int16 => uint256),int24,int24,bool)": "infinite",
+        "position(int24)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "contractName": "Create2",
+  "sourceName": "contracts/depends/openzeppelin-v2/utils/Create2.sol",
+  "abi": [],
+  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820a2d8d3b65a60d956d2225dff5fc5007fdffb659e2fddcaaaf5fd9935f5f180a364736f6c63430005110032",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820a2d8d3b65a60d956d2225dff5fc5007fdffb659e2fddcaaaf5fd9935f5f180a364736f6c63430005110032",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Helper to make usage of the `CREATE2` EVM opcode easier and safer. `CREATE2` can be used to compute in advance the address where a smart contract will be deployed, which allows for interesting new mechanisms known as 'counterfactual interactions'. * See the https://eips.ethereum.org/EIPS/eip-1014#motivation[EIP] for more information. * _Available since v2.5.0._",
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17000",
+        "executionCost": "94",
+        "totalCost": "17094"
+      },
+      "internal": {
+        "computeAddress(bytes32,bytes memory)": "infinite",
+        "computeAddress(bytes32,bytes memory,address)": "infinite",
+        "deploy(bytes32,bytes memory)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

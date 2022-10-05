@@ -1,0 +1,40 @@
+{
+  "contractName": "LiquidityAmounts",
+  "sourceName": "contracts/depends/uniswap-v3-periphery/libraries/LiquidityAmounts.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212209cbb390bb7dfe50f5ab70000693eed7af79af6490021c9f2129adc0339a56b3364736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212209cbb390bb7dfe50f5ab70000693eed7af79af6490021c9f2129adc0339a56b3364736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "title": "Liquidity amount functions",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Provides functions for computing liquidity amounts from token amounts and prices",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "getAmount0ForLiquidity(uint160,uint160,uint128)": "infinite",
+        "getAmount1ForLiquidity(uint160,uint160,uint128)": "infinite",
+        "getAmountsForLiquidity(uint160,uint160,uint160,uint128)": "infinite",
+        "getLiquidityForAmount0(uint160,uint160,uint256)": "infinite",
+        "getLiquidityForAmount1(uint160,uint160,uint256)": "infinite",
+        "getLiquidityForAmounts(uint160,uint160,uint160,uint256,uint256)": "infinite",
+        "toUint128(uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

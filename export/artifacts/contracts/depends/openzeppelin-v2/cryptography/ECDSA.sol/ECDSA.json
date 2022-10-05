@@ -1,0 +1,30 @@
+{
+  "contractName": "ECDSA",
+  "sourceName": "contracts/depends/openzeppelin-v2/cryptography/ECDSA.sol",
+  "abi": [],
+  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158204a1bbb5c3ee8017cd54477f7728264a1f86a36759fea683e1ff1836b34532d3364736f6c63430005110032",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158204a1bbb5c3ee8017cd54477f7728264a1f86a36759fea683e1ff1836b34532d3364736f6c63430005110032",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Elliptic Curve Digital Signature Algorithm (ECDSA) operations. * These functions can be used to verify that a message was signed by the holder of the private keys of a given address.",
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17000",
+        "executionCost": "94",
+        "totalCost": "17094"
+      },
+      "internal": {
+        "recover(bytes32,bytes memory)": "infinite",
+        "toEthSignedMessageHash(bytes32)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

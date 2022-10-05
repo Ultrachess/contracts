@@ -1,0 +1,38 @@
+{
+  "contractName": "LowGasSafeMath",
+  "sourceName": "contracts/depends/uniswap-v3-core/libraries/LowGasSafeMath.sol",
+  "abi": [],
+  "bytecode": "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220d4577c94f24ed1e4980e17fb9e2603925555099c654e9827c8bbfd24f370be0964736f6c63430008100033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220d4577c94f24ed1e4980e17fb9e2603925555099c654e9827c8bbfd24f370be0964736f6c63430008100033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "title": "Optimized overflow and underflow safe math operations",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Contains methods for doing math operations that revert on overflow or underflow for minimal gas cost",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "103",
+        "totalCost": "17303"
+      },
+      "internal": {
+        "add(int256,int256)": "infinite",
+        "add(uint256,uint256)": "infinite",
+        "mul(uint256,uint256)": "infinite",
+        "sub(int256,int256)": "infinite",
+        "sub(uint256,uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

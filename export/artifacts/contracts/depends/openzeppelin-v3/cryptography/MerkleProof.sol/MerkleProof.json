@@ -1,0 +1,33 @@
+{
+  "contractName": "MerkleProof",
+  "sourceName": "contracts/depends/openzeppelin-v3/cryptography/MerkleProof.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220ad6bce1d43b5420c0ee02b757c851cfa9fbc8c3a3f1ee388d73aa52c19467da864736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220ad6bce1d43b5420c0ee02b757c851cfa9fbc8c3a3f1ee388d73aa52c19467da864736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "These functions deal with verification of Merkle trees (hash trees),",
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "verify(bytes32[] memory,bytes32,bytes32)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

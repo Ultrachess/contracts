@@ -1,0 +1,33 @@
+{
+  "contractName": "SafeCast",
+  "sourceName": "contracts/depends/openzeppelin-v2/utils/SafeCast.sol",
+  "abi": [],
+  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820cdaa46f457f4f7085c44c993c588ea7358a89d641827ae7f57806d42068a970964736f6c63430005110032",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820cdaa46f457f4f7085c44c993c588ea7358a89d641827ae7f57806d42068a970964736f6c63430005110032",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Wrappers over Solidity's uintXX casting operators with added overflow checks. * Downcasting from uint256 in Solidity does not revert on overflow. This can easily result in undesired exploitation or bugs, since developers usually assume that overflows raise errors. `SafeCast` restores this intuition by reverting the transaction when such an operation overflows. * Using this library instead of the unchecked operations eliminates an entire class of bugs, so it's recommended to use it always. * Can be combined with {SafeMath} to extend it to smaller types, by performing all math on `uint256` and then downcasting. * _Available since v2.5.0._",
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17000",
+        "executionCost": "94",
+        "totalCost": "17094"
+      },
+      "internal": {
+        "toUint128(uint256)": "infinite",
+        "toUint16(uint256)": "infinite",
+        "toUint32(uint256)": "infinite",
+        "toUint64(uint256)": "infinite",
+        "toUint8(uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

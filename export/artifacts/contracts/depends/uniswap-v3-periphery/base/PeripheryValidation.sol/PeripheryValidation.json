@@ -1,0 +1,23 @@
+{
+  "contractName": "PeripheryValidation",
+  "sourceName": "contracts/depends/uniswap-v3-periphery/base/PeripheryValidation.sol",
+  "abi": [],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {}
+  }
+}

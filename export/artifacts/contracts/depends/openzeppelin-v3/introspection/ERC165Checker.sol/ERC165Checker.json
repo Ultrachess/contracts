@@ -1,0 +1,38 @@
+{
+  "contractName": "ERC165Checker",
+  "sourceName": "contracts/depends/openzeppelin-v3/introspection/ERC165Checker.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212203558c8a09ab3b8700673ee15c7d7f9484bd4b5c7eafdb6a741f39214816c723e64736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212203558c8a09ab3b8700673ee15c7d7f9484bd4b5c7eafdb6a741f39214816c723e64736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Library used to query support of an interface declared via {IERC165}. Note that these functions return the actual result of the query: they do not `revert` if an interface is not supported. It is up to the caller to decide what to do in these cases.",
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "_callERC165SupportsInterface(address,bytes4)": "infinite",
+        "_supportsERC165Interface(address,bytes4)": "infinite",
+        "getSupportedInterfaces(address,bytes4[] memory)": "infinite",
+        "supportsAllInterfaces(address,bytes4[] memory)": "infinite",
+        "supportsERC165(address)": "infinite",
+        "supportsInterface(address,bytes4)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

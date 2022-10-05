@@ -1,0 +1,292 @@
+{
+  "contractName": "IQuoterV2",
+  "sourceName": "contracts/depends/uniswap-v3-periphery/interfaces/IQuoterV2.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "path",
+          "type": "bytes"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountIn",
+          "type": "uint256"
+        }
+      ],
+      "name": "quoteExactInput",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountOut",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint160[]",
+          "name": "sqrtPriceX96AfterList",
+          "type": "uint160[]"
+        },
+        {
+          "internalType": "uint32[]",
+          "name": "initializedTicksCrossedList",
+          "type": "uint32[]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "gasEstimate",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "tokenIn",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "tokenOut",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountIn",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint24",
+              "name": "fee",
+              "type": "uint24"
+            },
+            {
+              "internalType": "uint160",
+              "name": "sqrtPriceLimitX96",
+              "type": "uint160"
+            }
+          ],
+          "internalType": "struct IQuoterV2.QuoteExactInputSingleParams",
+          "name": "params",
+          "type": "tuple"
+        }
+      ],
+      "name": "quoteExactInputSingle",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountOut",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint160",
+          "name": "sqrtPriceX96After",
+          "type": "uint160"
+        },
+        {
+          "internalType": "uint32",
+          "name": "initializedTicksCrossed",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "gasEstimate",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "path",
+          "type": "bytes"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountOut",
+          "type": "uint256"
+        }
+      ],
+      "name": "quoteExactOutput",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountIn",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint160[]",
+          "name": "sqrtPriceX96AfterList",
+          "type": "uint160[]"
+        },
+        {
+          "internalType": "uint32[]",
+          "name": "initializedTicksCrossedList",
+          "type": "uint32[]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "gasEstimate",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "tokenIn",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "tokenOut",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint24",
+              "name": "fee",
+              "type": "uint24"
+            },
+            {
+              "internalType": "uint160",
+              "name": "sqrtPriceLimitX96",
+              "type": "uint160"
+            }
+          ],
+          "internalType": "struct IQuoterV2.QuoteExactOutputSingleParams",
+          "name": "params",
+          "type": "tuple"
+        }
+      ],
+      "name": "quoteExactOutputSingle",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountIn",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint160",
+          "name": "sqrtPriceX96After",
+          "type": "uint160"
+        },
+        {
+          "internalType": "uint32",
+          "name": "initializedTicksCrossed",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "gasEstimate",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "These functions are not marked view because they rely on calling non-view functions and reverting to compute the result. They are also not gas efficient and should not be called on-chain.",
+    "kind": "dev",
+    "methods": {
+      "quoteExactInput(bytes,uint256)": {
+        "params": {
+          "amountIn": "The amount of the first token to swap",
+          "path": "The path of the swap, i.e. each token pair and the pool fee"
+        },
+        "returns": {
+          "amountOut": "The amount of the last token that would be received",
+          "gasEstimate": "The estimate of the gas that the swap consumes",
+          "initializedTicksCrossedList": "List of the initialized ticks that the swap crossed for each pool in the path",
+          "sqrtPriceX96AfterList": "List of the sqrt price after the swap for each pool in the path"
+        }
+      },
+      "quoteExactInputSingle((address,address,uint256,uint24,uint160))": {
+        "params": {
+          "params": "The params for the quote, encoded as `QuoteExactInputSingleParams` tokenIn The token being swapped in tokenOut The token being swapped out fee The fee of the token pool to consider for the pair amountIn The desired input amount sqrtPriceLimitX96 The price limit of the pool that cannot be exceeded by the swap"
+        },
+        "returns": {
+          "amountOut": "The amount of `tokenOut` that would be received",
+          "gasEstimate": "The estimate of the gas that the swap consumes",
+          "initializedTicksCrossed": "The number of initialized ticks that the swap crossed",
+          "sqrtPriceX96After": "The sqrt price of the pool after the swap"
+        }
+      },
+      "quoteExactOutput(bytes,uint256)": {
+        "params": {
+          "amountOut": "The amount of the last token to receive",
+          "path": "The path of the swap, i.e. each token pair and the pool fee. Path must be provided in reverse order"
+        },
+        "returns": {
+          "amountIn": "The amount of first token required to be paid",
+          "gasEstimate": "The estimate of the gas that the swap consumes",
+          "initializedTicksCrossedList": "List of the initialized ticks that the swap crossed for each pool in the path",
+          "sqrtPriceX96AfterList": "List of the sqrt price after the swap for each pool in the path"
+        }
+      },
+      "quoteExactOutputSingle((address,address,uint256,uint24,uint160))": {
+        "params": {
+          "params": "The params for the quote, encoded as `QuoteExactOutputSingleParams` tokenIn The token being swapped in tokenOut The token being swapped out fee The fee of the token pool to consider for the pair amountOut The desired output amount sqrtPriceLimitX96 The price limit of the pool that cannot be exceeded by the swap"
+        },
+        "returns": {
+          "amountIn": "The amount required as the input for the swap in order to receive `amountOut`",
+          "gasEstimate": "The estimate of the gas that the swap consumes",
+          "initializedTicksCrossed": "The number of initialized ticks that the swap crossed",
+          "sqrtPriceX96After": "The sqrt price of the pool after the swap"
+        }
+      }
+    },
+    "title": "QuoterV2 Interface",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "quoteExactInput(bytes,uint256)": {
+        "notice": "Returns the amount out received for a given exact input swap without executing the swap"
+      },
+      "quoteExactInputSingle((address,address,uint256,uint24,uint160))": {
+        "notice": "Returns the amount out received for a given exact input but for a swap of a single pool"
+      },
+      "quoteExactOutput(bytes,uint256)": {
+        "notice": "Returns the amount in required for a given exact output swap without executing the swap"
+      },
+      "quoteExactOutputSingle((address,address,uint256,uint24,uint160))": {
+        "notice": "Returns the amount in required to receive the given exact output amount but for a swap of a single pool"
+      }
+    },
+    "notice": "Supports quoting the calculated amounts from exact input or exact output swaps.For each pool also tells you the number of initialized ticks crossed and the sqrt price of the pool after the swap.",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "quoteExactInput(bytes,uint256)": "cdca1753",
+      "quoteExactInputSingle((address,address,uint256,uint24,uint160))": "c6a5026a",
+      "quoteExactOutput(bytes,uint256)": "2f80bb1d",
+      "quoteExactOutputSingle((address,address,uint256,uint24,uint160))": "bd21704a"
+    }
+  }
+}

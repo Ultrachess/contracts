@@ -1,0 +1,126 @@
+{
+  "contractName": "SimpleFaucet",
+  "sourceName": "contracts/depends/cartesi-token/SimpleFaucet.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_tokenInstance",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "allowedToWithdraw",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "requestTokens",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "tokenAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "tokenInstance",
+      "outputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "waitTime",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b506040516102c13803806102c18339818101604052602081101561003357600080fd5b50516001600160a01b03811661004857600080fd5b600080546001600160a01b039092166001600160a01b0319909216919091179055610249806100786000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c80632d291cad1461005c578063359cf2b714610096578063658030b3146100a0578063ccca123b146100c4578063eec7faa1146100de575b600080fd5b6100826004803603602081101561007257600080fd5b50356001600160a01b03166100e6565b604080519115158252519081900360200190f35b61009e61013b565b005b6100a86101f0565b604080516001600160a01b039092168252519081900360200190f35b6100cc6101ff565b60408051918252519081900360200190f35b6100cc610206565b6001600160a01b03811660009081526001602052604081205461010b57506001610136565b6001600160a01b038216600090815260016020526040902054421061013257506001610136565b5060005b919050565b610144336100e6565b61014d57600080fd5b600080546040805163a9059cbb60e01b815233600482015269152d02c7e14af6800000602482015290516001600160a01b039092169263a9059cbb926044808401936020939083900390910190829087803b1580156101ab57600080fd5b505af11580156101bf573d6000803e3d6000fd5b505050506040513d60208110156101d557600080fd5b5050336000908152600160205260409020426224ea00019055565b6000546001600160a01b031681565b6224ea0081565b69152d02c7e14af68000008156fea265627a7a72315820973b4b4a6de2ddeb436a80920bfdf0aedcd3bff3ad3c9198e4a1c55551b34d0b64736f6c63430005110032",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100575760003560e01c80632d291cad1461005c578063359cf2b714610096578063658030b3146100a0578063ccca123b146100c4578063eec7faa1146100de575b600080fd5b6100826004803603602081101561007257600080fd5b50356001600160a01b03166100e6565b604080519115158252519081900360200190f35b61009e61013b565b005b6100a86101f0565b604080516001600160a01b039092168252519081900360200190f35b6100cc6101ff565b60408051918252519081900360200190f35b6100cc610206565b6001600160a01b03811660009081526001602052604081205461010b57506001610136565b6001600160a01b038216600090815260016020526040902054421061013257506001610136565b5060005b919050565b610144336100e6565b61014d57600080fd5b600080546040805163a9059cbb60e01b815233600482015269152d02c7e14af6800000602482015290516001600160a01b039092169263a9059cbb926044808401936020939083900390910190829087803b1580156101ab57600080fd5b505af11580156101bf573d6000803e3d6000fd5b505050506040513d60208110156101d557600080fd5b5050336000908152600160205260409020426224ea00019055565b6000546001600160a01b031681565b6224ea0081565b69152d02c7e14af68000008156fea265627a7a72315820973b4b4a6de2ddeb436a80920bfdf0aedcd3bff3ad3c9198e4a1c55551b34d0b64736f6c63430005110032",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "117000",
+        "executionCost": "infinite",
+        "totalCost": "infinite"
+      },
+      "external": {
+        "allowedToWithdraw(address)": "2073",
+        "requestTokens()": "infinite",
+        "tokenAmount()": "264",
+        "tokenInstance()": "1059",
+        "waitTime()": "242"
+      }
+    },
+    "methodIdentifiers": {
+      "allowedToWithdraw(address)": "2d291cad",
+      "requestTokens()": "359cf2b7",
+      "tokenAmount()": "eec7faa1",
+      "tokenInstance()": "658030b3",
+      "waitTime()": "ccca123b"
+    }
+  }
+}

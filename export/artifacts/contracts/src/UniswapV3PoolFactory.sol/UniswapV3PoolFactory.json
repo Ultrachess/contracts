@@ -1,0 +1,90 @@
+{
+  "contractName": "UniswapV3PoolFactory",
+  "sourceName": "contracts/src/UniswapV3PoolFactory.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "factory",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "token0",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "token1",
+          "type": "address"
+        },
+        {
+          "internalType": "uint24",
+          "name": "fee",
+          "type": "uint24"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "uniV3Pool",
+      "outputs": [
+        {
+          "internalType": "contract IUniswapV3Pool",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x60a060405234801561001057600080fd5b506040516102f83803806102f883398101604081905261002f916101bb565b6001600160a01b03841661007c5760405162461bcd60e51b815260206004820152600f60248201526e496e76616c696420666163746f727960881b60448201526064015b60405180910390fd5b6001600160a01b0383166100c35760405162461bcd60e51b815260206004820152600e60248201526d0496e76616c696420746f6b656e360941b6044820152606401610073565b6001600160a01b03821661010a5760405162461bcd60e51b815260206004820152600e60248201526d496e76616c696420746f6b656e3160901b6044820152606401610073565b60405163a167129560e01b81526001600160a01b038481166004830152838116602483015262ffffff8316604483015285169063a1671295906064016020604051808303816000875af1158015610165573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906101899190610219565b6001600160a01b03166080525061023b92505050565b80516001600160a01b03811681146101b657600080fd5b919050565b600080600080608085870312156101d157600080fd5b6101da8561019f565b93506101e86020860161019f565b92506101f66040860161019f565b9150606085015162ffffff8116811461020e57600080fd5b939692955090935050565b60006020828403121561022b57600080fd5b6102348261019f565b9392505050565b60805160a561025360003960006031015260a56000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c80636c83b3d714602d575b600080fd5b60537f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b03909116815260200160405180910390f3fea26469706673582212206e4eb24d08d944163dcddcf45ba16b8de626ed4b4f42974d6b726dbc2220536564736f6c63430008100033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c80636c83b3d714602d575b600080fd5b60537f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b03909116815260200160405180910390f3fea26469706673582212206e4eb24d08d944163dcddcf45ba16b8de626ed4b4f42974d6b726dbc2220536564736f6c63430008100033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Test contract to create a Uniswap-V3 pool using a provided Uni-V3 factory This is a helper contract for the deployment of dependencies on test networks. The pool is created in the constructor and stored in a member variable so that it can be read back without the deployment system having to parse transaction receipts.",
+    "kind": "dev",
+    "methods": {
+      "constructor": {
+        "details": "Construct the test pool instance",
+        "params": {
+          "factory": "The contract address of the Uniswap V3 factory",
+          "fee": "The fee collected upon every swap in the pool, denominated in hundredths of a bip",
+          "token0": "The first token of the pool by address sort order",
+          "token1": "The second token of the pool by address sort order"
+        }
+      }
+    },
+    "stateVariables": {
+      "uniV3Pool": {
+        "details": "The address of the pool for this token pair"
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "33000",
+        "executionCost": "infinite",
+        "totalCost": "infinite"
+      },
+      "external": {
+        "uniV3Pool()": "infinite"
+      }
+    },
+    "methodIdentifiers": {
+      "uniV3Pool()": "6c83b3d7"
+    }
+  }
+}

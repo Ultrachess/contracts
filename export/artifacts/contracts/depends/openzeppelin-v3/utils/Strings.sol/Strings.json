@@ -1,0 +1,33 @@
+{
+  "contractName": "Strings",
+  "sourceName": "contracts/depends/openzeppelin-v3/utils/Strings.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122091936e0437b26a91a9721e4b9326ad9f85bdaf5e58d5e1796f5134dbce9030e564736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122091936e0437b26a91a9721e4b9326ad9f85bdaf5e58d5e1796f5134dbce9030e564736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "String operations.",
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "toString(uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}
