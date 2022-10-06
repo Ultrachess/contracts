@@ -1,0 +1,10 @@
+{
+  "exclude_high": false,
+  "exclude_medium": false,
+  "exclude_low": false,
+  "exclude_informational": true,
+  "exclude_optimization": true,
+  "exclude_dependencies": true,
+  "filter_paths": "depends",
+  "solc_disable_warnings": false
+}

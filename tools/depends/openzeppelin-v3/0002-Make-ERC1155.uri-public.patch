@@ -1,0 +1,26 @@
+From c8b049df09762e9cc41345eb720a6114fce8e659 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Sun, 12 Jun 2022 19:20:27 -0700
+Subject: [PATCH 2/3] Make ERC1155.uri() public
+
+See PR 2576.
+---
+ contracts/token/ERC1155/ERC1155.sol | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contracts/token/ERC1155/ERC1155.sol b/contracts/token/ERC1155/ERC1155.sol
+index eccc320f..40d18a5e 100644
+--- a/contracts/token/ERC1155/ERC1155.sol
++++ b/contracts/token/ERC1155/ERC1155.sol
+@@ -72,7 +72,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
+      * Clients calling this function must replace the `\{id\}` substring with the
+      * actual token type ID.
+      */
+-    function uri(uint256) external view virtual override returns (string memory) {
++    function uri(uint256) public view virtual override returns (string memory) {
+         return _uri;
+     }
+ 
+-- 
+2.34.1
+

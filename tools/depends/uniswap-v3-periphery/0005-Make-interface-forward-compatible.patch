@@ -1,0 +1,23 @@
+From 6b07d2aabe26ffc0a19571e39789852b2e435cae Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Fri, 24 Jun 2022 20:14:04 -0700
+Subject: [PATCH 5/5] Make interface forward-compatible
+
+---
+ contracts/interfaces/IERC20Metadata.sol | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contracts/interfaces/IERC20Metadata.sol b/contracts/interfaces/IERC20Metadata.sol
+index ef2373d..55c7374 100644
+--- a/contracts/interfaces/IERC20Metadata.sol
++++ b/contracts/interfaces/IERC20Metadata.sol
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+-pragma solidity ^0.7.0;
++pragma solidity >=0.7.0;
+ 
+ import '../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ 
+-- 
+2.34.1
+

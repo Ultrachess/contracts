@@ -1,0 +1,35 @@
+From 6effcc76cf639e5ced1289b2b80c5ae0a49bb5c7 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Wed, 5 Oct 2022 20:46:04 -0700
+Subject: [PATCH 2/2] Parameterize initial beneficiary of CTSI for CREATE2
+ deployments
+
+---
+ contracts/CartesiToken.sol | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/contracts/CartesiToken.sol b/contracts/CartesiToken.sol
+index b0d6440..4e74818 100644
+--- a/contracts/CartesiToken.sol
++++ b/contracts/CartesiToken.sol
+@@ -14,11 +14,15 @@ contract CartesiToken is ERC20Mintable, ERC20Detailed{
+ 
+     event LocktimeExteded(uint256 extendedBy, uint256 deadline);
+ 
+-    constructor()
++    constructor(address initialBeneficiary)
+         ERC20Detailed(NAME, SYMBOL, DECIMALS) public
+     {
+         deployedDate = now;
+-        _mint(msg.sender, INITIAL_SUPPLY);
++        _mint(initialBeneficiary, INITIAL_SUPPLY);
++        if (initialBeneficiary != _msgSender()) {
++            addMinter(initialBeneficiary);
++            renounceMinter();
++        }
+     }
+ 
+     function mint(address account, uint256 amount) public onlyMinter returns (bool) {
+-- 
+2.34.1
+

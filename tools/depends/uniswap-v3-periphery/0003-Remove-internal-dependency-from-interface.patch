@@ -1,0 +1,24 @@
+From e03c5bed5d4e8a75db1e6e89bdd87a614c1c3bd0 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Sat, 25 Jun 2022 06:23:29 -0700
+Subject: [PATCH 3/5] Remove internal dependency from interface
+
+---
+ contracts/interfaces/INonfungiblePositionManager.sol | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/contracts/interfaces/INonfungiblePositionManager.sol b/contracts/interfaces/INonfungiblePositionManager.sol
+index 38a98e9..57d68cd 100644
+--- a/contracts/interfaces/INonfungiblePositionManager.sol
++++ b/contracts/interfaces/INonfungiblePositionManager.sol
+@@ -9,7 +9,6 @@ import './IPoolInitializer.sol';
+ import './IERC721Permit.sol';
+ import './IPeripheryPayments.sol';
+ import './IPeripheryImmutableState.sol';
+-import '../libraries/PoolAddress.sol';
+ 
+ /// @title Non-fungible token for positions
+ /// @notice Wraps Uniswap V3 positions in a non-fungible token interface which allows for them to be transferred
+-- 
+2.34.1
+

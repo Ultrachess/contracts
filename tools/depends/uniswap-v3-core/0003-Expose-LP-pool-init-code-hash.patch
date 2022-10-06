@@ -1,0 +1,43 @@
+From ad73216d253cdc251e4942db42295bc77b7d643d Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Tue, 21 Jun 2022 13:04:53 -0700
+Subject: [PATCH 3/3] Expose LP pool init code hash
+
+---
+ contracts/UniswapV3Factory.sol             | 4 ++++
+ contracts/interfaces/IUniswapV3Factory.sol | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/contracts/UniswapV3Factory.sol b/contracts/UniswapV3Factory.sol
+index e065434..1747896 100644
+--- a/contracts/UniswapV3Factory.sol
++++ b/contracts/UniswapV3Factory.sol
+@@ -31,6 +31,10 @@ contract UniswapV3Factory is IUniswapV3Factory, UniswapV3PoolDeployer, NoDelegat
+         emit FeeAmountEnabled(10000, 200);
+     }
+ 
++    function poolCodeHash() external pure override returns (bytes32) {
++        return keccak256(type(UniswapV3Pool).creationCode);
++    }
++
+     /// @inheritdoc IUniswapV3Factory
+     function createPool(
+         address tokenA,
+diff --git a/contracts/interfaces/IUniswapV3Factory.sol b/contracts/interfaces/IUniswapV3Factory.sol
+index 540cfdc..5f4c0cc 100644
+--- a/contracts/interfaces/IUniswapV3Factory.sol
++++ b/contracts/interfaces/IUniswapV3Factory.sol
+@@ -28,6 +28,10 @@ interface IUniswapV3Factory {
+     /// @param tickSpacing The minimum number of ticks between initialized ticks for pools created with the given fee
+     event FeeAmountEnabled(uint24 indexed fee, int24 indexed tickSpacing);
+ 
++    /// @notice Returns the LP pool init code hash
++    /// @return The LP pool init code hash
++    function poolCodeHash() external pure returns (bytes32);
++
+     /// @notice Returns the current owner of the factory
+     /// @dev Can be changed by the current owner via setOwner
+     /// @return The address of the factory owner
+-- 
+2.30.2
+

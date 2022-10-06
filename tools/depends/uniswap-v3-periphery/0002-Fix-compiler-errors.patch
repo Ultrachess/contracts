@@ -1,0 +1,85 @@
+From e8163f23d7875328c57835380eb468380b07dcab Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Sun, 12 Jun 2022 00:59:39 -0700
+Subject: [PATCH 2/5] Fix compiler errors
+
+---
+ contracts/lens/TickLens.sol              |  2 +-
+ contracts/libraries/ChainId.sol          |  2 +-
+ contracts/libraries/PoolAddress.sol      | 16 +++++++++-------
+ contracts/libraries/PoolTicksCounter.sol |  4 ++--
+ 4 files changed, 13 insertions(+), 11 deletions(-)
+
+diff --git a/contracts/lens/TickLens.sol b/contracts/lens/TickLens.sol
+index ad53d3d..51b76f7 100644
+--- a/contracts/lens/TickLens.sol
++++ b/contracts/lens/TickLens.sol
+@@ -29,7 +29,7 @@ contract TickLens is ITickLens {
+         populatedTicks = new PopulatedTick[](numberOfPopulatedTicks);
+         for (uint256 i = 0; i < 256; i++) {
+             if (bitmap & (1 << i) > 0) {
+-                int24 populatedTick = ((int24(tickBitmapIndex) << 8) + int24(i)) * tickSpacing;
++                int24 populatedTick = ((int24(tickBitmapIndex) << 8) + int24(uint24(i))) * tickSpacing;
+                 (uint128 liquidityGross, int128 liquidityNet, , , , , , ) = IUniswapV3Pool(pool).ticks(populatedTick);
+                 populatedTicks[--numberOfPopulatedTicks] = PopulatedTick({
+                     tick: populatedTick,
+diff --git a/contracts/libraries/ChainId.sol b/contracts/libraries/ChainId.sol
+index 72cb8b7..7e67989 100644
+--- a/contracts/libraries/ChainId.sol
++++ b/contracts/libraries/ChainId.sol
+@@ -5,7 +5,7 @@ pragma solidity >=0.7.0;
+ library ChainId {
+     /// @dev Gets the current chain ID
+     /// @return chainId The current chain ID
+-    function get() internal pure returns (uint256 chainId) {
++    function get() internal view returns (uint256 chainId) {
+         assembly {
+             chainId := chainid()
+         }
+diff --git a/contracts/libraries/PoolAddress.sol b/contracts/libraries/PoolAddress.sol
+index 60de385..eccebc0 100644
+--- a/contracts/libraries/PoolAddress.sol
++++ b/contracts/libraries/PoolAddress.sol
+@@ -33,13 +33,15 @@ library PoolAddress {
+     function computeAddress(address factory, PoolKey memory key) internal pure returns (address pool) {
+         require(key.token0 < key.token1);
+         pool = address(
+-            uint256(
+-                keccak256(
+-                    abi.encodePacked(
+-                        hex'ff',
+-                        factory,
+-                        keccak256(abi.encode(key.token0, key.token1, key.fee)),
+-                        POOL_INIT_CODE_HASH
++            uint160(
++                uint256(
++                    keccak256(
++                        abi.encodePacked(
++                            hex'ff',
++                            factory,
++                            keccak256(abi.encode(key.token0, key.token1, key.fee)),
++                            POOL_INIT_CODE_HASH
++                        )
+                     )
+                 )
+             )
+diff --git a/contracts/libraries/PoolTicksCounter.sol b/contracts/libraries/PoolTicksCounter.sol
+index 23f2d01..3b1a289 100644
+--- a/contracts/libraries/PoolTicksCounter.sol
++++ b/contracts/libraries/PoolTicksCounter.sol
+@@ -23,10 +23,10 @@ library PoolTicksCounter {
+         {
+             // Get the key and offset in the tick bitmap of the active tick before and after the swap.
+             int16 wordPos = int16((tickBefore / self.tickSpacing()) >> 8);
+-            uint8 bitPos = uint8((tickBefore / self.tickSpacing()) % 256);
++            uint8 bitPos = uint8(uint24((tickBefore / self.tickSpacing()) % 256));
+ 
+             int16 wordPosAfter = int16((tickAfter / self.tickSpacing()) >> 8);
+-            uint8 bitPosAfter = uint8((tickAfter / self.tickSpacing()) % 256);
++            uint8 bitPosAfter = uint8(uint24((tickAfter / self.tickSpacing()) % 256));
+ 
+             // In the case where tickAfter is initialized, we only want to count it if we are swapping downwards.
+             // If the initializable tick after the swap is initialized, our original tickAfter is a
+-- 
+2.34.1
+

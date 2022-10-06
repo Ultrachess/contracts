@@ -1,0 +1,72 @@
+From 0f3b921254b9091fe98bbdd88c187ded0c358105 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Tue, 21 Jun 2022 13:08:23 -0700
+Subject: [PATCH 4/5] Parameterize LP pool init code hash
+
+---
+ contracts/libraries/PoolAddress.sol | 6 +++---
+ contracts/test/PoolAddressTest.sol  | 4 ----
+ test/PoolAddress.spec.ts            | 6 ------
+ 3 files changed, 3 insertions(+), 13 deletions(-)
+
+diff --git a/contracts/libraries/PoolAddress.sol b/contracts/libraries/PoolAddress.sol
+index eccebc0..b0cb30e 100644
+--- a/contracts/libraries/PoolAddress.sol
++++ b/contracts/libraries/PoolAddress.sol
+@@ -1,10 +1,10 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ pragma solidity >=0.5.0;
+ 
++import '../../uniswap-v3-core/interfaces/IUniswapV3Factory.sol';
++
+ /// @title Provides functions for deriving a pool address from the factory, tokens, and the fee
+ library PoolAddress {
+-    bytes32 internal constant POOL_INIT_CODE_HASH = 0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54;
+-
+     /// @notice The identifying key of the pool
+     struct PoolKey {
+         address token0;
+@@ -40,7 +40,7 @@ library PoolAddress {
+                             hex'ff',
+                             factory,
+                             keccak256(abi.encode(key.token0, key.token1, key.fee)),
+-                            POOL_INIT_CODE_HASH
++                            IUniswapV3Factory(factory).poolCodeHash()
+                         )
+                     )
+                 )
+diff --git a/contracts/test/PoolAddressTest.sol b/contracts/test/PoolAddressTest.sol
+index c1571e4..0e7c629 100644
+--- a/contracts/test/PoolAddressTest.sol
++++ b/contracts/test/PoolAddressTest.sol
+@@ -4,10 +4,6 @@ pragma solidity =0.7.6;
+ import '../libraries/PoolAddress.sol';
+ 
+ contract PoolAddressTest {
+-    function POOL_INIT_CODE_HASH() external pure returns (bytes32) {
+-        return PoolAddress.POOL_INIT_CODE_HASH;
+-    }
+-
+     function computeAddress(
+         address factory,
+         address token0,
+diff --git a/test/PoolAddress.spec.ts b/test/PoolAddress.spec.ts
+index 9c83481..d8ef240 100644
+--- a/test/PoolAddress.spec.ts
++++ b/test/PoolAddress.spec.ts
+@@ -24,12 +24,6 @@ describe('PoolAddress', () => {
+     poolAddress = await loadFixture(poolAddressTestFixture)
+   })
+ 
+-  describe('#POOL_INIT_CODE_HASH', () => {
+-    it('equals the hash of the pool bytecode', async () => {
+-      expect(await poolAddress.POOL_INIT_CODE_HASH()).to.eq(POOL_BYTECODE_HASH)
+-    })
+-  })
+-
+   describe('#computeAddress', () => {
+     it('all arguments equal zero', async () => {
+       await expect(poolAddress.computeAddress(constants.AddressZero, constants.AddressZero, constants.AddressZero, 0))
+-- 
+2.34.1
+

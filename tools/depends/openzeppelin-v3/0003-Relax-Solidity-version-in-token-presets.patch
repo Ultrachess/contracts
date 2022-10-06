@@ -1,0 +1,35 @@
+From 2ff8d6099bc35e36a0e20426d5201e18560542d2 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Wed, 9 Nov 2022 16:09:24 -0800
+Subject: [PATCH 3/3] Relax Solidity version in token presets
+
+---
+ contracts/presets/ERC20PresetFixedSupply.sol  | 2 +-
+ contracts/presets/ERC777PresetFixedSupply.sol | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/contracts/presets/ERC20PresetFixedSupply.sol b/contracts/presets/ERC20PresetFixedSupply.sol
+index 085d3d21..ab030a5c 100644
+--- a/contracts/presets/ERC20PresetFixedSupply.sol
++++ b/contracts/presets/ERC20PresetFixedSupply.sol
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: MIT
+-pragma solidity ^0.6.2;
++pragma solidity >=0.6.2 <0.8.0;
+ 
+ import "../token/ERC20/ERC20Burnable.sol";
+ 
+diff --git a/contracts/presets/ERC777PresetFixedSupply.sol b/contracts/presets/ERC777PresetFixedSupply.sol
+index 3216668e..514c19f4 100644
+--- a/contracts/presets/ERC777PresetFixedSupply.sol
++++ b/contracts/presets/ERC777PresetFixedSupply.sol
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: MIT
+-pragma solidity ^0.6.2;
++pragma solidity >=0.6.2 <0.8.0;
+ 
+ import "../token/ERC777/ERC777.sol";
+ 
+-- 
+2.34.1
+

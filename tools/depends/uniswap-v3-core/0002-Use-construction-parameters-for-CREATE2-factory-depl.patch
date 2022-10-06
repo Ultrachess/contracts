@@ -1,0 +1,30 @@
+From 8dc58cf846e23e20d60b67f0fcd890f2c1b071d2 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Tue, 21 Jun 2022 00:55:56 -0700
+Subject: [PATCH 2/3] Use construction parameters for CREATE2 factory
+ deployment
+
+---
+ contracts/UniswapV3Factory.sol | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/contracts/UniswapV3Factory.sol b/contracts/UniswapV3Factory.sol
+index 3553ce5..e065434 100644
+--- a/contracts/UniswapV3Factory.sol
++++ b/contracts/UniswapV3Factory.sol
+@@ -19,9 +19,9 @@ contract UniswapV3Factory is IUniswapV3Factory, UniswapV3PoolDeployer, NoDelegat
+     /// @inheritdoc IUniswapV3Factory
+     mapping(address => mapping(address => mapping(uint24 => address))) public override getPool;
+ 
+-    constructor() {
+-        owner = msg.sender;
+-        emit OwnerChanged(address(0), msg.sender);
++    constructor(address _owner) {
++        owner = _owner;
++        emit OwnerChanged(address(0), _owner);
+ 
+         feeAmountTickSpacing[500] = 10;
+         emit FeeAmountEnabled(500, 10);
+-- 
+2.30.2
+

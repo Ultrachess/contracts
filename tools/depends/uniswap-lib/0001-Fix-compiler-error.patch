@@ -1,0 +1,33 @@
+From f9a44aef15a2651a97169511c78408e042c0215c Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Sat, 11 Jun 2022 23:57:16 -0700
+Subject: [PATCH] Fix compiler error
+
+Error was:
+
+  TypeError: Explicit type conversion not allowed from "address" to "uint256".
+    --> contracts/depends/uniswap-lib/libraries/AddressStringUtil.sol:11:27:
+     |
+  11 |         uint256 addrNum = uint256(addr);
+     |                           ^^^^^^^^^^^^^
+
+---
+ contracts/libraries/AddressStringUtil.sol | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contracts/libraries/AddressStringUtil.sol b/contracts/libraries/AddressStringUtil.sol
+index dd71ac3..0f7a26f 100644
+--- a/contracts/libraries/AddressStringUtil.sol
++++ b/contracts/libraries/AddressStringUtil.sol
+@@ -8,7 +8,7 @@ library AddressStringUtil {
+         require(len % 2 == 0 && len > 0 && len <= 40, 'AddressStringUtil: INVALID_LEN');
+ 
+         bytes memory s = new bytes(len);
+-        uint256 addrNum = uint256(addr);
++        uint256 addrNum = uint256(uint160(addr));
+         for (uint256 i = 0; i < len / 2; i++) {
+             // shift right and truncate all but the least significant byte to extract the byte at position 19-i
+             uint8 b = uint8(addrNum >> (8 * (19 - i)));
+-- 
+2.30.2
+
