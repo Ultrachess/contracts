@@ -1,0 +1,675 @@
+From e048c07440813fe40f1e21fce07e9bd5b32b2e89 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Wed, 9 Nov 2022 16:20:21 -0800
+Subject: [PATCH] Update to Solidity 0.8.16
+
+solc frequently releases new compiler versions. Using an old version prevents
+access to new Solidity security checks. Slither recommends version 0.8.16 in
+the 0.8 series.
+---
+ contracts/ERC721Factory.sol                         | 2 +-
+ contracts/communityFee/OPFCommunityFeeCollector.sol | 2 +-
+ contracts/df/DFRewards.sol                          | 2 +-
+ contracts/df/DFStrategyV1.sol                       | 2 +-
+ contracts/interfaces/IDFRewards.sol                 | 2 +-
+ contracts/interfaces/IDispenser.sol                 | 2 +-
+ contracts/interfaces/IERC20.sol                     | 2 +-
+ contracts/interfaces/IERC20Template.sol             | 2 +-
+ contracts/interfaces/IERC721Template.sol            | 2 +-
+ contracts/interfaces/IERC725X.sol                   | 2 +-
+ contracts/interfaces/IERC725Y.sol                   | 2 +-
+ contracts/interfaces/IFactory.sol                   | 2 +-
+ contracts/interfaces/IFactoryRouter.sol             | 2 +-
+ contracts/interfaces/IFixedRateExchange.sol         | 2 +-
+ contracts/interfaces/IPool.sol                      | 2 +-
+ contracts/interfaces/ISideStaking.sol               | 2 +-
+ contracts/pools/FactoryRouter.sol                   | 2 +-
+ contracts/pools/balancer/BConst.sol                 | 2 +-
+ contracts/pools/balancer/BFactory.sol               | 2 +-
+ contracts/pools/balancer/BMath.sol                  | 2 +-
+ contracts/pools/balancer/BNum.sol                   | 2 +-
+ contracts/pools/balancer/BPool.sol                  | 2 +-
+ contracts/pools/balancer/BToken.sol                 | 2 +-
+ contracts/pools/dispenser/Dispenser.sol             | 2 +-
+ contracts/pools/fixedRate/FixedRateExchange.sol     | 2 +-
+ contracts/pools/ssContracts/SideStaking.sol         | 2 +-
+ contracts/templates/ERC20Template.sol               | 2 +-
+ contracts/templates/ERC20TemplateEnterprise.sol     | 2 +-
+ contracts/templates/ERC721Template.sol              | 2 +-
+ contracts/utils/Deployer.sol                        | 2 +-
+ contracts/utils/ERC20Roles.sol                      | 2 +-
+ contracts/utils/ERC721/Address.sol                  | 2 +-
+ contracts/utils/ERC721/Context.sol                  | 2 +-
+ contracts/utils/ERC721/ERC165.sol                   | 2 +-
+ contracts/utils/ERC721/ERC721.sol                   | 2 +-
+ contracts/utils/ERC721/EnumerableMap.sol            | 2 +-
+ contracts/utils/ERC721/EnumerableSet.sol            | 2 +-
+ contracts/utils/ERC721/IERC165.sol                  | 2 +-
+ contracts/utils/ERC721/IERC721.sol                  | 2 +-
+ contracts/utils/ERC721/IERC721Enumerable.sol        | 2 +-
+ contracts/utils/ERC721/IERC721Metadata.sol          | 2 +-
+ contracts/utils/ERC721/IERC721Receiver.sol          | 2 +-
+ contracts/utils/ERC721/Strings.sol                  | 2 +-
+ contracts/utils/ERC721RolesAddress.sol              | 2 +-
+ contracts/utils/ERC725/ERC725Ocean.sol              | 2 +-
+ contracts/utils/OceanToken.sol                      | 2 +-
+ contracts/utils/Ownable.sol                         | 2 +-
+ contracts/utils/SafeERC20.sol                       | 2 +-
+ contracts/utils/UtilsLib.sol                        | 2 +-
+ contracts/utils/mock/MockERC20.sol                  | 2 +-
+ contracts/utils/mock/MockERC20Decimals.sol          | 2 +-
+ contracts/utils/mock/MockExchange.sol               | 2 +-
+ contracts/utils/mock/MockOcean.sol                  | 2 +-
+ contracts/utils/mock/MockOldDT.sol                  | 2 +-
+ contracts/ve/SmartWalletChecker.sol                 | 2 +-
+ contracts/ve/veAllocate.sol                         | 2 +-
+ 56 files changed, 56 insertions(+), 56 deletions(-)
+
+diff --git a/contracts/ERC721Factory.sol b/contracts/ERC721Factory.sol
+index a7301994..5b6fe33d 100644
+--- a/contracts/ERC721Factory.sol
++++ b/contracts/ERC721Factory.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/communityFee/OPFCommunityFeeCollector.sol b/contracts/communityFee/OPFCommunityFeeCollector.sol
+index 52c75703..64b86b89 100644
+--- a/contracts/communityFee/OPFCommunityFeeCollector.sol
++++ b/contracts/communityFee/OPFCommunityFeeCollector.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/df/DFRewards.sol b/contracts/df/DFRewards.sol
+index 3fb7e96a..fde2e85e 100644
+--- a/contracts/df/DFRewards.sol
++++ b/contracts/df/DFRewards.sol
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ 
+ //import "OpenZeppelin/openzeppelin-contracts@4.2.0/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+diff --git a/contracts/df/DFStrategyV1.sol b/contracts/df/DFStrategyV1.sol
+index 8431432c..b08e4d94 100644
+--- a/contracts/df/DFStrategyV1.sol
++++ b/contracts/df/DFStrategyV1.sol
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ 
+ //import "OpenZeppelin/openzeppelin-contracts@4.2.0/contracts/token/ERC20/IERC20.sol";
+ //import "OpenZeppelin/openzeppelin-contracts@4.2.0/contracts/token/ERC20/utils/SafeERC20.sol";
+diff --git a/contracts/interfaces/IDFRewards.sol b/contracts/interfaces/IDFRewards.sol
+index 72a6e889..2fbfd773 100644
+--- a/contracts/interfaces/IDFRewards.sol
++++ b/contracts/interfaces/IDFRewards.sol
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ 
+ interface IDFRewards {
+     event Allocated(address[] tos, uint256[] values, address tokenAddress);
+diff --git a/contracts/interfaces/IDispenser.sol b/contracts/interfaces/IDispenser.sol
+index ff7d89f6..64f59e60 100644
+--- a/contracts/interfaces/IDispenser.sol
++++ b/contracts/interfaces/IDispenser.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/interfaces/IERC20.sol b/contracts/interfaces/IERC20.sol
+index 35d08473..a366b929 100644
+--- a/contracts/interfaces/IERC20.sol
++++ b/contracts/interfaces/IERC20.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/interfaces/IERC20Template.sol b/contracts/interfaces/IERC20Template.sol
+index d1dc60d2..93ac5694 100644
+--- a/contracts/interfaces/IERC20Template.sol
++++ b/contracts/interfaces/IERC20Template.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/interfaces/IERC721Template.sol b/contracts/interfaces/IERC721Template.sol
+index 078d341a..e802aa3d 100644
+--- a/contracts/interfaces/IERC721Template.sol
++++ b/contracts/interfaces/IERC721Template.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/interfaces/IERC725X.sol b/contracts/interfaces/IERC725X.sol
+index 3e623543..fb1d6fa7 100644
+--- a/contracts/interfaces/IERC725X.sol
++++ b/contracts/interfaces/IERC725X.sol
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: CC0-1.0
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ 
+ /**
+  * @dev Contract module which provides the ability to call arbitrary functions at any other smart contract and itself,
+diff --git a/contracts/interfaces/IERC725Y.sol b/contracts/interfaces/IERC725Y.sol
+index 75061b79..f88f5b5e 100644
+--- a/contracts/interfaces/IERC725Y.sol
++++ b/contracts/interfaces/IERC725Y.sol
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: CC0-1.0
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ 
+ /**
+  * @title ERC725 Y data store
+diff --git a/contracts/interfaces/IFactory.sol b/contracts/interfaces/IFactory.sol
+index 6ed6029c..b44b53a4 100644
+--- a/contracts/interfaces/IFactory.sol
++++ b/contracts/interfaces/IFactory.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/interfaces/IFactoryRouter.sol b/contracts/interfaces/IFactoryRouter.sol
+index fd1426f7..026f73b4 100644
+--- a/contracts/interfaces/IFactoryRouter.sol
++++ b/contracts/interfaces/IFactoryRouter.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/interfaces/IFixedRateExchange.sol b/contracts/interfaces/IFixedRateExchange.sol
+index 2b4ffafc..fdfe7982 100644
+--- a/contracts/interfaces/IFixedRateExchange.sol
++++ b/contracts/interfaces/IFixedRateExchange.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/interfaces/IPool.sol b/contracts/interfaces/IPool.sol
+index f605db74..47fd1fcb 100644
+--- a/contracts/interfaces/IPool.sol
++++ b/contracts/interfaces/IPool.sol
+@@ -6,7 +6,7 @@
+ // You should have received a copy of the GNU General Public License
+ // along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright Balancer, BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/interfaces/ISideStaking.sol b/contracts/interfaces/ISideStaking.sol
+index 477b3fd7..f9fe3c2c 100644
+--- a/contracts/interfaces/ISideStaking.sol
++++ b/contracts/interfaces/ISideStaking.sol
+@@ -6,7 +6,7 @@
+ // You should have received a copy of the GNU General Public License
+ // along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/pools/FactoryRouter.sol b/contracts/pools/FactoryRouter.sol
+index 36c21fe9..1ace0268 100644
+--- a/contracts/pools/FactoryRouter.sol
++++ b/contracts/pools/FactoryRouter.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/pools/balancer/BConst.sol b/contracts/pools/balancer/BConst.sol
+index 50748f30..43a778d0 100644
+--- a/contracts/pools/balancer/BConst.sol
++++ b/contracts/pools/balancer/BConst.sol
+@@ -11,7 +11,7 @@
+ // You should have received a copy of the GNU General Public License
+ // along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright Balancer, BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/pools/balancer/BFactory.sol b/contracts/pools/balancer/BFactory.sol
+index 5c44c98f..9302d711 100644
+--- a/contracts/pools/balancer/BFactory.sol
++++ b/contracts/pools/balancer/BFactory.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright Balancer, BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/pools/balancer/BMath.sol b/contracts/pools/balancer/BMath.sol
+index 6884e280..bbdf8f95 100644
+--- a/contracts/pools/balancer/BMath.sol
++++ b/contracts/pools/balancer/BMath.sol
+@@ -11,7 +11,7 @@
+ // You should have received a copy of the GNU General Public License
+ // along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright Balancer, BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/pools/balancer/BNum.sol b/contracts/pools/balancer/BNum.sol
+index f98fedde..9bdda746 100644
+--- a/contracts/pools/balancer/BNum.sol
++++ b/contracts/pools/balancer/BNum.sol
+@@ -11,7 +11,7 @@
+ // You should have received a copy of the GNU General Public License
+ // along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright Balancer, BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/pools/balancer/BPool.sol b/contracts/pools/balancer/BPool.sol
+index 911efdfe..cda4d6e5 100644
+--- a/contracts/pools/balancer/BPool.sol
++++ b/contracts/pools/balancer/BPool.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright Balancer, BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/pools/balancer/BToken.sol b/contracts/pools/balancer/BToken.sol
+index a56617c6..aec3f6b2 100644
+--- a/contracts/pools/balancer/BToken.sol
++++ b/contracts/pools/balancer/BToken.sol
+@@ -11,7 +11,7 @@
+ // You should have received a copy of the GNU General Public License
+ // along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright Balancer, BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/pools/dispenser/Dispenser.sol b/contracts/pools/dispenser/Dispenser.sol
+index 79514ef7..49449090 100644
+--- a/contracts/pools/dispenser/Dispenser.sol
++++ b/contracts/pools/dispenser/Dispenser.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/pools/fixedRate/FixedRateExchange.sol b/contracts/pools/fixedRate/FixedRateExchange.sol
+index a3091790..e1aa2223 100644
+--- a/contracts/pools/fixedRate/FixedRateExchange.sol
++++ b/contracts/pools/fixedRate/FixedRateExchange.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/pools/ssContracts/SideStaking.sol b/contracts/pools/ssContracts/SideStaking.sol
+index ba88224d..0e2cf238 100644
+--- a/contracts/pools/ssContracts/SideStaking.sol
++++ b/contracts/pools/ssContracts/SideStaking.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/templates/ERC20Template.sol b/contracts/templates/ERC20Template.sol
+index 6738d8cf..a64086fe 100644
+--- a/contracts/templates/ERC20Template.sol
++++ b/contracts/templates/ERC20Template.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/templates/ERC20TemplateEnterprise.sol b/contracts/templates/ERC20TemplateEnterprise.sol
+index 6e520fd3..7e2cc077 100644
+--- a/contracts/templates/ERC20TemplateEnterprise.sol
++++ b/contracts/templates/ERC20TemplateEnterprise.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/templates/ERC721Template.sol b/contracts/templates/ERC721Template.sol
+index 16b0c6f3..7e72cd43 100644
+--- a/contracts/templates/ERC721Template.sol
++++ b/contracts/templates/ERC721Template.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/utils/Deployer.sol b/contracts/utils/Deployer.sol
+index 4a629b73..81ddc300 100644
+--- a/contracts/utils/Deployer.sol
++++ b/contracts/utils/Deployer.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/utils/ERC20Roles.sol b/contracts/utils/ERC20Roles.sol
+index 110dedfd..6457db5d 100644
+--- a/contracts/utils/ERC20Roles.sol
++++ b/contracts/utils/ERC20Roles.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/utils/ERC721/Address.sol b/contracts/utils/ERC721/Address.sol
+index 99c78aeb..f6d1e4df 100644
+--- a/contracts/utils/ERC721/Address.sol
++++ b/contracts/utils/ERC721/Address.sol
+@@ -1,5 +1,5 @@
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ 
+ /**
+diff --git a/contracts/utils/ERC721/Context.sol b/contracts/utils/ERC721/Context.sol
+index 3beb89a2..d7755b68 100644
+--- a/contracts/utils/ERC721/Context.sol
++++ b/contracts/utils/ERC721/Context.sol
+@@ -1,5 +1,5 @@
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ /*
+  * @dev Provides information about the current execution context, including the
+diff --git a/contracts/utils/ERC721/ERC165.sol b/contracts/utils/ERC721/ERC165.sol
+index 2b91e393..824de091 100644
+--- a/contracts/utils/ERC721/ERC165.sol
++++ b/contracts/utils/ERC721/ERC165.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ 
+ import "../ERC721/IERC165.sol";
+ 
+diff --git a/contracts/utils/ERC721/ERC721.sol b/contracts/utils/ERC721/ERC721.sol
+index b04ecb6b..641a6edd 100644
+--- a/contracts/utils/ERC721/ERC721.sol
++++ b/contracts/utils/ERC721/ERC721.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ import "@openzeppelin/contracts/utils/Context.sol";
+ import "./IERC721.sol";
+diff --git a/contracts/utils/ERC721/EnumerableMap.sol b/contracts/utils/ERC721/EnumerableMap.sol
+index f71fdddf..5d1026b7 100644
+--- a/contracts/utils/ERC721/EnumerableMap.sol
++++ b/contracts/utils/ERC721/EnumerableMap.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ 
+ /**
+  * @dev Library for managing an enumerable variant of Solidity's
+diff --git a/contracts/utils/ERC721/EnumerableSet.sol b/contracts/utils/ERC721/EnumerableSet.sol
+index 8e501992..487fd02d 100644
+--- a/contracts/utils/ERC721/EnumerableSet.sol
++++ b/contracts/utils/ERC721/EnumerableSet.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ 
+ /**
+  * @dev Library for managing
+diff --git a/contracts/utils/ERC721/IERC165.sol b/contracts/utils/ERC721/IERC165.sol
+index d1798b3f..1d074d00 100644
+--- a/contracts/utils/ERC721/IERC165.sol
++++ b/contracts/utils/ERC721/IERC165.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.8.12;
++pragma solidity ^0.8.16;
+ 
+ /**
+  * @dev Interface of the ERC165 standard, as defined in the
+diff --git a/contracts/utils/ERC721/IERC721.sol b/contracts/utils/ERC721/IERC721.sol
+index 8bd8d3b3..b7a33f24 100644
+--- a/contracts/utils/ERC721/IERC721.sol
++++ b/contracts/utils/ERC721/IERC721.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ 
+ import "../ERC721/IERC165.sol";
+ 
+diff --git a/contracts/utils/ERC721/IERC721Enumerable.sol b/contracts/utils/ERC721/IERC721Enumerable.sol
+index 906ed0f5..c8843206 100644
+--- a/contracts/utils/ERC721/IERC721Enumerable.sol
++++ b/contracts/utils/ERC721/IERC721Enumerable.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ import "./IERC721.sol";
+ /**
+diff --git a/contracts/utils/ERC721/IERC721Metadata.sol b/contracts/utils/ERC721/IERC721Metadata.sol
+index 4653b3eb..c7029d24 100644
+--- a/contracts/utils/ERC721/IERC721Metadata.sol
++++ b/contracts/utils/ERC721/IERC721Metadata.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ import "./IERC721.sol";
+ /**
+diff --git a/contracts/utils/ERC721/IERC721Receiver.sol b/contracts/utils/ERC721/IERC721Receiver.sol
+index 945589dd..ac8da048 100644
+--- a/contracts/utils/ERC721/IERC721Receiver.sol
++++ b/contracts/utils/ERC721/IERC721Receiver.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ /**
+  * @title ERC721 token receiver interface
+diff --git a/contracts/utils/ERC721/Strings.sol b/contracts/utils/ERC721/Strings.sol
+index 4c1dacfe..e2eb62c6 100644
+--- a/contracts/utils/ERC721/Strings.sol
++++ b/contracts/utils/ERC721/Strings.sol
+@@ -1,5 +1,5 @@
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ 
+ /**
+diff --git a/contracts/utils/ERC721RolesAddress.sol b/contracts/utils/ERC721RolesAddress.sol
+index dd4c8462..d2872432 100644
+--- a/contracts/utils/ERC721RolesAddress.sol
++++ b/contracts/utils/ERC721RolesAddress.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/utils/ERC725/ERC725Ocean.sol b/contracts/utils/ERC725/ERC725Ocean.sol
+index 8c761b97..276ebcc9 100644
+--- a/contracts/utils/ERC725/ERC725Ocean.sol
++++ b/contracts/utils/ERC725/ERC725Ocean.sol
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: Apache-2.0
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // interfaces
+ import "../../interfaces/IERC725X.sol";
+ import "../../interfaces/IERC725Y.sol";
+diff --git a/contracts/utils/OceanToken.sol b/contracts/utils/OceanToken.sol
+index caaee18d..aeeac5ae 100644
+--- a/contracts/utils/OceanToken.sol
++++ b/contracts/utils/OceanToken.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/utils/Ownable.sol b/contracts/utils/Ownable.sol
+index 11f50ff1..3b994e94 100644
+--- a/contracts/utils/Ownable.sol
++++ b/contracts/utils/Ownable.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ 
+ import "./ERC721/Context.sol";
+ /**
+diff --git a/contracts/utils/SafeERC20.sol b/contracts/utils/SafeERC20.sol
+index f41b0134..789b9c66 100644
+--- a/contracts/utils/SafeERC20.sol
++++ b/contracts/utils/SafeERC20.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.8.12;
++pragma solidity ^0.8.16;
+ 
+ import "../interfaces/IERC20.sol";
+ import "./ERC721/Address.sol";
+diff --git a/contracts/utils/UtilsLib.sol b/contracts/utils/UtilsLib.sol
+index fc196574..8b63d7dd 100644
+--- a/contracts/utils/UtilsLib.sol
++++ b/contracts/utils/UtilsLib.sol
+@@ -6,7 +6,7 @@
+  * @dev Utils functions
+  */
+ 
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ 
+ 
+ library UtilsLib {
+diff --git a/contracts/utils/mock/MockERC20.sol b/contracts/utils/mock/MockERC20.sol
+index bc837686..1d7893ec 100644
+--- a/contracts/utils/mock/MockERC20.sol
++++ b/contracts/utils/mock/MockERC20.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/utils/mock/MockERC20Decimals.sol b/contracts/utils/mock/MockERC20Decimals.sol
+index 1917cfb0..1878b5d8 100644
+--- a/contracts/utils/mock/MockERC20Decimals.sol
++++ b/contracts/utils/mock/MockERC20Decimals.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/utils/mock/MockExchange.sol b/contracts/utils/mock/MockExchange.sol
+index 6bc98343..156f20ba 100644
+--- a/contracts/utils/mock/MockExchange.sol
++++ b/contracts/utils/mock/MockExchange.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/utils/mock/MockOcean.sol b/contracts/utils/mock/MockOcean.sol
+index 2e5766ad..047b4de7 100644
+--- a/contracts/utils/mock/MockOcean.sol
++++ b/contracts/utils/mock/MockOcean.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/utils/mock/MockOldDT.sol b/contracts/utils/mock/MockOldDT.sol
+index 1cce23e1..4be1b46e 100644
+--- a/contracts/utils/mock/MockOldDT.sol
++++ b/contracts/utils/mock/MockOldDT.sol
+@@ -1,4 +1,4 @@
+-pragma solidity 0.8.12;
++pragma solidity 0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+diff --git a/contracts/ve/SmartWalletChecker.sol b/contracts/ve/SmartWalletChecker.sol
+index 3c511fa8..d24f0286 100644
+--- a/contracts/ve/SmartWalletChecker.sol
++++ b/contracts/ve/SmartWalletChecker.sol
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: MIT
+-pragma solidity ^0.8.12;
++pragma solidity ^0.8.16;
+ 
+ 
+ contract SmartWalletChecker {
+diff --git a/contracts/ve/veAllocate.sol b/contracts/ve/veAllocate.sol
+index cfa72c41..dde12971 100644
+--- a/contracts/ve/veAllocate.sol
++++ b/contracts/ve/veAllocate.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.8.12;
++pragma solidity ^0.8.16;
+ // Copyright BigchainDB GmbH and Ocean Protocol contributors
+ // SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+ // Code is Apache-2.0 and docs are CC-BY-4.0
+-- 
+2.34.1
+
