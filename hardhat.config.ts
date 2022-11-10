@@ -84,6 +84,23 @@ const config: HardhatUserConfig = {
         },
       },
       {
+        // Required by Aave V2
+        version: "0.6.12",
+        settings: {
+          evmVersion: "berlin",
+          optimizer: {
+            enabled: true,
+            runs: 1000000,
+            details: {
+              yul: true,
+              deduplicate: true,
+              cse: true,
+              constantOptimizer: true,
+            },
+          },
+        },
+      },
+      {
         // Required by Cartesi token
         // Required by OpenZeppelin V2
         version: "0.5.17",

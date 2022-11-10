@@ -1,0 +1,77 @@
+From 44cb6f3915822f5a382222cc7a627ecc6b2c1548 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Mon, 20 Jun 2022 15:55:55 -0700
+Subject: [PATCH 1/2] feat: add owner constructor parameter to support CREATE2
+ factory deployment
+
+---
+ contracts/mocks/oracle/LendingRateOracle.sol           |  9 +++++++++
+ .../configuration/LendingPoolAddressesProvider.sol     | 10 +++++++++-
+ .../LendingPoolAddressesProviderRegistry.sol           |  9 +++++++++
+ 3 files changed, 27 insertions(+), 1 deletion(-)
+
+diff --git a/contracts/mocks/oracle/LendingRateOracle.sol b/contracts/mocks/oracle/LendingRateOracle.sol
+index 44fe8aa1..50e454c4 100644
+--- a/contracts/mocks/oracle/LendingRateOracle.sol
++++ b/contracts/mocks/oracle/LendingRateOracle.sol
+@@ -8,6 +8,15 @@ contract LendingRateOracle is ILendingRateOracle, Ownable {
+   mapping(address => uint256) borrowRates;
+   mapping(address => uint256) liquidityRates;
+ 
++  /**
++   * @dev Constructor
++   * @param owner The owner address of this contract
++   */
++  constructor(address owner) public {
++    // Initialize {Ownable}
++    transferOwnership(owner);
++  }
++
+   function getMarketBorrowRate(address _asset) external view override returns (uint256) {
+     return borrowRates[_asset];
+   }
+diff --git a/contracts/protocol/configuration/LendingPoolAddressesProvider.sol b/contracts/protocol/configuration/LendingPoolAddressesProvider.sol
+index 37b2ed8e..083a8ca8 100644
+--- a/contracts/protocol/configuration/LendingPoolAddressesProvider.sol
++++ b/contracts/protocol/configuration/LendingPoolAddressesProvider.sol
+@@ -28,8 +28,16 @@ contract LendingPoolAddressesProvider is Ownable, ILendingPoolAddressesProvider
+   bytes32 private constant PRICE_ORACLE = 'PRICE_ORACLE';
+   bytes32 private constant LENDING_RATE_ORACLE = 'LENDING_RATE_ORACLE';
+ 
+-  constructor(string memory marketId) public {
++  /**
++   * @dev Constructor
++   * @param marketId The identifier of the market
++   * @param owner The owner address of this contract
++   */
++  constructor(string memory marketId, address owner) public {
+     _setMarketId(marketId);
++
++    // Initialize {Ownable}
++    transferOwnership(owner);
+   }
+ 
+   /**
+diff --git a/contracts/protocol/configuration/LendingPoolAddressesProviderRegistry.sol b/contracts/protocol/configuration/LendingPoolAddressesProviderRegistry.sol
+index 20b11e0e..6528239d 100644
+--- a/contracts/protocol/configuration/LendingPoolAddressesProviderRegistry.sol
++++ b/contracts/protocol/configuration/LendingPoolAddressesProviderRegistry.sol
+@@ -19,6 +19,15 @@ contract LendingPoolAddressesProviderRegistry is Ownable, ILendingPoolAddressesP
+   mapping(address => uint256) private _addressesProviders;
+   address[] private _addressesProvidersList;
+ 
++  /**
++   * @dev Constructor
++   * @param owner The owner address of this contract
++   */
++  constructor(address owner) public {
++    // Initialize {Ownable}
++    transferOwnership(owner);
++  }
++
+   /**
+    * @dev Returns the list of registered addresses provider
+    * @return The list of addresses provider, potentially containing address(0) elements
+-- 
+2.30.2
+

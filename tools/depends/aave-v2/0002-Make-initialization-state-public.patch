@@ -1,0 +1,25 @@
+From 6a60178f8691428318761aeda3df2172c84e8c4f Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Mon, 20 Jun 2022 17:52:42 -0700
+Subject: [PATCH 2/2] Make initialization state public
+
+---
+ .../libraries/aave-upgradeability/VersionedInitializable.sol    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contracts/protocol/libraries/aave-upgradeability/VersionedInitializable.sol b/contracts/protocol/libraries/aave-upgradeability/VersionedInitializable.sol
+index b8e356ae..580a0954 100644
+--- a/contracts/protocol/libraries/aave-upgradeability/VersionedInitializable.sol
++++ b/contracts/protocol/libraries/aave-upgradeability/VersionedInitializable.sol
+@@ -19,7 +19,7 @@ abstract contract VersionedInitializable {
+   /**
+    * @dev Indicates that the contract has been initialized.
+    */
+-  uint256 private lastInitializedRevision = 0;
++  uint256 public lastInitializedRevision = 0;
+ 
+   /**
+    * @dev Indicates that the contract is in the process of being initialized.
+-- 
+2.30.2
+
