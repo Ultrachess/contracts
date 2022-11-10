@@ -1,0 +1,200 @@
+{
+  "contractName": "LendingRateOracle",
+  "sourceName": "contracts/depends/aave-v2/mocks/oracle/LendingRateOracle.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_asset",
+          "type": "address"
+        }
+      ],
+      "name": "getMarketBorrowRate",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_asset",
+          "type": "address"
+        }
+      ],
+      "name": "getMarketLiquidityRate",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_asset",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_rate",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMarketBorrowRate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_asset",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_rate",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMarketLiquidityRate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b5060405161087b38038061087b8339818101604052602081101561003357600080fd5b5051600061003f610086565b600080546001600160a01b0319166001600160a01b03831690811782556040519293509160008051602061085b833981519152908290a3506100808161008a565b50610182565b3390565b610092610086565b6000546001600160a01b039081169116146100f4576040805162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604482015290519081900360640190fd5b6001600160a01b0381166101395760405162461bcd60e51b81526004018080602001828103825260268152602001806108356026913960400191505060405180910390fd5b600080546040516001600160a01b038085169392169160008051602061085b83398151915291a3600080546001600160a01b0319166001600160a01b0392909216919091179055565b6106a4806101916000396000f3fe608060405234801561001057600080fd5b506004361061007d5760003560e01c80639f86a0ee1161005b5780639f86a0ee146100f6578063bb85c0bb1461012f578063f2fde38b14610174578063fbe5ba1e146101a75761007d565b8063715018a61461008257806372eb293d1461008c5780638da5cb5b146100c5575b600080fd5b61008a6101da565b005b61008a600480360360408110156100a257600080fd5b5073ffffffffffffffffffffffffffffffffffffffff81351690602001356102da565b6100cd610394565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b61008a6004803603604081101561010c57600080fd5b5073ffffffffffffffffffffffffffffffffffffffff81351690602001356103b0565b6101626004803603602081101561014557600080fd5b503573ffffffffffffffffffffffffffffffffffffffff1661046a565b60408051918252519081900360200190f35b61008a6004803603602081101561018a57600080fd5b503573ffffffffffffffffffffffffffffffffffffffff16610492565b610162600480360360208110156101bd57600080fd5b503573ffffffffffffffffffffffffffffffffffffffff1661061c565b6101e2610644565b60005473ffffffffffffffffffffffffffffffffffffffff90811691161461026b57604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604482015290519081900360640190fd5b6000805460405173ffffffffffffffffffffffffffffffffffffffff909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600080547fffffffffffffffffffffffff0000000000000000000000000000000000000000169055565b6102e2610644565b60005473ffffffffffffffffffffffffffffffffffffffff90811691161461036b57604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604482015290519081900360640190fd5b73ffffffffffffffffffffffffffffffffffffffff909116600090815260016020526040902055565b60005473ffffffffffffffffffffffffffffffffffffffff1690565b6103b8610644565b60005473ffffffffffffffffffffffffffffffffffffffff90811691161461044157604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604482015290519081900360640190fd5b73ffffffffffffffffffffffffffffffffffffffff909116600090815260026020526040902055565b73ffffffffffffffffffffffffffffffffffffffff1660009081526001602052604090205490565b61049a610644565b60005473ffffffffffffffffffffffffffffffffffffffff90811691161461052357604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604482015290519081900360640190fd5b73ffffffffffffffffffffffffffffffffffffffff811661058f576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260268152602001806106496026913960400191505060405180910390fd5b6000805460405173ffffffffffffffffffffffffffffffffffffffff808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b73ffffffffffffffffffffffffffffffffffffffff1660009081526002602052604090205490565b339056fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f2061646472657373a2646970667358221220b00a105cb8d81092d1b71841674d2e5d21be2f20f977a5f15ff455be4a59763d64736f6c634300060c00334f776e61626c653a206e6577206f776e657220697320746865207a65726f20616464726573738be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061007d5760003560e01c80639f86a0ee1161005b5780639f86a0ee146100f6578063bb85c0bb1461012f578063f2fde38b14610174578063fbe5ba1e146101a75761007d565b8063715018a61461008257806372eb293d1461008c5780638da5cb5b146100c5575b600080fd5b61008a6101da565b005b61008a600480360360408110156100a257600080fd5b5073ffffffffffffffffffffffffffffffffffffffff81351690602001356102da565b6100cd610394565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b61008a6004803603604081101561010c57600080fd5b5073ffffffffffffffffffffffffffffffffffffffff81351690602001356103b0565b6101626004803603602081101561014557600080fd5b503573ffffffffffffffffffffffffffffffffffffffff1661046a565b60408051918252519081900360200190f35b61008a6004803603602081101561018a57600080fd5b503573ffffffffffffffffffffffffffffffffffffffff16610492565b610162600480360360208110156101bd57600080fd5b503573ffffffffffffffffffffffffffffffffffffffff1661061c565b6101e2610644565b60005473ffffffffffffffffffffffffffffffffffffffff90811691161461026b57604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604482015290519081900360640190fd5b6000805460405173ffffffffffffffffffffffffffffffffffffffff909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600080547fffffffffffffffffffffffff0000000000000000000000000000000000000000169055565b6102e2610644565b60005473ffffffffffffffffffffffffffffffffffffffff90811691161461036b57604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604482015290519081900360640190fd5b73ffffffffffffffffffffffffffffffffffffffff909116600090815260016020526040902055565b60005473ffffffffffffffffffffffffffffffffffffffff1690565b6103b8610644565b60005473ffffffffffffffffffffffffffffffffffffffff90811691161461044157604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604482015290519081900360640190fd5b73ffffffffffffffffffffffffffffffffffffffff909116600090815260026020526040902055565b73ffffffffffffffffffffffffffffffffffffffff1660009081526001602052604090205490565b61049a610644565b60005473ffffffffffffffffffffffffffffffffffffffff90811691161461052357604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604482015290519081900360640190fd5b73ffffffffffffffffffffffffffffffffffffffff811661058f576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260268152602001806106496026913960400191505060405180910390fd5b6000805460405173ffffffffffffffffffffffffffffffffffffffff808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b73ffffffffffffffffffffffffffffffffffffffff1660009081526002602052604090205490565b339056fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f2061646472657373a2646970667358221220b00a105cb8d81092d1b71841674d2e5d21be2f20f977a5f15ff455be4a59763d64736f6c634300060c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "constructor": {
+        "details": "Constructor",
+        "params": {
+          "owner": "The owner address of this contract"
+        }
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "340000",
+        "executionCost": "infinite",
+        "totalCost": "infinite"
+      },
+      "external": {
+        "getMarketBorrowRate(address)": "1140",
+        "getMarketLiquidityRate(address)": "1184",
+        "owner()": "1058",
+        "renounceOwnership()": "24166",
+        "setMarketBorrowRate(address,uint256)": "21178",
+        "setMarketLiquidityRate(address,uint256)": "21155",
+        "transferOwnership(address)": "infinite"
+      }
+    },
+    "methodIdentifiers": {
+      "getMarketBorrowRate(address)": "bb85c0bb",
+      "getMarketLiquidityRate(address)": "fbe5ba1e",
+      "owner()": "8da5cb5b",
+      "renounceOwnership()": "715018a6",
+      "setMarketBorrowRate(address,uint256)": "72eb293d",
+      "setMarketLiquidityRate(address,uint256)": "9f86a0ee",
+      "transferOwnership(address)": "f2fde38b"
+    }
+  }
+}

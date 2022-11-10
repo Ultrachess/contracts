@@ -1,0 +1,112 @@
+{
+  "contractName": "ReserveLogic",
+  "sourceName": "contracts/depends/aave-v2/protocol/libraries/logic/ReserveLogic.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "liquidityRate",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "stableBorrowRate",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "variableBorrowRate",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "liquidityIndex",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "variableBorrowIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "ReserveDataUpdated",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x6102dd610026600b82828239805160001a60731461001957fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600436106100355760003560e01c80632b33897c1461003a575b600080fd5b81801561004657600080fd5b50610098600480360360a081101561005d57600080fd5b5080359073ffffffffffffffffffffffffffffffffffffffff602082013581169160408101358216916060820135811691608001351661009a565b005b600485015460408051808201909152600281527f333200000000000000000000000000000000000000000000000000000000000060208201529073ffffffffffffffffffffffffffffffffffffffff161561018d576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825283818151815260200191508051906020019080838360005b8381101561015257818101518382015260200161013a565b50505050905090810190601f16801561017f5780820380516001836020036101000a031916815260200191505b509250505060405180910390fd5b50610196610297565b6001860180547fffffffffffffffffffffffffffffffff00000000000000000000000000000000166fffffffffffffffffffffffffffffffff929092169190911790556101e1610297565b6001860180546fffffffffffffffffffffffffffffffff92831670010000000000000000000000000000000002921691909117905560048501805473ffffffffffffffffffffffffffffffffffffffff9586167fffffffffffffffffffffffff000000000000000000000000000000000000000091821617909155600586018054948616948216949094179093556006850180549285169284169290921790915560079093018054939092169216919091179055565b6b033b2e3c9fd0803ce80000009056fea2646970667358221220b83955f8322befb06b34f06d757774b3923b39b9059d604e41a2844dc95a21de64736f6c634300060c0033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600436106100355760003560e01c80632b33897c1461003a575b600080fd5b81801561004657600080fd5b50610098600480360360a081101561005d57600080fd5b5080359073ffffffffffffffffffffffffffffffffffffffff602082013581169160408101358216916060820135811691608001351661009a565b005b600485015460408051808201909152600281527f333200000000000000000000000000000000000000000000000000000000000060208201529073ffffffffffffffffffffffffffffffffffffffff161561018d576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825283818151815260200191508051906020019080838360005b8381101561015257818101518382015260200161013a565b50505050905090810190601f16801561017f5780820380516001836020036101000a031916815260200191505b509250505060405180910390fd5b50610196610297565b6001860180547fffffffffffffffffffffffffffffffff00000000000000000000000000000000166fffffffffffffffffffffffffffffffff929092169190911790556101e1610297565b6001860180546fffffffffffffffffffffffffffffffff92831670010000000000000000000000000000000002921691909117905560048501805473ffffffffffffffffffffffffffffffffffffffff9586167fffffffffffffffffffffffff000000000000000000000000000000000000000091821617909155600586018054948616948216949094179093556006850180549285169284169290921790915560079093018054939092169216919091179055565b6b033b2e3c9fd0803ce80000009056fea2646970667358221220b83955f8322befb06b34f06d757774b3923b39b9059d604e41a2844dc95a21de64736f6c634300060c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Aave",
+    "events": {
+      "ReserveDataUpdated(address,uint256,uint256,uint256,uint256,uint256)": {
+        "details": "Emitted when the state of a reserve is updated",
+        "params": {
+          "asset": "The address of the underlying asset of the reserve",
+          "liquidityIndex": "The new liquidity index",
+          "liquidityRate": "The new liquidity rate",
+          "stableBorrowRate": "The new stable borrow rate",
+          "variableBorrowIndex": "The new variable borrow index*",
+          "variableBorrowRate": "The new variable borrow rate"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "init(DataTypes.ReserveData storage,address,address,address,address)": {
+        "details": "Initializes a reserve",
+        "params": {
+          "aTokenAddress": "The address of the overlying atoken contract",
+          "interestRateStrategyAddress": "The address of the interest rate strategy contract*",
+          "reserve": "The reserve object"
+        }
+      }
+    },
+    "title": "ReserveLogic library",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Implements the logic to update the reserves state",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "146600",
+        "executionCost": "218",
+        "totalCost": "146818"
+      },
+      "external": {
+        "init(DataTypes.ReserveData storage,address,address,address,address)": "infinite"
+      },
+      "internal": {
+        "_mintToTreasury(struct DataTypes.ReserveData storage pointer,uint256,uint256,uint256,uint256,uint40)": "infinite",
+        "_updateIndexes(struct DataTypes.ReserveData storage pointer,uint256,uint256,uint256,uint40)": "infinite",
+        "cumulateToLiquidityIndex(struct DataTypes.ReserveData storage pointer,uint256,uint256)": "infinite",
+        "getNormalizedDebt(struct DataTypes.ReserveData storage pointer)": "infinite",
+        "getNormalizedIncome(struct DataTypes.ReserveData storage pointer)": "infinite",
+        "updateInterestRates(struct DataTypes.ReserveData storage pointer,address,address,uint256,uint256)": "infinite",
+        "updateState(struct DataTypes.ReserveData storage pointer)": "infinite"
+      }
+    },
+    "methodIdentifiers": {
+      "init(DataTypes.ReserveData storage,address,address,address,address)": "2b33897c"
+    }
+  }
+}

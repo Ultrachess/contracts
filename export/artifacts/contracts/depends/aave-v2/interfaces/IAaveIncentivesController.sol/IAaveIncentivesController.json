@@ -1,0 +1,528 @@
+{
+  "contractName": "IAaveIncentivesController",
+  "sourceName": "contracts/depends/aave-v2/interfaces/IAaveIncentivesController.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "claimer",
+          "type": "address"
+        }
+      ],
+      "name": "ClaimerSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "RewardsAccrued",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "RewardsClaimed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "claimer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "RewardsClaimed",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "DISTRIBUTION_END",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "PRECISION",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "REWARD_TOKEN",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        }
+      ],
+      "name": "assets",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "assets",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        }
+      ],
+      "name": "claimRewards",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "assets",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        }
+      ],
+      "name": "claimRewardsOnBehalf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "assets",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "emissionsPerSecond",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "configureAssets",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        }
+      ],
+      "name": "getAssetData",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getClaimer",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "assets",
+          "type": "address[]"
+        },
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getRewardsBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        }
+      ],
+      "name": "getUserAssetData",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getUserUnclaimedRewards",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "userBalance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalSupply",
+          "type": "uint256"
+        }
+      ],
+      "name": "handleAction",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "claimer",
+          "type": "address"
+        }
+      ],
+      "name": "setClaimer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "DISTRIBUTION_END()": {
+        "details": "Gets the distribution end timestamp of the emissions"
+      },
+      "PRECISION()": {
+        "details": "for backward compatibility with previous implementation of the Incentives controller"
+      },
+      "REWARD_TOKEN()": {
+        "details": "for backward compatibility with previous implementation of the Incentives controller"
+      },
+      "claimRewards(address[],uint256,address)": {
+        "details": "Claims reward for an user, on all the assets of the lending pool, accumulating the pending rewards",
+        "params": {
+          "amount": "Amount of rewards to claim",
+          "to": "Address that will be receiving the rewards"
+        },
+        "returns": {
+          "_0": "Rewards claimed*"
+        }
+      },
+      "claimRewardsOnBehalf(address[],uint256,address,address)": {
+        "details": "Claims reward for an user on behalf, on all the assets of the lending pool, accumulating the pending rewards. The caller must be whitelisted via \"allowClaimOnBehalf\" function by the RewardsAdmin role manager",
+        "params": {
+          "amount": "Amount of rewards to claim",
+          "to": "Address that will be receiving the rewards",
+          "user": "Address to check and claim rewards"
+        },
+        "returns": {
+          "_0": "Rewards claimed*"
+        }
+      },
+      "configureAssets(address[],uint256[])": {
+        "details": "Configure assets for a certain rewards emission",
+        "params": {
+          "assets": "The assets to incentivize",
+          "emissionsPerSecond": "The emission for each asset"
+        }
+      },
+      "getClaimer(address)": {
+        "details": "Returns the whitelisted claimer for a certain address (0x0 if not set)",
+        "params": {
+          "user": "The address of the user"
+        },
+        "returns": {
+          "_0": "The claimer address"
+        }
+      },
+      "getRewardsBalance(address[],address)": {
+        "details": "Returns the total of rewards of an user, already accrued + not yet accrued",
+        "params": {
+          "user": "The address of the user"
+        },
+        "returns": {
+          "_0": "The rewards*"
+        }
+      },
+      "getUserAssetData(address,address)": {
+        "details": "returns the unclaimed rewards of the user",
+        "params": {
+          "asset": "The asset to incentivize",
+          "user": "the address of the user"
+        },
+        "returns": {
+          "_0": "the user index for the asset"
+        }
+      },
+      "getUserUnclaimedRewards(address)": {
+        "details": "returns the unclaimed rewards of the user",
+        "params": {
+          "user": "the address of the user"
+        },
+        "returns": {
+          "_0": "the unclaimed user rewards"
+        }
+      },
+      "handleAction(address,uint256,uint256)": {
+        "details": "Called by the corresponding asset on any update that affects the rewards distribution",
+        "params": {
+          "asset": "The address of the user",
+          "totalSupply": "The total supply of the asset in the lending pool*",
+          "userBalance": "The balance of the user of the asset in the lending pool"
+        }
+      },
+      "setClaimer(address,address)": {
+        "details": "Whitelists an address to claim the rewards on behalf of another address",
+        "params": {
+          "claimer": "The address of the claimer",
+          "user": "The address of the user"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "DISTRIBUTION_END()": "919cd40f",
+      "PRECISION()": "aaf5eb68",
+      "REWARD_TOKEN()": "99248ea7",
+      "assets(address)": "f11b8188",
+      "claimRewards(address[],uint256,address)": "3111e7b3",
+      "claimRewardsOnBehalf(address[],uint256,address,address)": "6d34b96e",
+      "configureAssets(address[],uint256[])": "79f171b2",
+      "getAssetData(address)": "1652e7b7",
+      "getClaimer(address)": "74d945ec",
+      "getRewardsBalance(address[],address)": "8b599f26",
+      "getUserAssetData(address,address)": "3373ee4c",
+      "getUserUnclaimedRewards(address)": "198fa81e",
+      "handleAction(address,uint256,uint256)": "31873e2e",
+      "setClaimer(address,address)": "f5cf673b"
+    }
+  }
+}

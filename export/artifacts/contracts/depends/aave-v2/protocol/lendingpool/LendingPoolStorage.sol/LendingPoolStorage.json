@@ -1,0 +1,29 @@
+{
+  "contractName": "LendingPoolStorage",
+  "sourceName": "contracts/depends/aave-v2/protocol/lendingpool/LendingPoolStorage.sol",
+  "abi": [],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea264697066735822122091808e6427fc9c38d696f3b7c8c9580617cc09a02c426deac75fb3817494d10264736f6c634300060c0033",
+  "deployedBytecode": "0x6080604052600080fdfea264697066735822122091808e6427fc9c38d696f3b7c8c9580617cc09a02c426deac75fb3817494d10264736f6c634300060c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "12600",
+        "executionCost": "66",
+        "totalCost": "12666"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

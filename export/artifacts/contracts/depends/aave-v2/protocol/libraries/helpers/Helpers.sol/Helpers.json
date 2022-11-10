@@ -1,0 +1,35 @@
+{
+  "contractName": "Helpers",
+  "sourceName": "contracts/depends/aave-v2/protocol/libraries/helpers/Helpers.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220246431bca72d52b749307a8e9265b133ad73ea615528d54166c2366171ca7f8564736f6c634300060c0033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220246431bca72d52b749307a8e9265b133ad73ea615528d54166c2366171ca7f8564736f6c634300060c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Aave",
+    "kind": "dev",
+    "methods": {},
+    "title": "Helpers library",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "getUserCurrentDebt(address,struct DataTypes.ReserveData storage pointer)": "infinite",
+        "getUserCurrentDebtMemory(address,struct DataTypes.ReserveData memory)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "contractName": "ReserveConfiguration",
+  "sourceName": "contracts/depends/aave-v2/protocol/libraries/configuration/ReserveConfiguration.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220cf0905d3bdc9b8ae00d544d94d13a12f0a5bc50e47b720c700acdb0d3369a28964736f6c634300060c0033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220cf0905d3bdc9b8ae00d544d94d13a12f0a5bc50e47b720c700acdb0d3369a28964736f6c634300060c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Aave",
+    "kind": "dev",
+    "methods": {},
+    "stateVariables": {
+      "LIQUIDATION_THRESHOLD_START_BIT_POSITION": {
+        "details": "For the LTV, the start bit is 0 (up to 15), hence no bitshifting is needed"
+      }
+    },
+    "title": "ReserveConfiguration library",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Implements the bitmap logic to handle the reserve configuration",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "getActive(struct DataTypes.ReserveConfigurationMap storage pointer)": "infinite",
+        "getBorrowingEnabled(struct DataTypes.ReserveConfigurationMap storage pointer)": "infinite",
+        "getDecimals(struct DataTypes.ReserveConfigurationMap storage pointer)": "infinite",
+        "getFlags(struct DataTypes.ReserveConfigurationMap storage pointer)": "infinite",
+        "getFlagsMemory(struct DataTypes.ReserveConfigurationMap memory)": "infinite",
+        "getFrozen(struct DataTypes.ReserveConfigurationMap storage pointer)": "infinite",
+        "getLiquidationBonus(struct DataTypes.ReserveConfigurationMap storage pointer)": "infinite",
+        "getLiquidationThreshold(struct DataTypes.ReserveConfigurationMap storage pointer)": "infinite",
+        "getLtv(struct DataTypes.ReserveConfigurationMap storage pointer)": "infinite",
+        "getParams(struct DataTypes.ReserveConfigurationMap storage pointer)": "infinite",
+        "getParamsMemory(struct DataTypes.ReserveConfigurationMap memory)": "infinite",
+        "getReserveFactor(struct DataTypes.ReserveConfigurationMap storage pointer)": "infinite",
+        "getStableRateBorrowingEnabled(struct DataTypes.ReserveConfigurationMap storage pointer)": "infinite",
+        "setActive(struct DataTypes.ReserveConfigurationMap memory,bool)": "infinite",
+        "setBorrowingEnabled(struct DataTypes.ReserveConfigurationMap memory,bool)": "infinite",
+        "setDecimals(struct DataTypes.ReserveConfigurationMap memory,uint256)": "infinite",
+        "setFrozen(struct DataTypes.ReserveConfigurationMap memory,bool)": "infinite",
+        "setLiquidationBonus(struct DataTypes.ReserveConfigurationMap memory,uint256)": "infinite",
+        "setLiquidationThreshold(struct DataTypes.ReserveConfigurationMap memory,uint256)": "infinite",
+        "setLtv(struct DataTypes.ReserveConfigurationMap memory,uint256)": "infinite",
+        "setReserveFactor(struct DataTypes.ReserveConfigurationMap memory,uint256)": "infinite",
+        "setStableRateBorrowingEnabled(struct DataTypes.ReserveConfigurationMap memory,bool)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

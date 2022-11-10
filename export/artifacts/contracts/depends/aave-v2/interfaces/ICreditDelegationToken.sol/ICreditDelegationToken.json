@@ -1,0 +1,118 @@
+{
+  "contractName": "ICreditDelegationToken",
+  "sourceName": "contracts/depends/aave-v2/interfaces/ICreditDelegationToken.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "fromUser",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "toUser",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "BorrowAllowanceDelegated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "delegatee",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "approveDelegation",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "fromUser",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "toUser",
+          "type": "address"
+        }
+      ],
+      "name": "borrowAllowance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "approveDelegation(address,uint256)": {
+        "details": "delegates borrowing power to a user on the specific debt token",
+        "params": {
+          "amount": "the maximum amount being delegated. Delegation will still respect the liquidation constraints (even if delegated, a delegatee cannot force a delegator HF to go below 1)*",
+          "delegatee": "the address receiving the delegated borrowing power"
+        }
+      },
+      "borrowAllowance(address,address)": {
+        "details": "returns the borrow allowance of the user",
+        "params": {
+          "fromUser": "The user to giving allowance",
+          "toUser": "The user to give allowance to"
+        },
+        "returns": {
+          "_0": "the current allowance of toUser*"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "approveDelegation(address,uint256)": "c04a8a10",
+      "borrowAllowance(address,address)": "6bd76d24"
+    }
+  }
+}

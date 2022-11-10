@@ -1,0 +1,44 @@
+{
+  "contractName": "WadRayMath",
+  "sourceName": "contracts/depends/aave-v2/protocol/libraries/math/WadRayMath.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220417186099eeaa446a29937e52a09f509838cfd6a0f3fdd68d59b64419822a3d764736f6c634300060c0033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220417186099eeaa446a29937e52a09f509838cfd6a0f3fdd68d59b64419822a3d764736f6c634300060c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Aave",
+    "details": "Provides mul and div function for wads (decimal numbers with 18 digits precision) and rays (decimals with 27 digits)*",
+    "kind": "dev",
+    "methods": {},
+    "title": "WadRayMath library",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "halfRay()": "infinite",
+        "halfWad()": "infinite",
+        "ray()": "infinite",
+        "rayDiv(uint256,uint256)": "infinite",
+        "rayMul(uint256,uint256)": "infinite",
+        "rayToWad(uint256)": "infinite",
+        "wad()": "infinite",
+        "wadDiv(uint256,uint256)": "infinite",
+        "wadMul(uint256,uint256)": "infinite",
+        "wadToRay(uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

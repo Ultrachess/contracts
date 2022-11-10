@@ -1,0 +1,110 @@
+{
+  "contractName": "IScaledBalanceToken",
+  "sourceName": "contracts/depends/aave-v2/interfaces/IScaledBalanceToken.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getScaledUserBalanceAndSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "scaledBalanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "scaledTotalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "getScaledUserBalanceAndSupply(address)": {
+        "details": "Returns the scaled balance of the user and the scaled total supply.",
+        "params": {
+          "user": "The address of the user"
+        },
+        "returns": {
+          "_0": "The scaled balance of the user",
+          "_1": "The scaled balance and the scaled total supply*"
+        }
+      },
+      "scaledBalanceOf(address)": {
+        "details": "Returns the scaled balance of the user. The scaled balance is the sum of all the updated stored balance divided by the reserve's liquidity index at the moment of the update",
+        "params": {
+          "user": "The user whose balance is calculated"
+        },
+        "returns": {
+          "_0": "The scaled balance of the user*"
+        }
+      },
+      "scaledTotalSupply()": {
+        "details": "Returns the scaled total supply of the variable debt token. Represents sum(debt/index)",
+        "returns": {
+          "_0": "The scaled total supply*"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "getScaledUserBalanceAndSupply(address)": "0afbcdc9",
+      "scaledBalanceOf(address)": "1da24f3e",
+      "scaledTotalSupply()": "b1bf962d"
+    }
+  }
+}

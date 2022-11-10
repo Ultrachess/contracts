@@ -1,0 +1,30 @@
+{
+  "contractName": "Proxy",
+  "sourceName": "contracts/depends/aave-v2/dependencies/openzeppelin/upgradeability/Proxy.sol",
+  "abi": [
+    {
+      "stateMutability": "payable",
+      "type": "fallback"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Implements delegation of calls to other contracts, with proper forwarding of return values and bubbling of failures. It defines a fallback function that delegates all calls to the address returned by the abstract _implementation() internal function.",
+    "kind": "dev",
+    "methods": {},
+    "title": "Proxy",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {}
+  }
+}

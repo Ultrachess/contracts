@@ -1,0 +1,37 @@
+{
+  "contractName": "PercentageMath",
+  "sourceName": "contracts/depends/aave-v2/protocol/libraries/math/PercentageMath.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122012f6d9828f221a01ffa16fb74264abf3b638642d9faf62a2eb252717f4e825c064736f6c634300060c0033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122012f6d9828f221a01ffa16fb74264abf3b638642d9faf62a2eb252717f4e825c064736f6c634300060c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Aave",
+    "details": "Percentages are defined by default with 2 decimals of precision (100.00). The precision is indicated by PERCENTAGE_FACTOROperations are rounded half up*",
+    "kind": "dev",
+    "methods": {},
+    "title": "PercentageMath library",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Provides functions to perform percentage calculations",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "percentDiv(uint256,uint256)": "infinite",
+        "percentMul(uint256,uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

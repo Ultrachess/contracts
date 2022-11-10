@@ -1,0 +1,50 @@
+{
+  "contractName": "VersionedInitializable",
+  "sourceName": "contracts/depends/aave-v2/protocol/libraries/aave-upgradeability/VersionedInitializable.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "lastInitializedRevision",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Aave, inspired by the OpenZeppelin Initializable contract",
+    "details": "Helper contract to implement initializer functions. To use it, replace the constructor with a function that has the `initializer` modifier. WARNING: Unlike constructors, initializer functions must be manually invoked. This applies both to deploying an Initializable contract, as well as extending an Initializable contract via inheritance. WARNING: When used with inheritance, manual care must be taken to not invoke a parent initializer twice, or ensure that all initializers are idempotent, because this is not dealt with automatically as with constructors.",
+    "kind": "dev",
+    "methods": {},
+    "stateVariables": {
+      "initializing": {
+        "details": "Indicates that the contract is in the process of being initialized."
+      },
+      "lastInitializedRevision": {
+        "details": "Indicates that the contract has been initialized."
+      }
+    },
+    "title": "VersionedInitializable",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "lastInitializedRevision()": "3dc4abe0"
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "contractName": "IAaveOracle",
+  "sourceName": "contracts/depends/aave-v2/misc/interfaces/IAaveOracle.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "BASE_CURRENCY",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "BASE_CURRENCY_UNIT",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        }
+      ],
+      "name": "getAssetPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "title": "IAaveOracle interface",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Interface for the Aave oracle.*",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "BASE_CURRENCY()": "e19f4700",
+      "BASE_CURRENCY_UNIT()": "8c89b64f",
+      "getAssetPrice(address)": "b3596f07"
+    }
+  }
+}

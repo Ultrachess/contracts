@@ -1,0 +1,39 @@
+{
+  "contractName": "MathUtils",
+  "sourceName": "contracts/depends/aave-v2/protocol/libraries/math/MathUtils.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220ea836dd3aaeddae224168dce1fa531032062019eb98946844a41fac427db719964736f6c634300060c0033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220ea836dd3aaeddae224168dce1fa531032062019eb98946844a41fac427db719964736f6c634300060c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "stateVariables": {
+      "SECONDS_PER_YEAR": {
+        "details": "Ignoring leap years"
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "calculateCompoundedInterest(uint256,uint40)": "infinite",
+        "calculateCompoundedInterest(uint256,uint40,uint256)": "infinite",
+        "calculateLinearInterest(uint256,uint40)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

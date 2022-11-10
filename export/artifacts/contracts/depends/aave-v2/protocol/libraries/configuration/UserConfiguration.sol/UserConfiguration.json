@@ -1,0 +1,41 @@
+{
+  "contractName": "UserConfiguration",
+  "sourceName": "contracts/depends/aave-v2/protocol/libraries/configuration/UserConfiguration.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122093727bf75b7d23f538a5efb6c372298d8c74577d817b8bf29da2a413ed439d3364736f6c634300060c0033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122093727bf75b7d23f538a5efb6c372298d8c74577d817b8bf29da2a413ed439d3364736f6c634300060c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Aave",
+    "kind": "dev",
+    "methods": {},
+    "title": "UserConfiguration library",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Implements the bitmap logic to handle the user configuration",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "isBorrowing(struct DataTypes.UserConfigurationMap memory,uint256)": "infinite",
+        "isBorrowingAny(struct DataTypes.UserConfigurationMap memory)": "infinite",
+        "isEmpty(struct DataTypes.UserConfigurationMap memory)": "infinite",
+        "isUsingAsCollateral(struct DataTypes.UserConfigurationMap memory,uint256)": "infinite",
+        "isUsingAsCollateralOrBorrowing(struct DataTypes.UserConfigurationMap memory,uint256)": "infinite",
+        "setBorrowing(struct DataTypes.UserConfigurationMap storage pointer,uint256,bool)": "infinite",
+        "setUsingAsCollateral(struct DataTypes.UserConfigurationMap storage pointer,uint256,bool)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

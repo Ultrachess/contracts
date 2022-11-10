@@ -1,0 +1,442 @@
+{
+  "contractName": "BaseUniswapAdapter",
+  "sourceName": "contracts/depends/aave-v2/adapters/BaseUniswapAdapter.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "contract ILendingPoolAddressesProvider",
+          "name": "addressesProvider",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IUniswapV2Router02",
+          "name": "uniswapRouter",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "wethAddress",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "fromAsset",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "toAsset",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fromAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "receivedAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Swapped",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "ADDRESSES_PROVIDER",
+      "outputs": [
+        {
+          "internalType": "contract ILendingPoolAddressesProvider",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "FLASHLOAN_PREMIUM_TOTAL",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "LENDING_POOL",
+      "outputs": [
+        {
+          "internalType": "contract ILendingPool",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MAX_SLIPPAGE_PERCENT",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ORACLE",
+      "outputs": [
+        {
+          "internalType": "contract IPriceOracleGetter",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "UNISWAP_ROUTER",
+      "outputs": [
+        {
+          "internalType": "contract IUniswapV2Router02",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "USD_ADDRESS",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "WETH_ADDRESS",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "assets",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "amounts",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "premiums",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "address",
+          "name": "initiator",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes",
+          "name": "params",
+          "type": "bytes"
+        }
+      ],
+      "name": "executeOperation",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountOut",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "reserveIn",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "reserveOut",
+          "type": "address"
+        }
+      ],
+      "name": "getAmountsIn",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountIn",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "reserveIn",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "reserveOut",
+          "type": "address"
+        }
+      ],
+      "name": "getAmountsOut",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "token",
+          "type": "address"
+        }
+      ],
+      "name": "rescueTokens",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Aave*",
+    "kind": "dev",
+    "methods": {
+      "getAmountsIn(uint256,address,address)": {
+        "details": "Returns the minimum input asset amount required to buy the given output asset amount and the prices",
+        "params": {
+          "amountOut": "Amount of reserveOut",
+          "reserveIn": "Address of the asset to be swap from",
+          "reserveOut": "Address of the asset to be swap to"
+        },
+        "returns": {
+          "_0": "uint256 Amount in of the reserveIn",
+          "_1": "uint256 The price of in amount denominated in the reserveOut currency (18 decimals)",
+          "_2": "uint256 In amount of reserveIn value denominated in USD (8 decimals)",
+          "_3": "uint256 Out amount of reserveOut value denominated in USD (8 decimals)"
+        }
+      },
+      "getAmountsOut(uint256,address,address)": {
+        "details": "Given an input asset amount, returns the maximum output amount of the other asset and the prices",
+        "params": {
+          "amountIn": "Amount of reserveIn",
+          "reserveIn": "Address of the asset to be swap from",
+          "reserveOut": "Address of the asset to be swap to"
+        },
+        "returns": {
+          "_0": "uint256 Amount out of the reserveOut",
+          "_1": "uint256 The price of out amount denominated in the reserveIn currency (18 decimals)",
+          "_2": "uint256 In amount of reserveIn value denominated in USD (8 decimals)",
+          "_3": "uint256 Out amount of reserveOut value denominated in USD (8 decimals)"
+        }
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "rescueTokens(address)": {
+        "details": "Emergency rescue for token stucked on this contract, as failsafe mechanism - Funds should never remain in this contract more time than during transactions - Only callable by the owner*"
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "title": "BaseUniswapAdapter",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Implements the logic for performing assets swaps in Uniswap V2",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "ADDRESSES_PROVIDER()": "0542975c",
+      "FLASHLOAN_PREMIUM_TOTAL()": "074b2e43",
+      "LENDING_POOL()": "b4dcfc77",
+      "MAX_SLIPPAGE_PERCENT()": "32e4b286",
+      "ORACLE()": "38013f02",
+      "UNISWAP_ROUTER()": "d8264920",
+      "USD_ADDRESS()": "9d1211bf",
+      "WETH_ADDRESS()": "040141e5",
+      "executeOperation(address[],uint256[],uint256[],address,bytes)": "920f5c84",
+      "getAmountsIn(uint256,address,address)": "cdf58cd6",
+      "getAmountsOut(uint256,address,address)": "baf7fa99",
+      "owner()": "8da5cb5b",
+      "renounceOwnership()": "715018a6",
+      "rescueTokens(address)": "00ae3bf8",
+      "transferOwnership(address)": "f2fde38b"
+    }
+  }
+}

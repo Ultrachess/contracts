@@ -1,0 +1,271 @@
+{
+  "contractName": "IBaseUniswapAdapter",
+  "sourceName": "contracts/depends/aave-v2/adapters/interfaces/IBaseUniswapAdapter.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "fromAsset",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "toAsset",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fromAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "receivedAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Swapped",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "FLASHLOAN_PREMIUM_TOTAL",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MAX_SLIPPAGE_PERCENT",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "ORACLE",
+      "outputs": [
+        {
+          "internalType": "contract IPriceOracleGetter",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "UNISWAP_ROUTER",
+      "outputs": [
+        {
+          "internalType": "contract IUniswapV2Router02",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "USD_ADDRESS",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "WETH_ADDRESS",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountOut",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "reserveIn",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "reserveOut",
+          "type": "address"
+        }
+      ],
+      "name": "getAmountsIn",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountIn",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "reserveIn",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "reserveOut",
+          "type": "address"
+        }
+      ],
+      "name": "getAmountsOut",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "getAmountsIn(uint256,address,address)": {
+        "details": "Returns the minimum input asset amount required to buy the given output asset amount and the prices",
+        "params": {
+          "amountOut": "Amount of reserveOut",
+          "reserveIn": "Address of the asset to be swap from",
+          "reserveOut": "Address of the asset to be swap to"
+        },
+        "returns": {
+          "_0": "uint256 Amount in of the reserveIn",
+          "_1": "uint256 The price of in amount denominated in the reserveOut currency (18 decimals)",
+          "_2": "uint256 In amount of reserveIn value denominated in USD (8 decimals)",
+          "_3": "uint256 Out amount of reserveOut value denominated in USD (8 decimals)",
+          "_4": "address[] The exchange path"
+        }
+      },
+      "getAmountsOut(uint256,address,address)": {
+        "details": "Given an input asset amount, returns the maximum output amount of the other asset and the prices",
+        "params": {
+          "amountIn": "Amount of reserveIn",
+          "reserveIn": "Address of the asset to be swap from",
+          "reserveOut": "Address of the asset to be swap to"
+        },
+        "returns": {
+          "_0": "uint256 Amount out of the reserveOut",
+          "_1": "uint256 The price of out amount denominated in the reserveIn currency (18 decimals)",
+          "_2": "uint256 In amount of reserveIn value denominated in USD (8 decimals)",
+          "_3": "uint256 Out amount of reserveOut value denominated in USD (8 decimals)",
+          "_4": "address[] The exchange path"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "FLASHLOAN_PREMIUM_TOTAL()": "074b2e43",
+      "MAX_SLIPPAGE_PERCENT()": "32e4b286",
+      "ORACLE()": "38013f02",
+      "UNISWAP_ROUTER()": "d8264920",
+      "USD_ADDRESS()": "9d1211bf",
+      "WETH_ADDRESS()": "040141e5",
+      "getAmountsIn(uint256,address,address)": "cdf58cd6",
+      "getAmountsOut(uint256,address,address)": "baf7fa99"
+    }
+  }
+}

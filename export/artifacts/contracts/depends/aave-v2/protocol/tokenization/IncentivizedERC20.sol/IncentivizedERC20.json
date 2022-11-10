@@ -1,0 +1,416 @@
+{
+  "contractName": "IncentivizedERC20",
+  "sourceName": "contracts/depends/aave-v2/protocol/tokenization/IncentivizedERC20.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "symbol",
+          "type": "string"
+        },
+        {
+          "internalType": "uint8",
+          "name": "decimals",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Approval",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Transfer",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        }
+      ],
+      "name": "allowance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "approve",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "subtractedValue",
+          "type": "uint256"
+        }
+      ],
+      "name": "decreaseAllowance",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "addedValue",
+          "type": "uint256"
+        }
+      ],
+      "name": "increaseAllowance",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "transfer",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Aave, inspired by the Openzeppelin ERC20 implementation*",
+    "kind": "dev",
+    "methods": {
+      "allowance(address,address)": {
+        "details": "Returns the allowance of spender on the tokens owned by owner",
+        "params": {
+          "owner": "The owner of the tokens",
+          "spender": "The user allowed to spend the owner's tokens"
+        },
+        "returns": {
+          "_0": "The amount of owner's tokens spender is allowed to spend*"
+        }
+      },
+      "approve(address,uint256)": {
+        "details": "Allows `spender` to spend the tokens owned by _msgSender()",
+        "params": {
+          "spender": "The user allowed to spend _msgSender() tokens"
+        },
+        "returns": {
+          "_0": "`true`*"
+        }
+      },
+      "balanceOf(address)": {
+        "returns": {
+          "_0": "The balance of the token*"
+        }
+      },
+      "decimals()": {
+        "returns": {
+          "_0": "The decimals of the token*"
+        }
+      },
+      "decreaseAllowance(address,uint256)": {
+        "details": "Decreases the allowance of spender to spend _msgSender() tokens",
+        "params": {
+          "spender": "The user allowed to spend on behalf of _msgSender()",
+          "subtractedValue": "The amount being subtracted to the allowance"
+        },
+        "returns": {
+          "_0": "`true`*"
+        }
+      },
+      "increaseAllowance(address,uint256)": {
+        "details": "Increases the allowance of spender to spend _msgSender() tokens",
+        "params": {
+          "addedValue": "The amount being added to the allowance",
+          "spender": "The user allowed to spend on behalf of _msgSender()"
+        },
+        "returns": {
+          "_0": "`true`*"
+        }
+      },
+      "name()": {
+        "returns": {
+          "_0": "The name of the token*"
+        }
+      },
+      "symbol()": {
+        "returns": {
+          "_0": "The symbol of the token*"
+        }
+      },
+      "totalSupply()": {
+        "returns": {
+          "_0": "The total supply of the token*"
+        }
+      },
+      "transfer(address,uint256)": {
+        "details": "Executes a transfer of tokens from _msgSender() to recipient",
+        "params": {
+          "amount": "The amount of tokens being transferred",
+          "recipient": "The recipient of the tokens"
+        },
+        "returns": {
+          "_0": "`true` if the transfer succeeds, `false` otherwise*"
+        }
+      },
+      "transferFrom(address,address,uint256)": {
+        "details": "Executes a transfer of token from sender to recipient, if _msgSender() is allowed to do so",
+        "params": {
+          "amount": "The amount of tokens being transferred",
+          "recipient": "The recipient of the tokens",
+          "sender": "The owner of the tokens"
+        },
+        "returns": {
+          "_0": "`true` if the transfer succeeds, `false` otherwise*"
+        }
+      }
+    },
+    "title": "ERC20",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Basic ERC20 implementation",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "allowance(address,address)": "dd62ed3e",
+      "approve(address,uint256)": "095ea7b3",
+      "balanceOf(address)": "70a08231",
+      "decimals()": "313ce567",
+      "decreaseAllowance(address,uint256)": "a457c2d7",
+      "increaseAllowance(address,uint256)": "39509351",
+      "name()": "06fdde03",
+      "symbol()": "95d89b41",
+      "totalSupply()": "18160ddd",
+      "transfer(address,uint256)": "a9059cbb",
+      "transferFrom(address,address,uint256)": "23b872dd"
+    }
+  }
+}

@@ -98,7 +98,6 @@ function loadDeployment(network: string, contract: string): string | undefined {
   return; // undefined
 }
 const getContractAddress = async (
-  hardhat_re: HardhatRuntimeEnvironment,
   contractSymbol: string,
   contractName: string,
   network: string
@@ -149,111 +148,93 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   loadAddresses(network);
 
   let daiTokenAddress = await getContractAddress(
-    hardhat_re,
     "daiToken",
-    "DAI_TOKEN_CONTRACT",
+    DAI_TOKEN_CONTRACT,
     network
   );
   let usdcTokenAddress = await getContractAddress(
-    hardhat_re,
     "usdcToken",
-    "USDC_TOKEN_CONTRACT",
+    USDC_TOKEN_CONTRACT,
     network
   );
   let usdtTokenAddress = await getContractAddress(
-    hardhat_re,
     "usdtToken",
-    "USDT_TOKEN_CONTRACT",
+    USDT_TOKEN_CONTRACT,
     network
   );
   let aaveAddressConfigAddress = await getContractAddress(
-    hardhat_re,
     "aaveAddressConfig",
-    "AAVE_ADDRESS_CONFIG_CONTRACT",
+    AAVE_ADDRESS_CONFIG_CONTRACT,
     network
   );
   let aavePoolConfigAddress = await getContractAddress(
-    hardhat_re,
     "aavePoolConfig",
-    "AAVE_POOL_CONFIG_CONTRACT",
+    AAVE_POOL_CONFIG_CONTRACT,
     network
   );
   let aavePoolAddress = await getContractAddress(
-    hardhat_re,
     "aavePool",
-    "AAVE_POOL_CONTRACT",
+    AAVE_POOL_CONTRACT,
     network
   );
   let adaiTokenAddress = await getContractAddress(
-    hardhat_re,
     "adaiToken",
-    "ADAI_TOKEN_CONTRACT",
+    ADAI_TOKEN_CONTRACT,
     network
   );
   let ausdcTokenAddress = await getContractAddress(
-    hardhat_re,
     "ausdcToken",
-    "AUSDC_TOKEN_CONTRACT",
+    AUSDC_TOKEN_CONTRACT,
     network
   );
   let ausdtTokenAddress = await getContractAddress(
-    hardhat_re,
     "ausdtToken",
-    "AUSDT_TOKEN_CONTRACT",
+    AUSDT_TOKEN_CONTRACT,
     network
   );
   let adaiStableDebtTokenAddress = await getContractAddress(
-    hardhat_re,
     "adaiStableDebtToken",
-    "ADAI_STABLE_DEBT_TOKEN_CONTRACT",
+    ADAI_STABLE_DEBT_TOKEN_CONTRACT,
     network
   );
   let ausdcStableDebtTokenAddress = await getContractAddress(
-    hardhat_re,
     "ausdcStableDebtToken",
-    "AUSDC_STABLE_DEBT_TOKEN_CONTRACT",
+    AUSDC_STABLE_DEBT_TOKEN_CONTRACT,
     network
   );
   let ausdtStableDebtTokenAddress = await getContractAddress(
-    hardhat_re,
     "ausdtStableDebtToken",
-    "AUSDT_STABLE_DEBT_TOKEN_CONTRACT",
+    AUSDT_STABLE_DEBT_TOKEN_CONTRACT,
     network
   );
   let adaiVariableDebtTokenAddress = await getContractAddress(
-    hardhat_re,
     "adaiVariableDebtToken",
-    "ADAI_VARIABLE_DEBT_TOKEN_CONTRACT",
+    ADAI_VARIABLE_DEBT_TOKEN_CONTRACT,
     network
   );
   let ausdcVariableDebtTokenAddress = await getContractAddress(
-    hardhat_re,
     "ausdcVariableDebtToken",
-    "AUSDC_VARIABLE_DEBT_TOKEN_CONTRACT",
+    AUSDC_VARIABLE_DEBT_TOKEN_CONTRACT,
     network
   );
   let ausdtVariableDebtTokenAddress = await getContractAddress(
-    hardhat_re,
     "ausdtVariableDebtToken",
-    "AUSDT_VARIABLE_DEBT_TOKEN_CONTRACT",
+    AUSDT_VARIABLE_DEBT_TOKEN_CONTRACT,
     network
   );
   let aaveInterestRateStrategyAddress = await getContractAddress(
-    hardhat_re,
     "aaveInterestRateStrategy",
-    "AAVE_INTEREST_RATE_STRATEGY_CONTRACT",
+    AAVE_INTEREST_RATE_STRATEGY_CONTRACT,
     network
   );
   let aaveIncentivesControllerAddress = await getContractAddress(
-    hardhat_re,
     "aaveIncentivesController",
-    "AAVE_INCENTIVES_CONTROLLER_CONTRACT",
+    AAVE_INCENTIVES_CONTROLLER_CONTRACT,
     network
   );
   let aaveLendingRateOracleAddress = await getContractAddress(
-    hardhat_re,
     "aaveLendingRateOracle",
-    "AAVE_LENDING_RATE_ORACLE_CONTRACT",
+    AAVE_LENDING_RATE_ORACLE_CONTRACT,
     network
   );
 

@@ -1,0 +1,42 @@
+{
+  "contractName": "Initializable",
+  "sourceName": "contracts/depends/aave-v2/dependencies/openzeppelin/upgradeability/Initializable.sol",
+  "abi": [],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220ce1ac3f4a52a66c3326051fa8dad57ef2b39e724546397ced79cdc2c6d83207b64736f6c634300060c0033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220ce1ac3f4a52a66c3326051fa8dad57ef2b39e724546397ced79cdc2c6d83207b64736f6c634300060c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Helper contract to support initializer functions. To use it, replace the constructor with a function that has the `initializer` modifier. WARNING: Unlike constructors, initializer functions must be manually invoked. This applies both to deploying an Initializable contract, as well as extending an Initializable contract via inheritance. WARNING: When used with inheritance, manual care must be taken to not invoke a parent initializer twice, or ensure that all initializers are idempotent, because this is not dealt with automatically as with constructors.",
+    "kind": "dev",
+    "methods": {},
+    "stateVariables": {
+      "initialized": {
+        "details": "Indicates that the contract has been initialized."
+      },
+      "initializing": {
+        "details": "Indicates that the contract is in the process of being initialized."
+      }
+    },
+    "title": "Initializable",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "12600",
+        "executionCost": "66",
+        "totalCost": "12666"
+      },
+      "internal": {
+        "isConstructor()": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

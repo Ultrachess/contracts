@@ -1,0 +1,32 @@
+{
+  "contractName": "StringLib",
+  "sourceName": "contracts/depends/aave-v2/deployments/StringLib.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220214084c16c78593e15311d6e6b99d5dd3e2dfe004a0b14e39cec371384e98e6b64736f6c634300060c0033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220214084c16c78593e15311d6e6b99d5dd3e2dfe004a0b14e39cec371384e98e6b64736f6c634300060c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "concat(string memory,string memory)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

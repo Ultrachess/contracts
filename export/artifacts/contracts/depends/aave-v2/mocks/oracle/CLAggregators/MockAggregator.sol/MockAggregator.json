@@ -1,0 +1,99 @@
+{
+  "contractName": "MockAggregator",
+  "sourceName": "contracts/depends/aave-v2/mocks/oracle/CLAggregators/MockAggregator.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "_initialAnswer",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "int256",
+          "name": "current",
+          "type": "int256"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "AnswerUpdated",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "getTokenType",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "latestAnswer",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b506040516101153803806101158339818101604052602081101561003357600080fd5b5051600081815560408051428152905183917f0559884fd3a460db3073b7fc896cc77986f16e378210ded43186175bf646fc5f919081900360200190a35060968061007f6000396000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c806350d25bcd146037578063fcab181914604f575b600080fd5b603d6055565b60408051918252519081900360200190f35b603d605b565b60005490565b60019056fea2646970667358221220c194af3f458972d785970cca0b27009ad7c49bde5fd7eb881ca3d52d540dd83164736f6c634300060c0033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060325760003560e01c806350d25bcd146037578063fcab181914604f575b600080fd5b603d6055565b60408051918252519081900360200190f35b603d605b565b60005490565b60019056fea2646970667358221220c194af3f458972d785970cca0b27009ad7c49bde5fd7eb881ca3d52d540dd83164736f6c634300060c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "30000",
+        "executionCost": "infinite",
+        "totalCost": "infinite"
+      },
+      "external": {
+        "getTokenType()": "198",
+        "latestAnswer()": "976"
+      }
+    },
+    "methodIdentifiers": {
+      "getTokenType()": "fcab1819",
+      "latestAnswer()": "50d25bcd"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "contractName": "IParaSwapAugustus",
+  "sourceName": "contracts/depends/aave-v2/interfaces/IParaSwapAugustus.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "getTokenTransferProxy",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "getTokenTransferProxy()": "d2c4b598"
+    }
+  }
+}

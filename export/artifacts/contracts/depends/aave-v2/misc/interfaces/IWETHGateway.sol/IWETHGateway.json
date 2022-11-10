@@ -1,0 +1,131 @@
+{
+  "contractName": "IWETHGateway",
+  "sourceName": "contracts/depends/aave-v2/misc/interfaces/IWETHGateway.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "lendingPool",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "interesRateMode",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint16",
+          "name": "referralCode",
+          "type": "uint16"
+        }
+      ],
+      "name": "borrowETH",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "lendingPool",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "onBehalfOf",
+          "type": "address"
+        },
+        {
+          "internalType": "uint16",
+          "name": "referralCode",
+          "type": "uint16"
+        }
+      ],
+      "name": "depositETH",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "lendingPool",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rateMode",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "onBehalfOf",
+          "type": "address"
+        }
+      ],
+      "name": "repayETH",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "lendingPool",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "onBehalfOf",
+          "type": "address"
+        }
+      ],
+      "name": "withdrawETH",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "borrowETH(address,uint256,uint256,uint16)": "66514c97",
+      "depositETH(address,address,uint16)": "474cf53d",
+      "repayETH(address,uint256,uint256,address)": "02c5fcf8",
+      "withdrawETH(address,uint256,address)": "80500d20"
+    }
+  }
+}
