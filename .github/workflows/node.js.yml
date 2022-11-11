@@ -123,16 +123,20 @@ jobs:
       - name: yarn lint-app
         run: yarn lint-app
 
-      - name: yarn lint-chain
-        if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
-        run: yarn lint-chain
+      # TODO
+      #- name: yarn lint-chain
+      #  if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
+      #  run: yarn lint-chain
 
-      - name: yarn copy-dts
-        run: yarn copy-dts
+      # TODO
+      #- name: yarn copy-dts
+      #  run: yarn copy-dts
 
-      - name: yarn export
-        if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
-        run: yarn export
+      # TODO
+      #- name: yarn export
+      #  if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
+      #  run: yarn export
 
-      - name: yarn test
-        run: yarn test
+      # TODO
+      #- name: yarn test
+      #  run: yarn test

@@ -56,6 +56,7 @@
     "test": "hardhat test"
   },
   "devDependencies": {
+    "@boringcrypto/boring-solidity": "boringcrypto/BoringSolidity#e06e943",
     "@cartesi/token": "^1.7.0",
     "@cartesi/util": "^5.0.0",
     "@ethersproject/abi": "^5.7.0",

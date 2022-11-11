@@ -59,6 +59,7 @@ source "${DEPENDS_DIR}/curve/package.sh"
 source "${DEPENDS_DIR}/curve-dao/package.sh"
 source "${DEPENDS_DIR}/openzeppelin-v2/package.sh"
 source "${DEPENDS_DIR}/openzeppelin-v3/package.sh"
+source "${DEPENDS_DIR}/sushiswap/package.sh"
 source "${DEPENDS_DIR}/uniswap-lib/package.sh"
 source "${DEPENDS_DIR}/uniswap-v3-core/package.sh"
 source "${DEPENDS_DIR}/uniswap-v3-periphery/package.sh"
@@ -74,6 +75,7 @@ checkout_curve
 checkout_curve_dao
 checkout_openzeppelin_v2
 checkout_openzeppelin_v3
+checkout_sushiswap
 checkout_uniswap_lib
 checkout_uniswap_v3_core
 checkout_uniswap_v3_periphery
@@ -89,6 +91,7 @@ patch_curve
 patch_curve_dao
 patch_openzeppelin_v2
 patch_openzeppelin_v3
+patch_sushiswap
 patch_uniswap_lib
 patch_uniswap_v3_core
 patch_uniswap_v3_periphery
@@ -104,6 +107,7 @@ build_curve
 build_curve_dao
 build_openzeppelin_v2
 build_openzeppelin_v3
+build_sushiswap
 build_uniswap_lib
 build_uniswap_v3_core
 build_uniswap_v3_periphery
@@ -119,6 +123,7 @@ install_curve
 install_curve_dao
 install_openzeppelin_v2
 install_openzeppelin_v3
+install_sushiswap
 install_uniswap_lib
 install_uniswap_v3_core
 install_uniswap_v3_periphery

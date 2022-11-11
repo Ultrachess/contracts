@@ -1,0 +1,33 @@
+From c5f67cc4a178948011f80cd9ddea9ed5ec552282 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Mon, 6 Jun 2022 20:24:13 -0700
+Subject: [PATCH 2/5] Parametize LP init code hash
+
+---
+ contracts/uniswapv2/libraries/UniswapV2Library.sol | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/contracts/uniswapv2/libraries/UniswapV2Library.sol b/contracts/uniswapv2/libraries/UniswapV2Library.sol
+index 14cffb05..3798088e 100644
+--- a/contracts/uniswapv2/libraries/UniswapV2Library.sol
++++ b/contracts/uniswapv2/libraries/UniswapV2Library.sol
+@@ -3,6 +3,7 @@
+ pragma solidity >=0.5.0;
+ 
+ import '../interfaces/IUniswapV2Pair.sol';
++import '../uniswapv2/UniswapV2Factory.sol';
+ 
+ import "./SafeMath.sol";
+ 
+@@ -23,7 +24,7 @@ library UniswapV2Library {
+                 hex'ff',
+                 factory,
+                 keccak256(abi.encodePacked(token0, token1)),
+-                hex'e18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303' // init code hash
++                UniswapV2Factory(factory).pairCodeHash()
+             ))));
+     }
+ 
+-- 
+2.30.2
+

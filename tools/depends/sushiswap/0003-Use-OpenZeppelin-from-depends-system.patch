@@ -1,0 +1,126 @@
+From 541991353068147b264357643c9fb3771187811c Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Mon, 6 Jun 2022 20:22:52 -0700
+Subject: [PATCH 3/5] Use OpenZeppelin from depends system
+
+Needed to support older OpenZeppelin v3 in dependencies.
+---
+ contracts/MasterChef.sol                           | 10 +++++-----
+ contracts/SushiBar.sol                             |  6 +++---
+ contracts/SushiRoll.sol                            |  4 ++--
+ contracts/SushiToken.sol                           |  4 ++--
+ contracts/governance/Timelock.sol                  |  2 +-
+ contracts/mocks/ERC20Mock.sol                      |  2 +-
+ contracts/uniswapv2/libraries/UniswapV2Library.sol |  2 +-
+ 7 files changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/contracts/MasterChef.sol b/contracts/MasterChef.sol
+index e82548a5..9ff49ada 100644
+--- a/contracts/MasterChef.sol
++++ b/contracts/MasterChef.sol
+@@ -2,11 +2,11 @@
+ 
+ pragma solidity 0.6.12;
+ 
+-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+-import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+-import "@openzeppelin/contracts/utils/EnumerableSet.sol";
+-import "@openzeppelin/contracts/math/SafeMath.sol";
+-import "@openzeppelin/contracts/access/Ownable.sol";
++import "../openzeppelin/token/ERC20/IERC20.sol";
++import "../openzeppelin/token/ERC20/SafeERC20.sol";
++import "../openzeppelin/utils/EnumerableSet.sol";
++import "../openzeppelin/math/SafeMath.sol";
++import "../openzeppelin/access/Ownable.sol";
+ import "./SushiToken.sol";
+ 
+ interface IMigratorChef {
+diff --git a/contracts/SushiBar.sol b/contracts/SushiBar.sol
+index 51155231..8a2b6784 100644
+--- a/contracts/SushiBar.sol
++++ b/contracts/SushiBar.sol
+@@ -2,9 +2,9 @@
+ 
+ pragma solidity 0.6.12;
+ 
+-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+-import "@openzeppelin/contracts/math/SafeMath.sol";
++import "../openzeppelin/token/ERC20/IERC20.sol";
++import "../openzeppelin/token/ERC20/ERC20.sol";
++import "../openzeppelin/math/SafeMath.sol";
+ 
+ // SushiBar is the coolest bar in town. You come in with some Sushi, and leave with more! The longer you stay, the more Sushi you get.
+ //
+diff --git a/contracts/SushiRoll.sol b/contracts/SushiRoll.sol
+index 3dd552ca..859fcbe8 100644
+--- a/contracts/SushiRoll.sol
++++ b/contracts/SushiRoll.sol
+@@ -2,8 +2,8 @@
+ 
+ pragma solidity 0.6.12;
+ 
+-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+-import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
++import "../openzeppelin/token/ERC20/IERC20.sol";
++import "../openzeppelin/token/ERC20/SafeERC20.sol";
+ import "./uniswapv2/interfaces/IUniswapV2Pair.sol";
+ import "./uniswapv2/interfaces/IUniswapV2Router01.sol";
+ import "./uniswapv2/interfaces/IUniswapV2Factory.sol";
+diff --git a/contracts/SushiToken.sol b/contracts/SushiToken.sol
+index f4161546..4f58d21f 100644
+--- a/contracts/SushiToken.sol
++++ b/contracts/SushiToken.sol
+@@ -2,8 +2,8 @@
+ 
+ pragma solidity 0.6.12;
+ 
+-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+-import "@openzeppelin/contracts/access/Ownable.sol";
++import "../openzeppelin/token/ERC20/ERC20.sol";
++import "../openzeppelin/access/Ownable.sol";
+ 
+ // WARNING: There is a known vuln contained within this contract related to vote delegation, 
+ // it's NOT recommmended to use this in production.  
+diff --git a/contracts/governance/Timelock.sol b/contracts/governance/Timelock.sol
+index 776678ed..b1c75863 100644
+--- a/contracts/governance/Timelock.sol
++++ b/contracts/governance/Timelock.sol
+@@ -14,7 +14,7 @@
+ pragma solidity 0.6.12;
+ 
+ // XXX: import "./SafeMath.sol";
+-import "@openzeppelin/contracts/math/SafeMath.sol";
++import "../../openzeppelin/math/SafeMath.sol";
+ 
+ contract Timelock {
+     using SafeMath for uint;
+diff --git a/contracts/mocks/ERC20Mock.sol b/contracts/mocks/ERC20Mock.sol
+index 4520a8d0..2c65bd79 100644
+--- a/contracts/mocks/ERC20Mock.sol
++++ b/contracts/mocks/ERC20Mock.sol
+@@ -2,7 +2,7 @@
+ 
+ pragma solidity 0.6.12;
+ 
+-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
++import "../../openzeppelin/token/ERC20/ERC20.sol";
+ 
+ contract ERC20Mock is ERC20 {
+     constructor(
+diff --git a/contracts/uniswapv2/libraries/UniswapV2Library.sol b/contracts/uniswapv2/libraries/UniswapV2Library.sol
+index 3798088e..d8ba884a 100644
+--- a/contracts/uniswapv2/libraries/UniswapV2Library.sol
++++ b/contracts/uniswapv2/libraries/UniswapV2Library.sol
+@@ -3,7 +3,7 @@
+ pragma solidity >=0.5.0;
+ 
+ import '../interfaces/IUniswapV2Pair.sol';
+-import '../uniswapv2/UniswapV2Factory.sol';
++import '../UniswapV2Factory.sol';
+ 
+ import "./SafeMath.sol";
+ 
+-- 
+2.30.2
+

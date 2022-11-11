@@ -1,0 +1,31 @@
+From 6e53187f7f80f7c826dd88f13744cd0582bc5e0e Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Tue, 7 Jun 2022 16:43:57 -0700
+Subject: [PATCH 4/5] Provide owner via constructor to allow for delegated
+ msg.sender
+
+---
+ contracts/MiniChefV2.sol | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/contracts/MiniChefV2.sol b/contracts/MiniChefV2.sol
+index 3f969a1c..7a5f95a1 100644
+--- a/contracts/MiniChefV2.sol
++++ b/contracts/MiniChefV2.sol
+@@ -78,8 +78,12 @@ contract MiniChefV2 is BoringOwnable, BoringBatchable {
+     event LogSushiPerSecond(uint256 sushiPerSecond);
+ 
+     /// @param _sushi The SUSHI token contract address.
+-    constructor(IERC20 _sushi) public {
++    /// @param _owner The owner of the deployed contract (to allow delegated msg.sender)
++    constructor(IERC20 _sushi, address _owner) public {
+         SUSHI = _sushi;
++
++        // Initialize {BoringOwnable}
++        transferOwnership(_owner, true, false);
+     }
+ 
+     /// @notice Returns the number of MCV2 pools.
+-- 
+2.30.2
+
