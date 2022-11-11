@@ -124,9 +124,9 @@ jobs:
         if: steps.restore-contract-depends.outputs.cache-hit != 'true'
         run: yarn depends
 
-      - name: yarn lint-chain
-        if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
-        run: yarn lint-chain
+      #- name: yarn lint-chain
+      #  if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
+      #  run: yarn lint-chain
 
       - name: yarn copy-dts
         run: yarn copy-dts

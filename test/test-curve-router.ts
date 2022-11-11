@@ -239,10 +239,10 @@ describe("Curve Aave pool", function () {
   });
 
   //////////////////////////////////////////////////////////////////////////////
-  // Test Curve Aave pool
+  // Test Curve router
   //////////////////////////////////////////////////////////////////////////////
 
-  it("should approve Curve Aave pool to transfer stablecoins", async function () {
+  it("should approve Curve router to transfer stablecoins", async function () {
     this.timeout(60 * 1000);
 
     const { daiContract, usdcContract, usdtContract, curveAavePoolContract } =
@@ -295,10 +295,6 @@ describe("Curve Aave pool", function () {
     );
     chai.expect(balance).to.eq(CURVE_AAVE_LP_BALANCE);
   });
-
-  //////////////////////////////////////////////////////////////////////////////
-  // Test Curve DAO
-  //////////////////////////////////////////////////////////////////////////////
 
   it("should approve Curve gauge spending am3CRV tokens", async function () {
     this.timeout(60 * 1000);
@@ -371,10 +367,6 @@ describe("Curve Aave pool", function () {
     );
     chai.expect(balance).to.eq(CURVE_AAVE_LP_BALANCE);
   });
-
-  //////////////////////////////////////////////////////////////////////////////
-  // Test Curve Aave pool
-  //////////////////////////////////////////////////////////////////////////////
 
   it("should remove liquidity from Curve Aave pool", async function () {
     this.timeout(60 * 1000);
