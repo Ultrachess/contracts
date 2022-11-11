@@ -21,32 +21,32 @@ import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
  * to parse transaction receipts.
  */
 contract UniswapV3PoolFactory {
-    /**
-     * @dev The address of the pool for this token pair
-     */
-    IUniswapV3Pool public immutable uniV3Pool;
+  /**
+   * @dev The address of the pool for this token pair
+   */
+  IUniswapV3Pool public immutable uniV3Pool;
 
-    //////////////////////////////////////////////////////////////////////////////
-    // Initialization
-    //////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  // Initialization
+  //////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * @dev Construct the test pool instance
-     *
-     * @param factory The contract address of the Uniswap V3 factory
-     * @param token0 The first token of the pool by address sort order
-     * @param token1 The second token of the pool by address sort order
-     * @param fee The fee collected upon every swap in the pool, denominated in hundredths of a bip
-     */
-    constructor(address factory, address token0, address token1, uint24 fee) {
-        // Validate parameters
-        require(factory != address(0), "Invalid factory");
-        require(token0 != address(0), "Invalid token0");
-        require(token1 != address(0), "Invalid token1");
+  /**
+   * @dev Construct the test pool instance
+   *
+   * @param factory The contract address of the Uniswap V3 factory
+   * @param token0 The first token of the pool by address sort order
+   * @param token1 The second token of the pool by address sort order
+   * @param fee The fee collected upon every swap in the pool, denominated in hundredths of a bip
+   */
+  constructor(address factory, address token0, address token1, uint24 fee) {
+    // Validate parameters
+    require(factory != address(0), "Invalid factory");
+    require(token0 != address(0), "Invalid token0");
+    require(token1 != address(0), "Invalid token1");
 
-        // Call external contracts
-        uniV3Pool = IUniswapV3Pool(
-            IUniswapV3Factory(factory).createPool(token0, token1, fee)
-        );
-    }
+    // Call external contracts
+    uniV3Pool = IUniswapV3Pool(
+      IUniswapV3Factory(factory).createPool(token0, token1, fee)
+    );
+  }
 }

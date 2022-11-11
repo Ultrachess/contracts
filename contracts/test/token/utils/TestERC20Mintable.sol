@@ -18,16 +18,16 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
  * FOR TESTING ONLY.
  */
 abstract contract TestERC20Mintable is ERC20 {
-    //////////////////////////////////////////////////////////////////////////////
-    // Minting interface
-    //////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  // Minting interface
+  //////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * @dev Creates `amount` tokens and assigns them to `account`, increasing
-     * the total supply.
-     */
-    function mint(address account, uint256 amount) external {
-        // Call ancestor
-        _mint(account, amount);
-    }
+  /**
+   * @dev Creates `amount` tokens and assigns them to `account`, increasing
+   * the total supply.
+   */
+  function mint(address account, uint256 amount) external {
+    // Call ancestor
+    _mint(account, amount);
+  }
 }

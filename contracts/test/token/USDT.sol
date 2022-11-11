@@ -13,40 +13,40 @@ import "./utils/TestERC20Mintable.sol";
 
 // Mainnet address: 0xdac17f958d2ee523a2206206994597c13d831ec7
 contract USDT is TestERC20Mintable {
-    //////////////////////////////////////////////////////////////////////////////
-    // Constants
-    //////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  // Constants
+  //////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * @dev The ERC 20 token name used by wallets to identify the token
-     */
-    string private constant TOKEN_NAME = "Funny Tether USD";
+  /**
+   * @dev The ERC 20 token name used by wallets to identify the token
+   */
+  string private constant TOKEN_NAME = "Funny Tether USD";
 
-    /**
-     * @dev The ERC 20 token symbol used as an abbreviation of the token, such
-     * as BTC, ETH, AUG or SJCX.
-     */
-    string private constant TOKEN_SYMBOL = "USDT";
+  /**
+   * @dev The ERC 20 token symbol used as an abbreviation of the token, such
+   * as BTC, ETH, AUG or SJCX.
+   */
+  string private constant TOKEN_SYMBOL = "USDT";
 
-    //////////////////////////////////////////////////////////////////////////////
-    // Initialization
-    //////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  // Initialization
+  //////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * @dev Initializes the token with a name and symbol
-     */
-    // solhint-disable-next-line no-empty-blocks
-    constructor() ERC20(TOKEN_NAME, TOKEN_SYMBOL) {}
+  /**
+   * @dev Initializes the token with a name and symbol
+   */
+  // solhint-disable-next-line no-empty-blocks
+  constructor() ERC20(TOKEN_NAME, TOKEN_SYMBOL) {}
 
-    //////////////////////////////////////////////////////////////////////////////
-    // Implementation of {IERC20Metadata} via {TestERC20Mintable}
-    //////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  // Implementation of {IERC20Metadata} via {TestERC20Mintable}
+  //////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * @dev See {IERC20Metadata-decimals}
-     */
-    // slither-disable-next-line external-function
-    function decimals() public view virtual override returns (uint8) {
-        return 6;
-    }
+  /**
+   * @dev See {IERC20Metadata-decimals}
+   */
+  // slither-disable-next-line external-function
+  function decimals() public view virtual override returns (uint8) {
+    return 6;
+  }
 }

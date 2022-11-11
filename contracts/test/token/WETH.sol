@@ -15,12 +15,12 @@ import "../../depends/canonical-weth/WETH9.sol";
  * @dev W-ETH token for testing
  */
 contract WETH is WETH9 {
-    /**
-     * @dev Constructor
-     */
-    constructor() {
-        // Initialize {WETH9}
-        name = "Funny Wrapped Ethereum";
-        symbol = "W-ETH";
-    }
+  /**
+   * @dev Constructor
+   */
+  constructor() {
+    // Initialize {WETH9}
+    name = "Funny Wrapped Ethereum";
+    symbol = "W-ETH";
+  }
 }
