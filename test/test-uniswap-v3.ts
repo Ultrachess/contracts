@@ -407,6 +407,8 @@ describe("Uniswap V3", () => {
           encodePriceSqrt(1, 1), // sqrtPriceX96
           0 // tick0
         );
+    } else {
+      console.log("    Initialization failed, pool may already be initialized");
     }
   });
 
