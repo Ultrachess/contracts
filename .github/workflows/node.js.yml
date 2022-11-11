@@ -123,9 +123,10 @@ jobs:
       - name: yarn lint-app
         run: yarn lint-app
 
-      - name: yarn lint-chain
-        if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
-        run: yarn lint-chain
+      # TODO
+      #- name: yarn lint-chain
+      #  if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
+      #  run: yarn lint-chain
 
       - name: yarn copy-dts
         run: yarn copy-dts
