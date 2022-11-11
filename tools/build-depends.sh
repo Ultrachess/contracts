@@ -56,6 +56,7 @@ mkdir -p "${BYTECODE_DIR}"
 # Import dependencies
 #
 
+source "${DEPENDS_DIR}/aave-v3-core/package.sh"
 source "${DEPENDS_DIR}/canonical-weth/package.sh"
 source "${DEPENDS_DIR}/cartesi-token/package.sh"
 source "${DEPENDS_DIR}/openzeppelin-v2/package.sh"
@@ -68,6 +69,7 @@ source "${DEPENDS_DIR}/uniswap-v3-periphery/package.sh"
 # Checkout dependencies
 #
 
+checkout_aave_v3_core
 checkout_canonical_weth
 checkout_cartesi_token
 checkout_openzeppelin_v2
@@ -80,6 +82,7 @@ checkout_uniswap_v3_periphery
 # Patch dependencies
 #
 
+patch_aave_v3_core
 patch_canonical_weth
 patch_cartesi_token
 patch_openzeppelin_v2
@@ -92,6 +95,7 @@ patch_uniswap_v3_periphery
 # Build dependencies
 #
 
+build_aave_v3_core
 build_canonical_weth
 build_cartesi_token
 build_openzeppelin_v2
@@ -104,6 +108,7 @@ build_uniswap_v3_periphery
 # Install dependencies
 #
 
+install_aave_v3_core
 install_canonical_weth
 install_cartesi_token
 install_openzeppelin_v2
