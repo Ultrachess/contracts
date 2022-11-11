@@ -70,8 +70,27 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
+            contracts/bytecode
             contracts/depends
           key: restore-contract-depends-${{ hashFiles('tools/build-depends.sh', 'tools/depends/**') }}
+
+      - name: Restore Vyper compilers
+        id: restore-vyper
+        if: steps.restore-contract-depends.outputs.cache-hit != 'true'
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.vvm
+          key: restore-vyper-${{ hashFiles('tools/depends/curve/**', 'tools/depends/curve-dao/**') }}
+
+      - name: Restore Solidity compilers for Vyper
+        id: restore-solcx
+        if: steps.restore-contract-depends.outputs.cache-hit != 'true'
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.solcx
+          key: restore-solcx-${{ hashFiles('tools/depends/curve/**', 'tools/depends/curve-dao/**') }}
 
       - name: Restores smart contract artifacts
         id: restore-contract-artifacts

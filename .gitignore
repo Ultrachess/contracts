@@ -4,6 +4,7 @@
 /yarn-*.log
 
 # Dependencies build system
+/contracts/bytecode
 /contracts/depends
 /tools/repos
 

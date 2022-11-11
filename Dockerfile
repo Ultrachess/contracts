@@ -13,6 +13,8 @@ DEBIAN_FRONTEND="noninteractive" apt-get install -y \
   git \
   make \
   patch \
+  python3 \
+  python3-venv \
   tar \
   wget
 rm -rf /var/lib/apt/lists/*

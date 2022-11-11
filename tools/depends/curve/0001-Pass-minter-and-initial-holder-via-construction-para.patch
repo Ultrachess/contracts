@@ -1,0 +1,56 @@
+From f62761fce48d1c6fe0bf1ebdb79f5c1e2b6cfd01 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Fri, 11 Jun 2021 23:40:43 -0700
+Subject: [PATCH] Pass minter and initial holder via construction params
+
+---
+ contracts/tokens/CurveTokenV1.vy | 8 ++++----
+ contracts/tokens/CurveTokenV3.vy | 6 +++---
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/contracts/tokens/CurveTokenV1.vy b/contracts/tokens/CurveTokenV1.vy
+index 1c9ada4..d8f5526 100644
+--- a/contracts/tokens/CurveTokenV1.vy
++++ b/contracts/tokens/CurveTokenV1.vy
+@@ -28,15 +28,15 @@ minter: address
+ 
+ 
+ @public
+-def __init__(_name: string[64], _symbol: string[32], _decimals: uint256, _supply: uint256):
++def __init__(_name: string[64], _symbol: string[32], _decimals: uint256, _supply: uint256, _minter: address, _init_supply_holder: address):
+     init_supply: uint256 = _supply * 10 ** _decimals
+     self.name = _name
+     self.symbol = _symbol
+     self.decimals = _decimals
+-    self.balanceOf[msg.sender] = init_supply
++    self.balanceOf[_init_supply_holder] = init_supply
+     self.total_supply = init_supply
+-    self.minter = msg.sender
+-    log.Transfer(ZERO_ADDRESS, msg.sender, init_supply)
++    self.minter = _minter
++    log.Transfer(ZERO_ADDRESS, _init_supply_holder, init_supply)
+ 
+ 
+ @public
+diff --git a/contracts/tokens/CurveTokenV3.vy b/contracts/tokens/CurveTokenV3.vy
+index 6d204b6..eb1db07 100644
+--- a/contracts/tokens/CurveTokenV3.vy
++++ b/contracts/tokens/CurveTokenV3.vy
+@@ -38,11 +38,11 @@ minter: public(address)
+ 
+ 
+ @external
+-def __init__(_name: String[64], _symbol: String[32]):
++def __init__(_name: String[64], _symbol: String[32], _minter: address, _init_supply_holder: address):
+     self.name = _name
+     self.symbol = _symbol
+-    self.minter = msg.sender
+-    log Transfer(ZERO_ADDRESS, msg.sender, 0)
++    self.minter = _minter
++    log Transfer(ZERO_ADDRESS, _init_supply_holder, 0)
+ 
+ 
+ @view
+-- 
+2.30.2
+

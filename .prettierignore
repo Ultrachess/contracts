@@ -3,6 +3,7 @@
 /node_modules
 
 # Dependencies build system
+/contracts/bytecode
 /contracts/depends
 /tools/repos
 
