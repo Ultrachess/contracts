@@ -1,0 +1,582 @@
+From 27d452bbfd89e092f34284467d7777024ddf6cdc Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Mon, 14 Nov 2022 17:23:13 -0800
+Subject: [PATCH] Use Aave V3 Core from depends
+
+---
+ .../adapters/paraswap/BaseParaSwapAdapter.sol | 20 +++++++-------
+ .../paraswap/BaseParaSwapBuyAdapter.sol       |  8 +++---
+ .../paraswap/BaseParaSwapSellAdapter.sol      |  8 +++---
+ .../paraswap/ParaSwapLiquiditySwapAdapter.sol |  8 +++---
+ .../paraswap/ParaSwapRepayAdapter.sol         | 12 ++++-----
+ contracts/libraries/DataTypesHelper.sol       |  4 +--
+ contracts/misc/UiIncentiveDataProviderV3.sol  | 12 ++++-----
+ contracts/misc/UiPoolDataProviderV3.sol       | 26 +++++++++----------
+ contracts/misc/WETHGateway.sol                | 14 +++++-----
+ contracts/misc/WalletBalanceProvider.sol      | 16 ++++++------
+ .../misc/interfaces/IERC20DetailedBytes.sol   |  2 +-
+ .../interfaces/IUiIncentiveDataProviderV3.sol |  2 +-
+ .../misc/interfaces/IUiPoolDataProviderV3.sol |  2 +-
+ contracts/mocks/MockBadTransferStrategy.sol   |  4 +--
+ contracts/mocks/swap/MockParaSwapAugustus.sol |  4 +--
+ .../swap/MockParaSwapTokenTransferProxy.sol   |  4 +--
+ contracts/rewards/EmissionManager.sol         |  2 +-
+ contracts/rewards/RewardsController.sol       |  6 ++---
+ contracts/rewards/RewardsDistributor.sol      |  4 +--
+ .../PullRewardsTransferStrategy.sol           |  4 +--
+ .../StakedTokenTransferStrategy.sol           |  4 +--
+ .../TransferStrategyBase.sol                  |  4 +--
+ .../AaveEcosystemReserveController.sol        |  4 +--
+ contracts/treasury/AaveEcosystemReserveV2.sol |  2 +-
+ .../AdminControlledEcosystemReserve.sol       |  2 +-
+ contracts/treasury/Collector.sol              |  4 +--
+ contracts/treasury/CollectorController.sol    |  4 +--
+ .../IAaveEcosystemReserveController.sol       |  2 +-
+ .../IAdminControlledEcosystemReserve.sol      |  2 +-
+ contracts/treasury/interfaces/ICollector.sol  |  2 +-
+ contracts/treasury/libs/SafeERC20.sol         |  2 +-
+ 31 files changed, 97 insertions(+), 97 deletions(-)
+
+diff --git a/contracts/adapters/paraswap/BaseParaSwapAdapter.sol b/contracts/adapters/paraswap/BaseParaSwapAdapter.sol
+index 8ad3c6a..efac374 100644
+--- a/contracts/adapters/paraswap/BaseParaSwapAdapter.sol
++++ b/contracts/adapters/paraswap/BaseParaSwapAdapter.sol
+@@ -1,16 +1,16 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {DataTypes} from '@aave/core-v3/contracts/protocol/libraries/types/DataTypes.sol';
+-import {FlashLoanSimpleReceiverBase} from '@aave/core-v3/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol';
+-import {GPv2SafeERC20} from '@aave/core-v3/contracts/dependencies/gnosis/contracts/GPv2SafeERC20.sol';
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
+-import {IERC20Detailed} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
+-import {IERC20WithPermit} from '@aave/core-v3/contracts/interfaces/IERC20WithPermit.sol';
+-import {IPoolAddressesProvider} from '@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol';
+-import {IPriceOracleGetter} from '@aave/core-v3/contracts/interfaces/IPriceOracleGetter.sol';
+-import {SafeMath} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/SafeMath.sol';
+-import {Ownable} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/Ownable.sol';
++import {DataTypes} from '../../../aave-v3-core/protocol/libraries/types/DataTypes.sol';
++import {FlashLoanSimpleReceiverBase} from '../../../aave-v3-core/flashloan/base/FlashLoanSimpleReceiverBase.sol';
++import {GPv2SafeERC20} from '../../../aave-v3-core/dependencies/gnosis/contracts/GPv2SafeERC20.sol';
++import {IERC20} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20Detailed} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
++import {IERC20WithPermit} from '../../../aave-v3-core/interfaces/IERC20WithPermit.sol';
++import {IPoolAddressesProvider} from '../../../aave-v3-core/interfaces/IPoolAddressesProvider.sol';
++import {IPriceOracleGetter} from '../../../aave-v3-core/interfaces/IPriceOracleGetter.sol';
++import {SafeMath} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/SafeMath.sol';
++import {Ownable} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/Ownable.sol';
+ 
+ /**
+  * @title BaseParaSwapAdapter
+diff --git a/contracts/adapters/paraswap/BaseParaSwapBuyAdapter.sol b/contracts/adapters/paraswap/BaseParaSwapBuyAdapter.sol
+index c55f709..4c1ab0c 100644
+--- a/contracts/adapters/paraswap/BaseParaSwapBuyAdapter.sol
++++ b/contracts/adapters/paraswap/BaseParaSwapBuyAdapter.sol
+@@ -1,10 +1,10 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {SafeMath} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/SafeMath.sol';
+-import {PercentageMath} from '@aave/core-v3/contracts/protocol/libraries/math/PercentageMath.sol';
+-import {IPoolAddressesProvider} from '@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol';
+-import {IERC20Detailed} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
++import {SafeMath} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/SafeMath.sol';
++import {PercentageMath} from '../../../aave-v3-core/protocol/libraries/math/PercentageMath.sol';
++import {IPoolAddressesProvider} from '../../../aave-v3-core/interfaces/IPoolAddressesProvider.sol';
++import {IERC20Detailed} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
+ import {IParaSwapAugustus} from './interfaces/IParaSwapAugustus.sol';
+ import {IParaSwapAugustusRegistry} from './interfaces/IParaSwapAugustusRegistry.sol';
+ import {BaseParaSwapAdapter} from './BaseParaSwapAdapter.sol';
+diff --git a/contracts/adapters/paraswap/BaseParaSwapSellAdapter.sol b/contracts/adapters/paraswap/BaseParaSwapSellAdapter.sol
+index 7fd31ab..53dab2a 100644
+--- a/contracts/adapters/paraswap/BaseParaSwapSellAdapter.sol
++++ b/contracts/adapters/paraswap/BaseParaSwapSellAdapter.sol
+@@ -1,10 +1,10 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {SafeMath} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/SafeMath.sol';
+-import {PercentageMath} from '@aave/core-v3/contracts/protocol/libraries/math/PercentageMath.sol';
+-import {IPoolAddressesProvider} from '@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol';
+-import {IERC20Detailed} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
++import {SafeMath} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/SafeMath.sol';
++import {PercentageMath} from '../../../aave-v3-core/protocol/libraries/math/PercentageMath.sol';
++import {IPoolAddressesProvider} from '../../../aave-v3-core/interfaces/IPoolAddressesProvider.sol';
++import {IERC20Detailed} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
+ import {IParaSwapAugustus} from './interfaces/IParaSwapAugustus.sol';
+ import {IParaSwapAugustusRegistry} from './interfaces/IParaSwapAugustusRegistry.sol';
+ import {BaseParaSwapAdapter} from './BaseParaSwapAdapter.sol';
+diff --git a/contracts/adapters/paraswap/ParaSwapLiquiditySwapAdapter.sol b/contracts/adapters/paraswap/ParaSwapLiquiditySwapAdapter.sol
+index fda9c13..fbc68ad 100644
+--- a/contracts/adapters/paraswap/ParaSwapLiquiditySwapAdapter.sol
++++ b/contracts/adapters/paraswap/ParaSwapLiquiditySwapAdapter.sol
+@@ -1,10 +1,10 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {IERC20Detailed} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
+-import {IERC20WithPermit} from '@aave/core-v3/contracts/interfaces/IERC20WithPermit.sol';
+-import {IPoolAddressesProvider} from '@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol';
+-import {SafeMath} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/SafeMath.sol';
++import {IERC20Detailed} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
++import {IERC20WithPermit} from '../../../aave-v3-core/interfaces/IERC20WithPermit.sol';
++import {IPoolAddressesProvider} from '../../../aave-v3-core/interfaces/IPoolAddressesProvider.sol';
++import {SafeMath} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/SafeMath.sol';
+ import {BaseParaSwapSellAdapter} from './BaseParaSwapSellAdapter.sol';
+ import {IParaSwapAugustusRegistry} from './interfaces/IParaSwapAugustusRegistry.sol';
+ import {IParaSwapAugustus} from './interfaces/IParaSwapAugustus.sol';
+diff --git a/contracts/adapters/paraswap/ParaSwapRepayAdapter.sol b/contracts/adapters/paraswap/ParaSwapRepayAdapter.sol
+index fe0a135..c55aa6d 100644
+--- a/contracts/adapters/paraswap/ParaSwapRepayAdapter.sol
++++ b/contracts/adapters/paraswap/ParaSwapRepayAdapter.sol
+@@ -1,12 +1,12 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {DataTypes} from '@aave/core-v3/contracts/protocol/libraries/types/DataTypes.sol';
+-import {IERC20Detailed} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
+-import {IERC20WithPermit} from '@aave/core-v3/contracts/interfaces/IERC20WithPermit.sol';
+-import {IPoolAddressesProvider} from '@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol';
+-import {SafeMath} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/SafeMath.sol';
++import {DataTypes} from '../../../aave-v3-core/protocol/libraries/types/DataTypes.sol';
++import {IERC20Detailed} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
++import {IERC20} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20WithPermit} from '../../../aave-v3-core/interfaces/IERC20WithPermit.sol';
++import {IPoolAddressesProvider} from '../../../aave-v3-core/interfaces/IPoolAddressesProvider.sol';
++import {SafeMath} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/SafeMath.sol';
+ import {BaseParaSwapBuyAdapter} from './BaseParaSwapBuyAdapter.sol';
+ import {IParaSwapAugustusRegistry} from './interfaces/IParaSwapAugustusRegistry.sol';
+ import {IParaSwapAugustus} from './interfaces/IParaSwapAugustus.sol';
+diff --git a/contracts/libraries/DataTypesHelper.sol b/contracts/libraries/DataTypesHelper.sol
+index 6b613b6..5d3208e 100644
+--- a/contracts/libraries/DataTypesHelper.sol
++++ b/contracts/libraries/DataTypesHelper.sol
+@@ -1,8 +1,8 @@
+ // SPDX-License-Identifier: AGPL-3.0
+ pragma solidity 0.8.10;
+ 
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
+-import {DataTypes} from '@aave/core-v3/contracts/protocol/libraries/types/DataTypes.sol';
++import {IERC20} from '../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
++import {DataTypes} from '../../aave-v3-core/protocol/libraries/types/DataTypes.sol';
+ 
+ /**
+  * @title DataTypesHelper
+diff --git a/contracts/misc/UiIncentiveDataProviderV3.sol b/contracts/misc/UiIncentiveDataProviderV3.sol
+index 80f859a..3b6b199 100644
+--- a/contracts/misc/UiIncentiveDataProviderV3.sol
++++ b/contracts/misc/UiIncentiveDataProviderV3.sol
+@@ -1,12 +1,12 @@
+ // SPDX-License-Identifier: AGPL-3.0
+ pragma solidity 0.8.10;
+ 
+-import {IERC20Detailed} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
+-import {IPoolAddressesProvider} from '@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol';
+-import {IPool} from '@aave/core-v3/contracts/interfaces/IPool.sol';
+-import {IncentivizedERC20} from '@aave/core-v3/contracts/protocol/tokenization/base/IncentivizedERC20.sol';
+-import {UserConfiguration} from '@aave/core-v3/contracts/protocol/libraries/configuration/UserConfiguration.sol';
+-import {DataTypes} from '@aave/core-v3/contracts/protocol/libraries/types/DataTypes.sol';
++import {IERC20Detailed} from '../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
++import {IPoolAddressesProvider} from '../../aave-v3-core/interfaces/IPoolAddressesProvider.sol';
++import {IPool} from '../../aave-v3-core/interfaces/IPool.sol';
++import {IncentivizedERC20} from '../../aave-v3-core/protocol/tokenization/base/IncentivizedERC20.sol';
++import {UserConfiguration} from '../../aave-v3-core/protocol/libraries/configuration/UserConfiguration.sol';
++import {DataTypes} from '../../aave-v3-core/protocol/libraries/types/DataTypes.sol';
+ import {IRewardsController} from '../rewards/interfaces/IRewardsController.sol';
+ import {IEACAggregatorProxy} from './interfaces/IEACAggregatorProxy.sol';
+ import {IUiIncentiveDataProviderV3} from './interfaces/IUiIncentiveDataProviderV3.sol';
+diff --git a/contracts/misc/UiPoolDataProviderV3.sol b/contracts/misc/UiPoolDataProviderV3.sol
+index e2cfc8e..bc7f2de 100644
+--- a/contracts/misc/UiPoolDataProviderV3.sol
++++ b/contracts/misc/UiPoolDataProviderV3.sol
+@@ -1,19 +1,19 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {IERC20Detailed} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
+-import {IPoolAddressesProvider} from '@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol';
+-import {IPool} from '@aave/core-v3/contracts/interfaces/IPool.sol';
+-import {IAaveOracle} from '@aave/core-v3/contracts/interfaces/IAaveOracle.sol';
+-import {IAToken} from '@aave/core-v3/contracts/interfaces/IAToken.sol';
+-import {IVariableDebtToken} from '@aave/core-v3/contracts/interfaces/IVariableDebtToken.sol';
+-import {IStableDebtToken} from '@aave/core-v3/contracts/interfaces/IStableDebtToken.sol';
+-import {DefaultReserveInterestRateStrategy} from '@aave/core-v3/contracts/protocol/pool/DefaultReserveInterestRateStrategy.sol';
+-import {AaveProtocolDataProvider} from '@aave/core-v3/contracts/misc/AaveProtocolDataProvider.sol';
+-import {WadRayMath} from '@aave/core-v3/contracts/protocol/libraries/math/WadRayMath.sol';
+-import {ReserveConfiguration} from '@aave/core-v3/contracts/protocol/libraries/configuration/ReserveConfiguration.sol';
+-import {UserConfiguration} from '@aave/core-v3/contracts/protocol/libraries/configuration/UserConfiguration.sol';
+-import {DataTypes} from '@aave/core-v3/contracts/protocol/libraries/types/DataTypes.sol';
++import {IERC20Detailed} from '../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
++import {IPoolAddressesProvider} from '../../aave-v3-core/interfaces/IPoolAddressesProvider.sol';
++import {IPool} from '../../aave-v3-core/interfaces/IPool.sol';
++import {IAaveOracle} from '../../aave-v3-core/interfaces/IAaveOracle.sol';
++import {IAToken} from '../../aave-v3-core/interfaces/IAToken.sol';
++import {IVariableDebtToken} from '../../aave-v3-core/interfaces/IVariableDebtToken.sol';
++import {IStableDebtToken} from '../../aave-v3-core/interfaces/IStableDebtToken.sol';
++import {DefaultReserveInterestRateStrategy} from '../../aave-v3-core/protocol/pool/DefaultReserveInterestRateStrategy.sol';
++import {AaveProtocolDataProvider} from '../../aave-v3-core/misc/AaveProtocolDataProvider.sol';
++import {WadRayMath} from '../../aave-v3-core/protocol/libraries/math/WadRayMath.sol';
++import {ReserveConfiguration} from '../../aave-v3-core/protocol/libraries/configuration/ReserveConfiguration.sol';
++import {UserConfiguration} from '../../aave-v3-core/protocol/libraries/configuration/UserConfiguration.sol';
++import {DataTypes} from '../../aave-v3-core/protocol/libraries/types/DataTypes.sol';
+ import {IEACAggregatorProxy} from './interfaces/IEACAggregatorProxy.sol';
+ import {IERC20DetailedBytes} from './interfaces/IERC20DetailedBytes.sol';
+ import {IUiPoolDataProviderV3} from './interfaces/IUiPoolDataProviderV3.sol';
+diff --git a/contracts/misc/WETHGateway.sol b/contracts/misc/WETHGateway.sol
+index f56a994..5b478b6 100644
+--- a/contracts/misc/WETHGateway.sol
++++ b/contracts/misc/WETHGateway.sol
+@@ -1,15 +1,15 @@
+ // SPDX-License-Identifier: AGPL-3.0
+ pragma solidity 0.8.10;
+ 
+-import {Ownable} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/Ownable.sol';
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {Ownable} from '../../aave-v3-core/dependencies/openzeppelin/contracts/Ownable.sol';
++import {IERC20} from '../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ import {IWETH} from './interfaces/IWETH.sol';
+ import {IWETHGateway} from './interfaces/IWETHGateway.sol';
+-import {IPool} from '@aave/core-v3/contracts/interfaces/IPool.sol';
+-import {IAToken} from '@aave/core-v3/contracts/interfaces/IAToken.sol';
+-import {ReserveConfiguration} from '@aave/core-v3/contracts/protocol/libraries/configuration/ReserveConfiguration.sol';
+-import {UserConfiguration} from '@aave/core-v3/contracts/protocol/libraries/configuration/UserConfiguration.sol';
+-import {DataTypes} from '@aave/core-v3/contracts/protocol/libraries/types/DataTypes.sol';
++import {IPool} from '../../aave-v3-core/interfaces/IPool.sol';
++import {IAToken} from '../../aave-v3-core/interfaces/IAToken.sol';
++import {ReserveConfiguration} from '../../aave-v3-core/protocol/libraries/configuration/ReserveConfiguration.sol';
++import {UserConfiguration} from '../../aave-v3-core/protocol/libraries/configuration/UserConfiguration.sol';
++import {DataTypes} from '../../aave-v3-core/protocol/libraries/types/DataTypes.sol';
+ import {DataTypesHelper} from '../libraries/DataTypesHelper.sol';
+ 
+ contract WETHGateway is IWETHGateway, Ownable {
+diff --git a/contracts/misc/WalletBalanceProvider.sol b/contracts/misc/WalletBalanceProvider.sol
+index a5e42e8..573cf7d 100644
+--- a/contracts/misc/WalletBalanceProvider.sol
++++ b/contracts/misc/WalletBalanceProvider.sol
+@@ -1,14 +1,14 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {Address} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/Address.sol';
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
+-
+-import {IPoolAddressesProvider} from '@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol';
+-import {IPool} from '@aave/core-v3/contracts/interfaces/IPool.sol';
+-import {GPv2SafeERC20} from '@aave/core-v3/contracts/dependencies/gnosis/contracts/GPv2SafeERC20.sol';
+-import {ReserveConfiguration} from '@aave/core-v3/contracts/protocol/libraries/configuration/ReserveConfiguration.sol';
+-import {DataTypes} from '@aave/core-v3/contracts/protocol/libraries/types/DataTypes.sol';
++import {Address} from '../../aave-v3-core/dependencies/openzeppelin/contracts/Address.sol';
++import {IERC20} from '../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
++
++import {IPoolAddressesProvider} from '../../aave-v3-core/interfaces/IPoolAddressesProvider.sol';
++import {IPool} from '../../aave-v3-core/interfaces/IPool.sol';
++import {GPv2SafeERC20} from '../../aave-v3-core/dependencies/gnosis/contracts/GPv2SafeERC20.sol';
++import {ReserveConfiguration} from '../../aave-v3-core/protocol/libraries/configuration/ReserveConfiguration.sol';
++import {DataTypes} from '../../aave-v3-core/protocol/libraries/types/DataTypes.sol';
+ 
+ /**
+  * @title WalletBalanceProvider contract
+diff --git a/contracts/misc/interfaces/IERC20DetailedBytes.sol b/contracts/misc/interfaces/IERC20DetailedBytes.sol
+index 15aa07d..90ae6b4 100644
+--- a/contracts/misc/interfaces/IERC20DetailedBytes.sol
++++ b/contracts/misc/interfaces/IERC20DetailedBytes.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ 
+ interface IERC20DetailedBytes is IERC20 {
+   function name() external view returns (bytes32);
+diff --git a/contracts/misc/interfaces/IUiIncentiveDataProviderV3.sol b/contracts/misc/interfaces/IUiIncentiveDataProviderV3.sol
+index f581779..43fe1b0 100644
+--- a/contracts/misc/interfaces/IUiIncentiveDataProviderV3.sol
++++ b/contracts/misc/interfaces/IUiIncentiveDataProviderV3.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {IPoolAddressesProvider} from '@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol';
++import {IPoolAddressesProvider} from '../../../aave-v3-core/interfaces/IPoolAddressesProvider.sol';
+ 
+ interface IUiIncentiveDataProviderV3 {
+   struct AggregatedReserveIncentiveData {
+diff --git a/contracts/misc/interfaces/IUiPoolDataProviderV3.sol b/contracts/misc/interfaces/IUiPoolDataProviderV3.sol
+index 8d4c5e5..fefcfd0 100644
+--- a/contracts/misc/interfaces/IUiPoolDataProviderV3.sol
++++ b/contracts/misc/interfaces/IUiPoolDataProviderV3.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {IPoolAddressesProvider} from '@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol';
++import {IPoolAddressesProvider} from '../../../aave-v3-core/interfaces/IPoolAddressesProvider.sol';
+ 
+ interface IUiPoolDataProviderV3 {
+   struct InterestRates {
+diff --git a/contracts/mocks/MockBadTransferStrategy.sol b/contracts/mocks/MockBadTransferStrategy.sol
+index f518caa..03cbf2f 100644
+--- a/contracts/mocks/MockBadTransferStrategy.sol
++++ b/contracts/mocks/MockBadTransferStrategy.sol
+@@ -3,8 +3,8 @@ pragma solidity 0.8.10;
+ 
+ import {ITransferStrategyBase} from '../rewards/interfaces/ITransferStrategyBase.sol';
+ import {TransferStrategyBase} from '../rewards/transfer-strategies/TransferStrategyBase.sol';
+-import {GPv2SafeERC20} from '@aave/core-v3/contracts/dependencies/gnosis/contracts/GPv2SafeERC20.sol';
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {GPv2SafeERC20} from '../../aave-v3-core/dependencies/gnosis/contracts/GPv2SafeERC20.sol';
++import {IERC20} from '../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ 
+ /**
+  * @title MockBadTransferStrategy
+diff --git a/contracts/mocks/swap/MockParaSwapAugustus.sol b/contracts/mocks/swap/MockParaSwapAugustus.sol
+index e3f0384..8e75320 100644
+--- a/contracts/mocks/swap/MockParaSwapAugustus.sol
++++ b/contracts/mocks/swap/MockParaSwapAugustus.sol
+@@ -3,8 +3,8 @@ pragma solidity 0.8.10;
+ 
+ import {IParaSwapAugustus} from '../../adapters/paraswap/interfaces/IParaSwapAugustus.sol';
+ import {MockParaSwapTokenTransferProxy} from './MockParaSwapTokenTransferProxy.sol';
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
+-import {MintableERC20} from '@aave/core-v3/contracts/mocks/tokens/MintableERC20.sol';
++import {IERC20} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
++import {MintableERC20} from '../../../aave-v3-core/mocks/tokens/MintableERC20.sol';
+ 
+ contract MockParaSwapAugustus is IParaSwapAugustus {
+   MockParaSwapTokenTransferProxy immutable TOKEN_TRANSFER_PROXY;
+diff --git a/contracts/mocks/swap/MockParaSwapTokenTransferProxy.sol b/contracts/mocks/swap/MockParaSwapTokenTransferProxy.sol
+index e3a72b3..05533bf 100644
+--- a/contracts/mocks/swap/MockParaSwapTokenTransferProxy.sol
++++ b/contracts/mocks/swap/MockParaSwapTokenTransferProxy.sol
+@@ -1,8 +1,8 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {Ownable} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/Ownable.sol';
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {Ownable} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/Ownable.sol';
++import {IERC20} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ 
+ contract MockParaSwapTokenTransferProxy is Ownable {
+   function transferFrom(
+diff --git a/contracts/rewards/EmissionManager.sol b/contracts/rewards/EmissionManager.sol
+index fe49e77..a90c6d2 100644
+--- a/contracts/rewards/EmissionManager.sol
++++ b/contracts/rewards/EmissionManager.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {Ownable} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/Ownable.sol';
++import {Ownable} from '../../aave-v3-core/dependencies/openzeppelin/contracts/Ownable.sol';
+ import {IEACAggregatorProxy} from '../misc/interfaces/IEACAggregatorProxy.sol';
+ import {IEmissionManager} from './interfaces/IEmissionManager.sol';
+ import {ITransferStrategyBase} from './interfaces/ITransferStrategyBase.sol';
+diff --git a/contracts/rewards/RewardsController.sol b/contracts/rewards/RewardsController.sol
+index 45bd0ea..018fec4 100644
+--- a/contracts/rewards/RewardsController.sol
++++ b/contracts/rewards/RewardsController.sol
+@@ -1,9 +1,9 @@
+ // SPDX-License-Identifier: BUSL-1.1
+ pragma solidity 0.8.10;
+ 
+-import {VersionedInitializable} from '@aave/core-v3/contracts/protocol/libraries/aave-upgradeability/VersionedInitializable.sol';
+-import {SafeCast} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/SafeCast.sol';
+-import {IScaledBalanceToken} from '@aave/core-v3/contracts/interfaces/IScaledBalanceToken.sol';
++import {VersionedInitializable} from '../../aave-v3-core/protocol/libraries/aave-upgradeability/VersionedInitializable.sol';
++import {SafeCast} from '../../aave-v3-core/dependencies/openzeppelin/contracts/SafeCast.sol';
++import {IScaledBalanceToken} from '../../aave-v3-core/interfaces/IScaledBalanceToken.sol';
+ import {RewardsDistributor} from './RewardsDistributor.sol';
+ import {IRewardsController} from './interfaces/IRewardsController.sol';
+ import {ITransferStrategyBase} from './interfaces/ITransferStrategyBase.sol';
+diff --git a/contracts/rewards/RewardsDistributor.sol b/contracts/rewards/RewardsDistributor.sol
+index 56db747..90c1ae9 100644
+--- a/contracts/rewards/RewardsDistributor.sol
++++ b/contracts/rewards/RewardsDistributor.sol
+@@ -1,8 +1,8 @@
+ // SPDX-License-Identifier: BUSL-1.1
+ pragma solidity 0.8.10;
+ 
+-import {IERC20Detailed} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
+-import {SafeCast} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/SafeCast.sol';
++import {IERC20Detailed} from '../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20Detailed.sol';
++import {SafeCast} from '../../aave-v3-core/dependencies/openzeppelin/contracts/SafeCast.sol';
+ import {IRewardsDistributor} from './interfaces/IRewardsDistributor.sol';
+ import {RewardsDataTypes} from './libraries/RewardsDataTypes.sol';
+ 
+diff --git a/contracts/rewards/transfer-strategies/PullRewardsTransferStrategy.sol b/contracts/rewards/transfer-strategies/PullRewardsTransferStrategy.sol
+index 450eb5c..3f4d424 100644
+--- a/contracts/rewards/transfer-strategies/PullRewardsTransferStrategy.sol
++++ b/contracts/rewards/transfer-strategies/PullRewardsTransferStrategy.sol
+@@ -4,8 +4,8 @@ pragma solidity 0.8.10;
+ import {IPullRewardsTransferStrategy} from '../interfaces/IPullRewardsTransferStrategy.sol';
+ import {ITransferStrategyBase} from '../interfaces/ITransferStrategyBase.sol';
+ import {TransferStrategyBase} from './TransferStrategyBase.sol';
+-import {GPv2SafeERC20} from '@aave/core-v3/contracts/dependencies/gnosis/contracts/GPv2SafeERC20.sol';
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {GPv2SafeERC20} from '../../../aave-v3-core/dependencies/gnosis/contracts/GPv2SafeERC20.sol';
++import {IERC20} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ 
+ /**
+  * @title PullRewardsTransferStrategy
+diff --git a/contracts/rewards/transfer-strategies/StakedTokenTransferStrategy.sol b/contracts/rewards/transfer-strategies/StakedTokenTransferStrategy.sol
+index ba88c9d..259a2f7 100644
+--- a/contracts/rewards/transfer-strategies/StakedTokenTransferStrategy.sol
++++ b/contracts/rewards/transfer-strategies/StakedTokenTransferStrategy.sol
+@@ -5,8 +5,8 @@ import {IStakedToken} from '../interfaces/IStakedToken.sol';
+ import {IStakedTokenTransferStrategy} from '../interfaces/IStakedTokenTransferStrategy.sol';
+ import {ITransferStrategyBase} from '../interfaces/ITransferStrategyBase.sol';
+ import {TransferStrategyBase} from './TransferStrategyBase.sol';
+-import {GPv2SafeERC20} from '@aave/core-v3/contracts/dependencies/gnosis/contracts/GPv2SafeERC20.sol';
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {GPv2SafeERC20} from '../../../aave-v3-core/dependencies/gnosis/contracts/GPv2SafeERC20.sol';
++import {IERC20} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ 
+ /**
+  * @title StakedTokenTransferStrategy
+diff --git a/contracts/rewards/transfer-strategies/TransferStrategyBase.sol b/contracts/rewards/transfer-strategies/TransferStrategyBase.sol
+index 582ead1..2595e38 100644
+--- a/contracts/rewards/transfer-strategies/TransferStrategyBase.sol
++++ b/contracts/rewards/transfer-strategies/TransferStrategyBase.sol
+@@ -2,8 +2,8 @@
+ pragma solidity 0.8.10;
+ 
+ import {ITransferStrategyBase} from '../interfaces/ITransferStrategyBase.sol';
+-import {GPv2SafeERC20} from '@aave/core-v3/contracts/dependencies/gnosis/contracts/GPv2SafeERC20.sol';
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {GPv2SafeERC20} from '../../../aave-v3-core/dependencies/gnosis/contracts/GPv2SafeERC20.sol';
++import {IERC20} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ 
+ /**
+  * @title TransferStrategyStorage
+diff --git a/contracts/treasury/AaveEcosystemReserveController.sol b/contracts/treasury/AaveEcosystemReserveController.sol
+index fd7152d..bfefeff 100644
+--- a/contracts/treasury/AaveEcosystemReserveController.sol
++++ b/contracts/treasury/AaveEcosystemReserveController.sol
+@@ -1,11 +1,11 @@
+ // SPDX-License-Identifier: MIT
+ pragma solidity ^0.8.10;
+ 
+-import {Ownable} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/Ownable.sol';
++import {Ownable} from '../../aave-v3-core/dependencies/openzeppelin/contracts/Ownable.sol';
+ import {IStreamable} from './interfaces/IStreamable.sol';
+ import {IAdminControlledEcosystemReserve} from './interfaces/IAdminControlledEcosystemReserve.sol';
+ import {IAaveEcosystemReserveController} from './interfaces/IAaveEcosystemReserveController.sol';
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ 
+ contract AaveEcosystemReserveController is Ownable, IAaveEcosystemReserveController {
+   /**
+diff --git a/contracts/treasury/AaveEcosystemReserveV2.sol b/contracts/treasury/AaveEcosystemReserveV2.sol
+index 0c36f67..6882812 100644
+--- a/contracts/treasury/AaveEcosystemReserveV2.sol
++++ b/contracts/treasury/AaveEcosystemReserveV2.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-3.0
+ pragma solidity ^0.8.10;
+ 
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ import {IStreamable} from './interfaces/IStreamable.sol';
+ import {AdminControlledEcosystemReserve} from './AdminControlledEcosystemReserve.sol';
+ import {ReentrancyGuard} from './libs/ReentrancyGuard.sol';
+diff --git a/contracts/treasury/AdminControlledEcosystemReserve.sol b/contracts/treasury/AdminControlledEcosystemReserve.sol
+index 27dcf05..6fe6909 100644
+--- a/contracts/treasury/AdminControlledEcosystemReserve.sol
++++ b/contracts/treasury/AdminControlledEcosystemReserve.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-3.0
+ pragma solidity ^0.8.10;
+ 
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ import {IAdminControlledEcosystemReserve} from './interfaces/IAdminControlledEcosystemReserve.sol';
+ import {VersionedInitializable} from './libs/VersionedInitializable.sol';
+ import {SafeERC20} from './libs/SafeERC20.sol';
+diff --git a/contracts/treasury/Collector.sol b/contracts/treasury/Collector.sol
+index 59f3c46..7492d83 100644
+--- a/contracts/treasury/Collector.sol
++++ b/contracts/treasury/Collector.sol
+@@ -1,8 +1,8 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {VersionedInitializable} from '@aave/core-v3/contracts/protocol/libraries/aave-upgradeability/VersionedInitializable.sol';
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {VersionedInitializable} from '../../aave-v3-core/protocol/libraries/aave-upgradeability/VersionedInitializable.sol';
++import {IERC20} from '../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ import {ICollector} from './interfaces/ICollector.sol';
+ 
+ /**
+diff --git a/contracts/treasury/CollectorController.sol b/contracts/treasury/CollectorController.sol
+index de70a2e..c711505 100644
+--- a/contracts/treasury/CollectorController.sol
++++ b/contracts/treasury/CollectorController.sol
+@@ -1,8 +1,8 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {Ownable} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/Ownable.sol';
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {Ownable} from '../../aave-v3-core/dependencies/openzeppelin/contracts/Ownable.sol';
++import {IERC20} from '../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ import {ICollector} from './interfaces/ICollector.sol';
+ 
+ /**
+diff --git a/contracts/treasury/interfaces/IAaveEcosystemReserveController.sol b/contracts/treasury/interfaces/IAaveEcosystemReserveController.sol
+index bd8131e..d03544c 100644
+--- a/contracts/treasury/interfaces/IAaveEcosystemReserveController.sol
++++ b/contracts/treasury/interfaces/IAaveEcosystemReserveController.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: MIT
+ pragma solidity ^0.8.10;
+ 
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ 
+ interface IAaveEcosystemReserveController {
+   /**
+diff --git a/contracts/treasury/interfaces/IAdminControlledEcosystemReserve.sol b/contracts/treasury/interfaces/IAdminControlledEcosystemReserve.sol
+index 3071f91..fd27596 100644
+--- a/contracts/treasury/interfaces/IAdminControlledEcosystemReserve.sol
++++ b/contracts/treasury/interfaces/IAdminControlledEcosystemReserve.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-3.0
+ pragma solidity ^0.8.10;
+ 
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ 
+ interface IAdminControlledEcosystemReserve {
+   /** @notice Emitted when the funds admin changes
+diff --git a/contracts/treasury/interfaces/ICollector.sol b/contracts/treasury/interfaces/ICollector.sol
+index 707d0a5..5560b1d 100644
+--- a/contracts/treasury/interfaces/ICollector.sol
++++ b/contracts/treasury/interfaces/ICollector.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.8.10;
+ 
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ 
+ /**
+  * @title ICollector
+diff --git a/contracts/treasury/libs/SafeERC20.sol b/contracts/treasury/libs/SafeERC20.sol
+index ebc45c9..62db948 100644
+--- a/contracts/treasury/libs/SafeERC20.sol
++++ b/contracts/treasury/libs/SafeERC20.sol
+@@ -3,7 +3,7 @@
+ 
+ pragma solidity ^0.8.0;
+ 
+-import {IERC20} from '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../../aave-v3-core/dependencies/openzeppelin/contracts/IERC20.sol';
+ import {Address} from './Address.sol';
+ 
+ /**
+-- 
+2.34.1
+

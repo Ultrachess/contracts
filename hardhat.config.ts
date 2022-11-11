@@ -65,6 +65,15 @@ const config: HardhatUserConfig = {
           },
         },
       },
+      // Required by Aave V3
+      {
+        version: "0.8.10",
+        settings: {
+          optimizer: {
+            enabled: true,
+          },
+        },
+      },
       {
         // Required by OpenZeppelin V3
         // Required by Uniswap V3

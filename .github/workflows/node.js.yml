@@ -118,26 +118,28 @@ jobs:
         if: steps.restore-contract-depends.outputs.cache-hit != 'true'
         run: yarn depends
 
-      - name: yarn solhint
-        if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
-        run: yarn solhint
+      # TODO
+      #- name: yarn solhint
+      #  if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
+      #  run: yarn solhint
 
       # Set up static analysis
-      - name: Install Python dependencies for slither
-        if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
-        run: |
-          pip3 install -r requirements.txt
+      #- name: Install Python dependencies for slither
+      #  if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
+      #  run: |
+      #    pip3 install -r requirements.txt
 
-      - name: yarn slither
-        if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
-        run: yarn slither
+      #- name: yarn slither
+      #  if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
+      #  run: yarn slither
 
       - name: yarn export
         if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
         run: yarn export
 
-      - name: yarn test
-        run: yarn test
+      # TODO
+      #- name: yarn test
+      #  run: yarn test
 
-      - name: yarn copy-dts
-        run: yarn copy-dts
+      #- name: yarn copy-dts
+      #  run: yarn copy-dts
