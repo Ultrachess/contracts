@@ -1,0 +1,43 @@
+From 03a89c92b0af25a67d4436c7ed548d43f422b9f1 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Fri, 11 Nov 2022 16:12:07 -0800
+Subject: [PATCH 2/2] Rename reserved word in Solidity
+
+---
+ contracts/VotingEscrow.vy | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/contracts/VotingEscrow.vy b/contracts/VotingEscrow.vy
+index 4e596e5..d86c6d1 100644
+--- a/contracts/VotingEscrow.vy
++++ b/contracts/VotingEscrow.vy
+@@ -68,7 +68,7 @@ event Deposit:
+     provider: indexed(address)
+     value: uint256
+     locktime: indexed(uint256)
+-    type: int128
++    deposit_type: int128
+     ts: uint256
+ 
+ event Withdraw:
+@@ -348,7 +348,7 @@ def _checkpoint(addr: address, old_locked: LockedBalance, new_locked: LockedBala
+ 
+ 
+ @internal
+-def _deposit_for(_addr: address, _value: uint256, unlock_time: uint256, locked_balance: LockedBalance, type: int128):
++def _deposit_for(_addr: address, _value: uint256, unlock_time: uint256, locked_balance: LockedBalance, deposit_type: int128):
+     """
+     @notice Deposit and lock tokens for a user
+     @param _addr User's wallet address
+@@ -376,7 +376,7 @@ def _deposit_for(_addr: address, _value: uint256, unlock_time: uint256, locked_b
+     if _value != 0:
+         assert ERC20(self.token).transferFrom(_addr, self, _value)
+ 
+-    log Deposit(_addr, _value, _locked.end, type, block.timestamp)
++    log Deposit(_addr, _value, _locked.end, deposit_type, block.timestamp)
+     log Supply(supply_before, supply_before + _value)
+ 
+ 
+-- 
+2.34.1
+

@@ -29,7 +29,7 @@
   "scripts": {
     "audit-ci": "audit-ci --config audit-ci.json",
     "build": "hardhat compile && tsc",
-    "clean": "rimraf artifacts cache contracts/bytecode contracts/depends deployments/hardhat deployments/localhost dist node_modules src/abi src/types tools/repos",
+    "clean": "rimraf artifacts cache contracts/bytecode contracts/depends contracts/interfaces deployments/hardhat deployments/localhost dist node_modules src/abi src/types tools/repos",
     "copy-dts": "copyfiles -u 1 \"src/**/*.d.ts\" dist/src",
     "depends": "bash tools/build-depends.sh",
     "deploy": "run-s deploy:development",

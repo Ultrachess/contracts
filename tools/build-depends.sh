@@ -40,12 +40,16 @@ CONTRACT_DIR="${ROOT_DIR}/contracts"
 # Depends install directory
 INSTALL_DIR="${CONTRACT_DIR}/depends"
 
+# Contract interface directory
+INTERFACE_DIR="${CONTRACT_DIR}/interfaces"
+
 # Directory to place compiled bytecode
 BYTECODE_DIR="${CONTRACT_DIR}/bytecode"
 
 # Ensure directories exist
 mkdir -p "${REPO_DIR}"
 mkdir -p "${INSTALL_DIR}"
+mkdir -p "${INTERFACE_DIR}"
 mkdir -p "${BYTECODE_DIR}"
 
 #

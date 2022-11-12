@@ -19,10 +19,14 @@
 #   * DEPENDS_DIR - Location of dependency package files
 #   * REPO_DIR - Place to download the repo
 #   * BYTECODE_DIR - Place to install the bytecode files
+#   * INTERFACE_DIR - Place to install the contract interfaces
 #
 # Dependencies:
 #
 #   * git
+#   * jq
+#   * npm (installed with Node)
+#   * npx (installed with Node)
 #   * patch
 #   * python3
 #   * python3-venv
@@ -40,6 +44,7 @@ set -o nounset
 CURVE_DAO_NAME="curve-dao"
 CURVE_DAO_VERSION="3bee979b7b6293c9e7654ee7dfbf5cc9ff40ca58" # master
 CURVE_DAO_REPO="https://github.com/curvefi/curve-dao-contracts.git"
+CURVE_DAO_LICENSE="MIT"
 
 #
 # Environment paths
@@ -51,8 +56,11 @@ DEPENDS_DIR_CURVE_DAO="${DEPENDS_DIR}/${CURVE_DAO_NAME}"
 # Checkout directory
 REPO_DIR_CURVE_DAO="${REPO_DIR}/${CURVE_DAO_NAME}"
 
-# Install directory
+# Bytecode install directory
 BYTECODE_DIR_CURVE_DAO="${BYTECODE_DIR}/${CURVE_DAO_NAME}"
+
+# Interace install directory
+INTERFACE_DIR_CURVE_DAO="${INTERFACE_DIR}/${CURVE_DAO_NAME}"
 
 #
 # Checkout
@@ -81,6 +89,8 @@ function patch_curve_dao() {
 
   patch -p1 --directory="${REPO_DIR_CURVE_DAO}" < \
     "${DEPENDS_DIR_CURVE_DAO}/0001-Use-construction-params-for-CREATE2-factory-deployme.patch"
+  patch -p1 --directory="${REPO_DIR_CURVE_DAO}" < \
+    "${DEPENDS_DIR_CURVE_DAO}/0002-Rename-reserved-word-in-Solidity.patch"
 
   # Remove test contracts to save space and compile time
   rm -rf "${REPO_DIR_CURVE_DAO}/contracts/testing"
@@ -107,15 +117,57 @@ function patch_curve_dao() {
 function build_curve_dao() {
   echo "Building Curve DAO"
 
+  # Build Vyper contracts
   (
     cd "${REPO_DIR_CURVE_DAO}"
-    python3 -m venv .
+
+    python3 -m venv .venv
+
     set +o nounset # Bug in python3-venv that ships with Ubuntu 18.04
-    source bin/activate
+
+    source .venv/bin/activate
     pip3 install eth-brownie
     brownie compile
     deactivate
+
     set -o nounset
+  )
+
+  # Generate Solidity interfaces
+  (
+    cd "${REPO_DIR_CURVE_DAO}"
+
+    npm install --save-dev \
+      abi-to-sol \
+      prettier \
+      prettier-plugin-solidity
+
+    # Generate interfaces from ABIs
+    cd "build/contracts"
+    for file in *.json; do
+      echo "Generating ${file%.json}.sol..."
+
+      jq ".abi" "${file}" | \
+        npx abi-to-sol \
+          --license="${CURVE_DAO_LICENSE}" \
+          --solidity-version=">=0.7.0" \
+          "${file%.json}" > \
+        "../interfaces/${file%.json}.sol"
+    done
+
+    # Format interfaces
+    cd "../.."
+    cp "${ROOT_DIR}/.prettierrc" .
+    npx prettier -w "build/interfaces"
+
+    # We aren't able to use abi-to-sol with version ">=0.6.0" due to the
+    # following error:
+    #
+    #   Error: Desired Solidity range lacks unambiguous location specifier for parameter of type "address[8]".
+    #
+    # To work around this, we generate with version >=0.7.0, and then replace it afterward
+    find "build/interfaces" -type f -name "*.sol" -exec \
+      sed -i "s|pragma solidity >=0.7.0;|pragma solidity >=0.6.0;|g" {} \;
   )
 }
 
@@ -129,4 +181,9 @@ function install_curve_dao() {
   rm -rf "${BYTECODE_DIR_CURVE_DAO}"
   mkdir -p "${BYTECODE_DIR_CURVE_DAO}"
   cp -r "${REPO_DIR_CURVE_DAO}/build/contracts"/* "${BYTECODE_DIR_CURVE_DAO}"
+
+  # Install interfaces
+  rm -rf "${INTERFACE_DIR_CURVE_DAO}"
+  mkdir -p "${INTERFACE_DIR_CURVE_DAO}"
+  cp -r "${REPO_DIR_CURVE_DAO}/build/interfaces"/* "${INTERFACE_DIR_CURVE_DAO}"
 }

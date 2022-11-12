@@ -19,10 +19,14 @@
 #   * DEPENDS_DIR - Location of dependency package files
 #   * REPO_DIR - Place to download the repo
 #   * BYTECODE_DIR - Place to install the bytecode files
+#   * INTERFACE_DIR - Place to install the contract interfaces
 #
 # Dependencies:
 #
 #   * git
+#   * jq
+#   * npm (installed with Node)
+#   * npx (installed with Node)
 #   * patch
 #   * python3
 #   * python3-venv
@@ -40,6 +44,7 @@ set -o nounset
 CURVE_NAME="curve"
 CURVE_VERSION="b0bbf77f8f93c9c5f4e415bce9cd71f0cdee960e"
 CURVE_REPO="https://github.com/curvefi/curve-contract.git"
+CURVE_LICENSE="MIT"
 
 #
 # Environment paths
@@ -51,8 +56,11 @@ DEPENDS_DIR_CURVE="${DEPENDS_DIR}/${CURVE_NAME}"
 # Checkout directory
 REPO_DIR_CURVE="${REPO_DIR}/${CURVE_NAME}"
 
-# Install directory
+# Bytecode install directory
 BYTECODE_DIR_CURVE="${BYTECODE_DIR}/${CURVE_NAME}"
+
+# Interace install directory
+INTERFACE_DIR_CURVE="${INTERFACE_DIR}/${CURVE_NAME}"
 
 #
 # Checkout
@@ -98,15 +106,57 @@ function patch_curve() {
 function build_curve() {
   echo "Building Curve"
 
+  # Build Vyper contracts
   (
     cd "${REPO_DIR_CURVE}"
-    python3 -m venv .
+
+    python3 -m venv .venv
+
     set +o nounset # Bug in python3-venv that ships with Ubuntu 18.04
-    source bin/activate
+
+    source .venv/bin/activate
     pip3 install eth-brownie
     brownie compile
     deactivate
+
     set -o nounset
+  )
+
+  # Generate Solidity interfaces
+  (
+    cd "${REPO_DIR_CURVE}"
+
+    npm install --save-dev \
+      abi-to-sol \
+      prettier \
+      prettier-plugin-solidity
+
+    # Generate interfaces from ABIs
+    cd "build/contracts"
+    for file in *.json; do
+      echo "Generating ${file%.json}.sol..."
+
+      jq ".abi" "${file}" | \
+        npx abi-to-sol \
+          --license="${CURVE_LICENSE}" \
+          --solidity-version=">=0.7.0" \
+          "${file%.json}" > \
+        "../interfaces/${file%.json}.sol"
+    done
+
+    # Format interfaces
+    cd "../.."
+    cp "${ROOT_DIR}/.prettierrc" .
+    npx prettier -w "build/interfaces"
+
+    # We aren't able to use abi-to-sol with version ">=0.6.0" due to the
+    # following error:
+    #
+    #   Error: Desired Solidity range lacks unambiguous location specifier for parameter of type "address[8]".
+    #
+    # To work around this, we generate with version >=0.7.0, and then replace it afterward
+    find "build/interfaces" -type f -name "*.sol" -exec \
+      sed -i "s|pragma solidity >=0.7.0;|pragma solidity >=0.6.0;|g" {} \;
   )
 }
 
@@ -117,7 +167,13 @@ function build_curve() {
 function install_curve() {
   echo "Installing Curve"
 
+  # Install bytecode
   rm -rf "${BYTECODE_DIR_CURVE}"
   mkdir -p "${BYTECODE_DIR_CURVE}"
   cp -r "${REPO_DIR_CURVE}/build/contracts"/* "${BYTECODE_DIR_CURVE}"
+
+  # Install interfaces
+  rm -rf "${INTERFACE_DIR_CURVE}"
+  mkdir -p "${INTERFACE_DIR_CURVE}"
+  cp -r "${REPO_DIR_CURVE}/build/interfaces"/* "${INTERFACE_DIR_CURVE}"
 }

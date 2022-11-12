@@ -72,6 +72,7 @@ jobs:
           path: |
             contracts/bytecode
             contracts/depends
+            contracts/interfaces
           key: restore-contract-depends-${{ hashFiles('tools/build-depends.sh', 'tools/depends/**') }}
 
       - name: Restore Vyper compilers
