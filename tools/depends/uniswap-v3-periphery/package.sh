@@ -19,6 +19,7 @@
 #   * DEPENDS_DIR - Location of dependency package files (TODO)
 #   * REPO_DIR - Place to download the repo
 #   * INSTALL_DIR - Place to install the contract files
+#   * INTERFACE_DIR - Place to install the contract interfaces
 #
 # Dependencies:
 #
@@ -51,6 +52,9 @@ REPO_DIR_UNISWAP_V3_PERIPHERY="${REPO_DIR}/${UNISWAP_V3_PERIPHERY_NAME}"
 
 # Install directory for Uniswap V3 Periphery contracts
 INSTALL_DIR_UNISWAP_V3_PERIPHERY="${INSTALL_DIR}/${UNISWAP_V3_PERIPHERY_NAME}"
+
+# Install directory for Uniswap V3 Periphery interfaces
+INTERFACE_DIR_UNISWAP_V3_PERIPHERY="${INTERFACE_DIR}/${UNISWAP_V3_PERIPHERY_NAME}"
 
 #
 # Checkout
@@ -113,4 +117,23 @@ function install_uniswap_v3_periphery() {
 
   # Remove V2 to V3 migrator, as it depends on UniV2 headers
   rm -rf "${INSTALL_DIR_UNISWAP_V3_PERIPHERY}/V3Migrator.sol"
+
+  # Install and patch Uniswap V3 Periphery interfaces. This is needed because
+  # an older version of OpenZeppelin is used in the interface, so we copy the
+  # interfaces and patch in the new version.
+  rm -rf "${INTERFACE_DIR_UNISWAP_V3_PERIPHERY}"
+  mkdir -p "${INTERFACE_DIR_UNISWAP_V3_PERIPHERY}"
+  for file in \
+      IERC721Permit.sol \
+      INonfungiblePositionManager.sol \
+      IPeripheryImmutableState.sol \
+      IPeripheryPayments.sol \
+      IPoolInitializer.sol \
+  ; do
+    cp "${REPO_DIR_UNISWAP_V3_PERIPHERY}/contracts/interfaces/${file}" "${INTERFACE_DIR_UNISWAP_V3_PERIPHERY}"
+
+    # Patch Uniswap V3 Periphery interfaces to use compatible version of OpenZeppelin
+    sed -i 's|../../openzeppelin-v3/|../../depends/openzeppelin-v3/|g' \
+      "${INTERFACE_DIR_UNISWAP_V3_PERIPHERY}/${file}"
+  done
 }
