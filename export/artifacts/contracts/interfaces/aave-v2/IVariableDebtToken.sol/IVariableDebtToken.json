@@ -1,0 +1,387 @@
+{
+  "contractName": "IVariableDebtToken",
+  "sourceName": "contracts/interfaces/aave-v2/IVariableDebtToken.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "Burn",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "underlyingAsset",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "pool",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "incentivesController",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint8",
+          "name": "debtTokenDecimals",
+          "type": "uint8"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "debtTokenName",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "debtTokenSymbol",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "params",
+          "type": "bytes"
+        }
+      ],
+      "name": "Initialized",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "onBehalfOf",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "Mint",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "burn",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getIncentivesController",
+      "outputs": [
+        {
+          "internalType": "contract IAaveIncentivesController",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getScaledUserBalanceAndSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract ILendingPool",
+          "name": "pool",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "underlyingAsset",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IAaveIncentivesController",
+          "name": "incentivesController",
+          "type": "address"
+        },
+        {
+          "internalType": "uint8",
+          "name": "debtTokenDecimals",
+          "type": "uint8"
+        },
+        {
+          "internalType": "string",
+          "name": "debtTokenName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "debtTokenSymbol",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes",
+          "name": "params",
+          "type": "bytes"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "onBehalfOf",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "mint",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "scaledBalanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "scaledTotalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Aave",
+    "events": {
+      "Burn(address,uint256,uint256)": {
+        "details": "Emitted when variable debt is burnt",
+        "params": {
+          "amount": "The amount of debt being burned",
+          "index": "The index of the user*",
+          "user": "The user which debt has been burned"
+        }
+      },
+      "Mint(address,address,uint256,uint256)": {
+        "details": "Emitted after the mint action",
+        "params": {
+          "from": "The address performing the mint",
+          "index": "The last index of the reserve*",
+          "onBehalfOf": "The address of the user on which behalf minting has been performed",
+          "value": "The amount to be minted"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "burn(address,uint256,uint256)": {
+        "details": "Burns user variable debt",
+        "params": {
+          "index": "The variable debt index of the reserve*",
+          "user": "The user which debt is burnt"
+        }
+      },
+      "getIncentivesController()": {
+        "details": "Returns the address of the incentives controller contract*"
+      },
+      "getScaledUserBalanceAndSupply(address)": {
+        "details": "Returns the scaled balance of the user and the scaled total supply.",
+        "params": {
+          "user": "The address of the user"
+        },
+        "returns": {
+          "_0": "The scaled balance of the user",
+          "_1": "The scaled balance and the scaled total supply*"
+        }
+      },
+      "initialize(address,address,address,uint8,string,string,bytes)": {
+        "details": "Initializes the debt token.",
+        "params": {
+          "debtTokenDecimals": "The decimals of the debtToken, same as the underlying asset's",
+          "debtTokenName": "The name of the token",
+          "debtTokenSymbol": "The symbol of the token",
+          "incentivesController": "The smart contract managing potential incentives distribution",
+          "pool": "The address of the lending pool where this aToken will be used",
+          "underlyingAsset": "The address of the underlying asset of this aToken (E.g. WETH for aWETH)"
+        }
+      },
+      "mint(address,address,uint256,uint256)": {
+        "details": "Mints debt token to the `onBehalfOf` address",
+        "params": {
+          "amount": "The amount of debt being minted",
+          "index": "The variable debt index of the reserve",
+          "onBehalfOf": "The address receiving the debt tokens",
+          "user": "The address receiving the borrowed underlying, being the delegatee in case of credit delegate, or same as `onBehalfOf` otherwise"
+        },
+        "returns": {
+          "_0": "`true` if the the previous balance of the user is 0*"
+        }
+      },
+      "scaledBalanceOf(address)": {
+        "details": "Returns the scaled balance of the user. The scaled balance is the sum of all the updated stored balance divided by the reserve's liquidity index at the moment of the update",
+        "params": {
+          "user": "The user whose balance is calculated"
+        },
+        "returns": {
+          "_0": "The scaled balance of the user*"
+        }
+      },
+      "scaledTotalSupply()": {
+        "details": "Returns the scaled total supply of the variable debt token. Represents sum(debt/index)",
+        "returns": {
+          "_0": "The scaled total supply*"
+        }
+      }
+    },
+    "title": "IVariableDebtToken",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Defines the basic interface for a variable debt token.*",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "burn(address,uint256,uint256)": "f5298aca",
+      "getIncentivesController()": "75d26413",
+      "getScaledUserBalanceAndSupply(address)": "0afbcdc9",
+      "initialize(address,address,address,uint8,string,string,bytes)": "c222ec8a",
+      "mint(address,address,uint256,uint256)": "b3f1c93d",
+      "scaledBalanceOf(address)": "1da24f3e",
+      "scaledTotalSupply()": "b1bf962d"
+    }
+  }
+}

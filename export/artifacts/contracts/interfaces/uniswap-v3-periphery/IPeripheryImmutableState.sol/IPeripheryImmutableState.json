@@ -1,0 +1,66 @@
+{
+  "contractName": "IPeripheryImmutableState",
+  "sourceName": "contracts/interfaces/uniswap-v3-periphery/IPeripheryImmutableState.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "WETH9",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "factory",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "WETH9()": {
+        "returns": {
+          "_0": "Returns the address of WETH9"
+        }
+      },
+      "factory()": {
+        "returns": {
+          "_0": "Returns the address of the Uniswap V3 factory"
+        }
+      }
+    },
+    "title": "Immutable state",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Functions that return immutable state of the router",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "WETH9()": "4aa4a4fc",
+      "factory()": "c45a0155"
+    }
+  }
+}

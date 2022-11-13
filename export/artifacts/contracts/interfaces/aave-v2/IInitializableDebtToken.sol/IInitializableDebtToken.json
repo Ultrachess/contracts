@@ -1,0 +1,147 @@
+{
+  "contractName": "IInitializableDebtToken",
+  "sourceName": "contracts/interfaces/aave-v2/IInitializableDebtToken.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "underlyingAsset",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "pool",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "incentivesController",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint8",
+          "name": "debtTokenDecimals",
+          "type": "uint8"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "debtTokenName",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "debtTokenSymbol",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "params",
+          "type": "bytes"
+        }
+      ],
+      "name": "Initialized",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract ILendingPool",
+          "name": "pool",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "underlyingAsset",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IAaveIncentivesController",
+          "name": "incentivesController",
+          "type": "address"
+        },
+        {
+          "internalType": "uint8",
+          "name": "debtTokenDecimals",
+          "type": "uint8"
+        },
+        {
+          "internalType": "string",
+          "name": "debtTokenName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "debtTokenSymbol",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes",
+          "name": "params",
+          "type": "bytes"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Aave*",
+    "events": {
+      "Initialized(address,address,address,uint8,string,string,bytes)": {
+        "details": "Emitted when a debt token is initialized",
+        "params": {
+          "debtTokenDecimals": "the decimals of the debt token",
+          "debtTokenName": "the name of the debt token",
+          "debtTokenSymbol": "the symbol of the debt token",
+          "incentivesController": "The address of the incentives controller for this aToken",
+          "params": "A set of encoded parameters for additional initialization*",
+          "pool": "The address of the associated lending pool",
+          "underlyingAsset": "The address of the underlying asset"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "initialize(address,address,address,uint8,string,string,bytes)": {
+        "details": "Initializes the debt token.",
+        "params": {
+          "debtTokenDecimals": "The decimals of the debtToken, same as the underlying asset's",
+          "debtTokenName": "The name of the token",
+          "debtTokenSymbol": "The symbol of the token",
+          "incentivesController": "The smart contract managing potential incentives distribution",
+          "pool": "The address of the lending pool where this aToken will be used",
+          "underlyingAsset": "The address of the underlying asset of this aToken (E.g. WETH for aWETH)"
+        }
+      }
+    },
+    "title": "IInitializableDebtToken",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Interface for the initialize function common between debt tokens",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "initialize(address,address,address,uint8,string,string,bytes)": "c222ec8a"
+    }
+  }
+}

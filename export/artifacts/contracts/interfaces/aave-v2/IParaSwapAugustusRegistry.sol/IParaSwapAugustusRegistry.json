@@ -1,0 +1,45 @@
+{
+  "contractName": "IParaSwapAugustusRegistry",
+  "sourceName": "contracts/interfaces/aave-v2/IParaSwapAugustusRegistry.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "augustus",
+          "type": "address"
+        }
+      ],
+      "name": "isValidAugustus",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "isValidAugustus(address)": "fb04e17b"
+    }
+  }
+}

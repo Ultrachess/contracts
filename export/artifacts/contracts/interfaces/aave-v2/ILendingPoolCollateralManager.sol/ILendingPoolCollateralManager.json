@@ -1,0 +1,199 @@
+{
+  "contractName": "ILendingPoolCollateralManager",
+  "sourceName": "contracts/interfaces/aave-v2/ILendingPoolCollateralManager.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "collateral",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "principal",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "debtToCover",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "liquidatedCollateralAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "liquidator",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "receiveAToken",
+          "type": "bool"
+        }
+      ],
+      "name": "LiquidationCall",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "reserve",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "ReserveUsedAsCollateralDisabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "reserve",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "ReserveUsedAsCollateralEnabled",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "collateral",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "principal",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "debtToCover",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "receiveAToken",
+          "type": "bool"
+        }
+      ],
+      "name": "liquidationCall",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Aave",
+    "events": {
+      "LiquidationCall(address,address,address,uint256,uint256,address,bool)": {
+        "details": "Emitted when a borrower is liquidated",
+        "params": {
+          "collateral": "The address of the collateral being liquidated",
+          "debtToCover": "The total amount liquidated",
+          "liquidatedCollateralAmount": "The amount of collateral being liquidated",
+          "liquidator": "The address of the liquidator",
+          "principal": "The address of the reserve",
+          "receiveAToken": "true if the liquidator wants to receive aTokens, false otherwise*",
+          "user": "The address of the user being liquidated"
+        }
+      },
+      "ReserveUsedAsCollateralDisabled(address,address)": {
+        "details": "Emitted when a reserve is disabled as collateral for an user",
+        "params": {
+          "reserve": "The address of the reserve",
+          "user": "The address of the user*"
+        }
+      },
+      "ReserveUsedAsCollateralEnabled(address,address)": {
+        "details": "Emitted when a reserve is enabled as collateral for an user",
+        "params": {
+          "reserve": "The address of the reserve",
+          "user": "The address of the user*"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "liquidationCall(address,address,address,uint256,bool)": {
+        "details": "Users can invoke this function to liquidate an undercollateralized position.",
+        "params": {
+          "collateral": "The address of the collateral to liquidated",
+          "debtToCover": "The amount of principal that the liquidator wants to repay",
+          "principal": "The address of the principal reserve",
+          "receiveAToken": "true if the liquidators wants to receive the aTokens, false if he wants to receive the underlying asset directly*",
+          "user": "The address of the borrower"
+        }
+      }
+    },
+    "title": "ILendingPoolCollateralManager",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Defines the actions involving management of collateral in the protocol.*",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "liquidationCall(address,address,address,uint256,bool)": "00a718a9"
+    }
+  }
+}

@@ -1,0 +1,517 @@
+{
+  "contractName": "IStableDebtToken",
+  "sourceName": "contracts/interfaces/aave-v2/IStableDebtToken.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "currentBalance",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "balanceIncrease",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "avgStableRate",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newTotalSupply",
+          "type": "uint256"
+        }
+      ],
+      "name": "Burn",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "underlyingAsset",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "pool",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "incentivesController",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint8",
+          "name": "debtTokenDecimals",
+          "type": "uint8"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "debtTokenName",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "debtTokenSymbol",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "params",
+          "type": "bytes"
+        }
+      ],
+      "name": "Initialized",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "onBehalfOf",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "currentBalance",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "balanceIncrease",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newRate",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "avgStableRate",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newTotalSupply",
+          "type": "uint256"
+        }
+      ],
+      "name": "Mint",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "burn",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getAverageStableRate",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getIncentivesController",
+      "outputs": [
+        {
+          "internalType": "contract IAaveIncentivesController",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getSupplyData",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint40",
+          "name": "",
+          "type": "uint40"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getTotalSupplyAndAvgRate",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getTotalSupplyLastUpdated",
+      "outputs": [
+        {
+          "internalType": "uint40",
+          "name": "",
+          "type": "uint40"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getUserLastUpdated",
+      "outputs": [
+        {
+          "internalType": "uint40",
+          "name": "",
+          "type": "uint40"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getUserStableRate",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract ILendingPool",
+          "name": "pool",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "underlyingAsset",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IAaveIncentivesController",
+          "name": "incentivesController",
+          "type": "address"
+        },
+        {
+          "internalType": "uint8",
+          "name": "debtTokenDecimals",
+          "type": "uint8"
+        },
+        {
+          "internalType": "string",
+          "name": "debtTokenName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "debtTokenSymbol",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes",
+          "name": "params",
+          "type": "bytes"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "onBehalfOf",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rate",
+          "type": "uint256"
+        }
+      ],
+      "name": "mint",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "principalBalanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "author": "Aave*",
+    "details": "It does not inherit from IERC20 to save in code size",
+    "events": {
+      "Burn(address,uint256,uint256,uint256,uint256,uint256)": {
+        "details": "Emitted when new stable debt is burned",
+        "params": {
+          "amount": "The amount being burned",
+          "avgStableRate": "The new average stable rate after the burning",
+          "balanceIncrease": "The the increase in balance since the last action of the user",
+          "currentBalance": "The current balance of the user",
+          "newTotalSupply": "The new total supply of the stable debt token after the action*",
+          "user": "The address of the user"
+        }
+      },
+      "Mint(address,address,uint256,uint256,uint256,uint256,uint256,uint256)": {
+        "details": "Emitted when new stable debt is minted",
+        "params": {
+          "amount": "The amount minted",
+          "avgStableRate": "The new average stable rate after the minting",
+          "balanceIncrease": "The increase in balance since the last action of the user",
+          "currentBalance": "The current balance of the user",
+          "newRate": "The rate of the debt after the minting",
+          "newTotalSupply": "The new total supply of the stable debt token after the action*",
+          "onBehalfOf": "The recipient of stable debt tokens",
+          "user": "The address of the user who triggered the minting"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "burn(address,uint256)": {
+        "details": "Burns debt of `user` - The resulting rate is the weighted average between the rate of the new debt and the rate of the previous debt",
+        "params": {
+          "amount": "The amount of debt tokens getting burned*",
+          "user": "The address of the user getting his debt burned"
+        }
+      },
+      "getAverageStableRate()": {
+        "details": "Returns the average rate of all the stable rate loans.",
+        "returns": {
+          "_0": "The average stable rate*"
+        }
+      },
+      "getIncentivesController()": {
+        "details": "Returns the address of the incentives controller contract*"
+      },
+      "getSupplyData()": {
+        "details": "Returns the principal, the total supply and the average stable rate*"
+      },
+      "getTotalSupplyAndAvgRate()": {
+        "details": "Returns the total supply and the average stable rate*"
+      },
+      "getTotalSupplyLastUpdated()": {
+        "details": "Returns the timestamp of the last update of the total supply",
+        "returns": {
+          "_0": "The timestamp*"
+        }
+      },
+      "getUserLastUpdated(address)": {
+        "details": "Returns the timestamp of the last update of the user",
+        "returns": {
+          "_0": "The timestamp*"
+        }
+      },
+      "getUserStableRate(address)": {
+        "details": "Returns the stable rate of the user debt",
+        "returns": {
+          "_0": "The stable rate of the user*"
+        }
+      },
+      "initialize(address,address,address,uint8,string,string,bytes)": {
+        "details": "Initializes the debt token.",
+        "params": {
+          "debtTokenDecimals": "The decimals of the debtToken, same as the underlying asset's",
+          "debtTokenName": "The name of the token",
+          "debtTokenSymbol": "The symbol of the token",
+          "incentivesController": "The smart contract managing potential incentives distribution",
+          "pool": "The address of the lending pool where this aToken will be used",
+          "underlyingAsset": "The address of the underlying asset of this aToken (E.g. WETH for aWETH)"
+        }
+      },
+      "mint(address,address,uint256,uint256)": {
+        "details": "Mints debt token to the `onBehalfOf` address. - The resulting rate is the weighted average between the rate of the new debt and the rate of the previous debt",
+        "params": {
+          "amount": "The amount of debt tokens to mint",
+          "onBehalfOf": "The address receiving the debt tokens",
+          "rate": "The rate of the debt being minted*",
+          "user": "The address receiving the borrowed underlying, being the delegatee in case of credit delegate, or same as `onBehalfOf` otherwise"
+        }
+      },
+      "principalBalanceOf(address)": {
+        "details": "Returns the principal debt balance of the user",
+        "returns": {
+          "_0": "The debt balance of the user since the last burn/mint action*"
+        }
+      }
+    },
+    "title": "IStableDebtToken",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Defines the interface for the stable debt token",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "burn(address,uint256)": "9dc29fac",
+      "getAverageStableRate()": "90f6fcf2",
+      "getIncentivesController()": "75d26413",
+      "getSupplyData()": "79774338",
+      "getTotalSupplyAndAvgRate()": "f731e9be",
+      "getTotalSupplyLastUpdated()": "e7484890",
+      "getUserLastUpdated(address)": "79ce6b8c",
+      "getUserStableRate(address)": "e78c9b3b",
+      "initialize(address,address,address,uint8,string,string,bytes)": "c222ec8a",
+      "mint(address,address,uint256,uint256)": "b3f1c93d",
+      "principalBalanceOf(address)": "c634dfaa"
+    }
+  }
+}

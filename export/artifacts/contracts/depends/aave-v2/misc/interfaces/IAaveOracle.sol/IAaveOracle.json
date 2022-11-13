@@ -46,6 +46,25 @@
       ],
       "stateMutability": "view",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        }
+      ],
+      "name": "getSourceOfAsset",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
     }
   ],
   "bytecode": "0x",
@@ -54,13 +73,26 @@
   "deployedLinkReferences": {},
   "devdoc": {
     "kind": "dev",
-    "methods": {},
+    "methods": {
+      "getSourceOfAsset(address)": {
+        "params": {
+          "asset": "The address of the asset"
+        },
+        "returns": {
+          "_0": "The address of the source"
+        }
+      }
+    },
     "title": "IAaveOracle interface",
     "version": 1
   },
   "userdoc": {
     "kind": "user",
-    "methods": {},
+    "methods": {
+      "getSourceOfAsset(address)": {
+        "notice": "Returns the address of the source for an asset address"
+      }
+    },
     "notice": "Interface for the Aave oracle.*",
     "version": 1
   },
@@ -69,7 +101,8 @@
     "methodIdentifiers": {
       "BASE_CURRENCY()": "e19f4700",
       "BASE_CURRENCY_UNIT()": "8c89b64f",
-      "getAssetPrice(address)": "b3596f07"
+      "getAssetPrice(address)": "b3596f07",
+      "getSourceOfAsset(address)": "92bf2be0"
     }
   }
 }
