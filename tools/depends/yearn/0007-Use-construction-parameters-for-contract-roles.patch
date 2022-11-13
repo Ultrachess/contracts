@@ -1,0 +1,29 @@
+From 9a6882b952807a71203358883a45f446ae887466 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Fri, 11 Jun 2021 02:21:21 -0700
+Subject: [PATCH 07/12] Use construction parameters for contract roles
+
+---
+ contracts/controllers/Controller.sol | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/contracts/controllers/Controller.sol b/contracts/controllers/Controller.sol
+index 55d84cf..d82cf9f 100644
+--- a/contracts/controllers/Controller.sol
++++ b/contracts/controllers/Controller.sol
+@@ -30,9 +30,9 @@ contract YearnController {
+     uint256 public split = 500;
+     uint256 public constant max = 10000;
+ 
+-    constructor(address _rewards) public {
+-        governance = msg.sender;
+-        strategist = msg.sender;
++    constructor(address _rewards, address _governance, address _strategist) public {
++        governance = _governance;
++        strategist = _strategist;
+         onesplit = address(0x50FDA034C0Ce7a8f7EFDAebDA7Aa7cA21CC1267e);
+         rewards = _rewards;
+     }
+-- 
+2.34.1
+

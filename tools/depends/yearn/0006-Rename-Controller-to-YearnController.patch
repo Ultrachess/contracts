@@ -1,0 +1,25 @@
+From 52f2bcd4cfaeeff1312c137929bc51f18d18ecee Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Fri, 11 Jun 2021 01:43:25 -0700
+Subject: [PATCH 06/12] Rename Controller to YearnController
+
+---
+ contracts/controllers/Controller.sol | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contracts/controllers/Controller.sol b/contracts/controllers/Controller.sol
+index af05c4c..55d84cf 100644
+--- a/contracts/controllers/Controller.sol
++++ b/contracts/controllers/Controller.sol
+@@ -11,7 +11,7 @@ import "../../interfaces/yearn/IConverter.sol";
+ import "../../interfaces/yearn/IOneSplitAudit.sol";
+ import "../../interfaces/yearn/IStrategy.sol";
+ 
+-contract Controller {
++contract YearnController {
+     using SafeERC20 for IERC20;
+     using Address for address;
+     using SafeMath for uint256;
+-- 
+2.34.1
+

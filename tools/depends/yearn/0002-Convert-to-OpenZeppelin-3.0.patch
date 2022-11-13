@@ -1,0 +1,228 @@
+From 49b8dc90771563c8f348475080633b80a7d65609 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Fri, 11 Jun 2021 01:13:46 -0700
+Subject: [PATCH 02/12] Convert to OpenZeppelin 3.0
+
+---
+ brownie-config.yaml                  |  4 ++--
+ contracts/registries/YRegistry.sol   |  8 ++++----
+ contracts/test/Token.sol             |  8 +++++---
+ contracts/vaults/yDelegatedVault.sol | 19 ++++++++++---------
+ contracts/vaults/yVault.sol          | 13 +++++++------
+ contracts/vaults/yWETH.sol           | 13 +++++++------
+ 6 files changed, 35 insertions(+), 30 deletions(-)
+
+diff --git a/brownie-config.yaml b/brownie-config.yaml
+index dc189bb..a12f766 100644
+--- a/brownie-config.yaml
++++ b/brownie-config.yaml
+@@ -15,8 +15,8 @@ compiler:
+   solc:
+     version: 0.5.17
+     remappings:
+-      - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@2.5.1"
+-      - "@openzeppelinV3=OpenZeppelin/openzeppelin-contracts@3.1.0"
++      - "@openzeppelinV2=OpenZeppelin/openzeppelin-contracts@2.5.1"
++      - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@3.1.0"
+ 
+ reports:
+   exclude_paths:
+diff --git a/contracts/registries/YRegistry.sol b/contracts/registries/YRegistry.sol
+index 0320fa2..2c27e8f 100644
+--- a/contracts/registries/YRegistry.sol
++++ b/contracts/registries/YRegistry.sol
+@@ -152,7 +152,7 @@ contract YRegistry {
+ 
+     // Vaults getters
+     function getVault(uint256 index) external view returns (address vault) {
+-        return vaults.get(index);
++        return vaults.at(index);
+     }
+ 
+     function getVaultsLength() external view returns (uint256) {
+@@ -162,7 +162,7 @@ contract YRegistry {
+     function getVaults() external view returns (address[] memory) {
+         address[] memory vaultsArray = new address[](vaults.length());
+         for (uint256 i = 0; i < vaults.length(); i++) {
+-            vaultsArray[i] = vaults.get(i);
++            vaultsArray[i] = vaults.at(i);
+         }
+         return vaultsArray;
+     }
+@@ -202,8 +202,8 @@ contract YRegistry {
+         isDelegatedArray = new bool[](vaults.length());
+ 
+         for (uint256 i = 0; i < vaults.length(); i++) {
+-            vaultsAddresses[i] = vaults.get(i);
+-            (address _controller, address _token, address _strategy, bool _isWrapped, bool _isDelegated) = getVaultData(vaults.get(i));
++            vaultsAddresses[i] = vaults.at(i);
++            (address _controller, address _token, address _strategy, bool _isWrapped, bool _isDelegated) = getVaultData(vaults.at(i));
+             controllerArray[i] = _controller;
+             tokenArray[i] = _token;
+             strategyArray[i] = _strategy;
+diff --git a/contracts/test/Token.sol b/contracts/test/Token.sol
+index 3f21d48..cbaab9d 100644
+--- a/contracts/test/Token.sol
++++ b/contracts/test/Token.sol
+@@ -2,10 +2,12 @@
+ pragma solidity ^0.5.17;
+ 
+ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+-import "@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol";
+ 
+-contract Token is ERC20, ERC20Detailed {
+-    constructor() public ERC20Detailed("yearn.finance test token", "TEST", 18) {
++contract Token is ERC20 {
++    constructor() public ERC20("yearn.finance test token", "TEST", 18) {
++        // Initialize ERC20
++        _setupDecimals(18);
++
+         _mint(msg.sender, 30000 * 10**18);
+     }
+ }
+diff --git a/contracts/vaults/yDelegatedVault.sol b/contracts/vaults/yDelegatedVault.sol
+index 6227065..e86457b 100644
+--- a/contracts/vaults/yDelegatedVault.sol
++++ b/contracts/vaults/yDelegatedVault.sol
+@@ -5,7 +5,6 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+-import "@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol";
+ import "@openzeppelin/contracts/ownership/Ownable.sol";
+ 
+ import "../../interfaces/aave/Aave.sol";
+@@ -14,7 +13,7 @@ import "../../interfaces/aave/Oracle.sol";
+ import "../../interfaces/aave/LendingPoolAddressesProvider.sol";
+ import "../../interfaces/yearn/IController.sol";
+ 
+-contract yDelegatedVault is ERC20, ERC20Detailed {
++contract yDelegatedVault is ERC20 {
+     using SafeERC20 for IERC20;
+     using Address for address;
+     using SafeMath for uint256;
+@@ -33,12 +32,14 @@ contract yDelegatedVault is ERC20, ERC20Detailed {
+ 
+     constructor(address _token, address _controller)
+         public
+-        ERC20Detailed(
+-            string(abi.encodePacked("yearn ", ERC20Detailed(_token).name())),
+-            string(abi.encodePacked("y", ERC20Detailed(_token).symbol())),
+-            ERC20Detailed(_token).decimals()
++        ERC20(
++            string(abi.encodePacked("yearn ", ERC20(_token).name())),
++            string(abi.encodePacked("y", ERC20(_token).symbol()))
+         )
+     {
++        // Initialize ERC20
++        _setupDecimals(ERC20(_token).decimals());
++
+         token = IERC20(_token);
+         governance = msg.sender;
+         controller = _controller;
+@@ -133,7 +134,7 @@ contract yDelegatedVault is ERC20, ERC20Detailed {
+     }
+ 
+     function getUnderlyingPriceETH(uint256 _amount) public view returns (uint256) {
+-        _amount = _amount.mul(getUnderlyingPrice()).div(uint256(10)**ERC20Detailed(address(token)).decimals()); // Calculate the amount we are withdrawing in ETH
++        _amount = _amount.mul(getUnderlyingPrice()).div(uint256(10)**ERC20(address(token)).decimals()); // Calculate the amount we are withdrawing in ETH
+         return _amount.mul(ltv).div(max).div(healthFactor);
+     }
+ 
+@@ -149,7 +150,7 @@ contract yDelegatedVault is ERC20, ERC20Detailed {
+         }
+         if (_maxSafeETH < _totalBorrowsETH) {
+             uint256 _over = _totalBorrowsETH.mul(_totalBorrowsETH.sub(_maxSafeETH)).div(_totalBorrowsETH);
+-            _over = _over.mul(uint256(10)**ERC20Detailed(_reserve).decimals()).div(getReservePrice());
++            _over = _over.mul(uint256(10)**ERC20(_reserve).decimals()).div(getReservePrice());
+             return _over;
+         } else {
+             return 0;
+@@ -211,7 +212,7 @@ contract yDelegatedVault is ERC20, ERC20Detailed {
+         address _reserve = reserve();
+         uint256 _available = availableToBorrowETH();
+         if (_available > 0) {
+-            return _available.mul(uint256(10)**ERC20Detailed(_reserve).decimals()).div(getReservePrice());
++            return _available.mul(uint256(10)**ERC20(_reserve).decimals()).div(getReservePrice());
+         } else {
+             return 0;
+         }
+diff --git a/contracts/vaults/yVault.sol b/contracts/vaults/yVault.sol
+index 9b00a19..9e12882 100644
+--- a/contracts/vaults/yVault.sol
++++ b/contracts/vaults/yVault.sol
+@@ -5,12 +5,11 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+-import "@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol";
+ import "@openzeppelin/contracts/ownership/Ownable.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ 
+-contract yVault is ERC20, ERC20Detailed {
++contract yVault is ERC20 {
+     using SafeERC20 for IERC20;
+     using Address for address;
+     using SafeMath for uint256;
+@@ -25,12 +24,14 @@ contract yVault is ERC20, ERC20Detailed {
+ 
+     constructor(address _token, address _controller)
+         public
+-        ERC20Detailed(
+-            string(abi.encodePacked("yearn ", ERC20Detailed(_token).name())),
+-            string(abi.encodePacked("y", ERC20Detailed(_token).symbol())),
+-            ERC20Detailed(_token).decimals()
++        ERC20(
++            string(abi.encodePacked("yearn ", ERC20(_token).name())),
++            string(abi.encodePacked("y", ERC20(_token).symbol()))
+         )
+     {
++        // Initialize ERC20
++        _setupDecimals(ERC20(_token).decimals());
++
+         token = IERC20(_token);
+         governance = msg.sender;
+         controller = _controller;
+diff --git a/contracts/vaults/yWETH.sol b/contracts/vaults/yWETH.sol
+index fda13a7..a2000ce 100644
+--- a/contracts/vaults/yWETH.sol
++++ b/contracts/vaults/yWETH.sol
+@@ -5,14 +5,13 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+-import "@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol";
+ import "@openzeppelin/contracts/ownership/Ownable.sol";
+ 
+ import "../../interfaces/weth/WETH.sol";
+ import "../../interfaces/yearn/IController.sol";
+ 
+ // NOTE: The name of this contract was modified from yVault so as not to conflict with yVault.sol
+-contract yWETH is ERC20, ERC20Detailed {
++contract yWETH is ERC20 {
+     using SafeERC20 for IERC20;
+     using Address for address;
+     using SafeMath for uint256;
+@@ -27,12 +26,14 @@ contract yWETH is ERC20, ERC20Detailed {
+ 
+     constructor(address _token, address _controller)
+         public
+-        ERC20Detailed(
+-            string(abi.encodePacked("yearn ", ERC20Detailed(_token).name())),
+-            string(abi.encodePacked("y", ERC20Detailed(_token).symbol())),
+-            ERC20Detailed(_token).decimals()
++        ERC20(
++            string(abi.encodePacked("yearn ", ERC20(_token).name())),
++            string(abi.encodePacked("y", ERC20(_token).symbol()))
+         )
+     {
++        // Initialize ERC20
++        _setupDecimals(ERC20(_token).decimals());
++
+         token = IERC20(_token);
+         governance = msg.sender;
+         controller = _controller;
+-- 
+2.34.1
+

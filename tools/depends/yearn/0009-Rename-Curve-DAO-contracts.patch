@@ -1,0 +1,271 @@
+From a5bbb39bba98170c094f989c3e241c1b79eefb30 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Sat, 12 Nov 2022 22:53:18 -0800
+Subject: [PATCH 09/12] Rename Curve DAO contracts
+
+---
+ contracts/strategies/CurveYCRVVoter.sol                | 10 +++++-----
+ contracts/strategies/StrategyCurve3CrvVoterProxy.sol   |  2 +-
+ contracts/strategies/StrategyCurveBBTCVoterProxy.sol   |  2 +-
+ contracts/strategies/StrategyCurveBTCVoterProxy.sol    |  2 +-
+ contracts/strategies/StrategyCurveBUSDVoterProxy.sol   |  2 +-
+ .../strategies/StrategyCurveCompoundVoterProxy.sol     |  2 +-
+ contracts/strategies/StrategyCurveEURVoterProxy.sol    |  2 +-
+ contracts/strategies/StrategyCurveGUSDVoterProxy.sol   |  2 +-
+ contracts/strategies/StrategyCurveRENVoterProxy.sol    |  2 +-
+ contracts/strategies/StrategyCurveUSDNVoterProxy.sol   |  2 +-
+ contracts/strategies/StrategyCurveUSTVoterProxy.sol    |  2 +-
+ contracts/strategies/StrategyCurveYVoterProxy.sol      |  2 +-
+ contracts/strategies/StrategyCurvemUSDVoterProxy.sol   |  2 +-
+ contracts/strategies/StrategyDAICurve.sol              |  2 +-
+ contracts/strategies/StrategyProxy.sol                 |  6 +++---
+ contracts/strategies/StrategyTUSDCurve.sol             |  2 +-
+ 16 files changed, 22 insertions(+), 22 deletions(-)
+
+diff --git a/contracts/strategies/CurveYCRVVoter.sol b/contracts/strategies/CurveYCRVVoter.sol
+index b168c0d..46784b6 100644
+--- a/contracts/strategies/CurveYCRVVoter.sol
++++ b/contracts/strategies/CurveYCRVVoter.sol
+@@ -9,8 +9,8 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve/Mintr.sol";
+-import "../../interfaces/curve/VoteEscrow.sol";
++import "../../interfaces/curve-dao/Minter.sol";
++import "../../interfaces/curve-dao/VotingEscrow.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+ import "../../interfaces/yearn/IToken.sol";
+ 
+@@ -86,19 +86,19 @@ contract CurveYCRVVoter {
+         require(msg.sender == strategy || msg.sender == governance, "!authorized");
+         IERC20(crv).safeApprove(escrow, 0);
+         IERC20(crv).safeApprove(escrow, _value);
+-        VoteEscrow(escrow).create_lock(_value, _unlockTime);
++        VotingEscrow(escrow).create_lock(_value, _unlockTime);
+     }
+ 
+     function increaseAmount(uint256 _value) external {
+         require(msg.sender == strategy || msg.sender == governance, "!authorized");
+         IERC20(crv).safeApprove(escrow, 0);
+         IERC20(crv).safeApprove(escrow, _value);
+-        VoteEscrow(escrow).increase_amount(_value);
++        VotingEscrow(escrow).increase_amount(_value);
+     }
+ 
+     function release() external {
+         require(msg.sender == strategy || msg.sender == governance, "!authorized");
+-        VoteEscrow(escrow).withdraw();
++        VotingEscrow(escrow).withdraw();
+     }
+ 
+     function _withdrawSome(uint256 _amount) internal returns (uint256) {
+diff --git a/contracts/strategies/StrategyCurve3CrvVoterProxy.sol b/contracts/strategies/StrategyCurve3CrvVoterProxy.sol
+index 6910364..9f8314f 100644
+--- a/contracts/strategies/StrategyCurve3CrvVoterProxy.sol
++++ b/contracts/strategies/StrategyCurve3CrvVoterProxy.sol
+@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/yearn/IToken.sol";
+diff --git a/contracts/strategies/StrategyCurveBBTCVoterProxy.sol b/contracts/strategies/StrategyCurveBBTCVoterProxy.sol
+index e601b46..29b218e 100644
+--- a/contracts/strategies/StrategyCurveBBTCVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveBBTCVoterProxy.sol
+@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/yearn/IVoterProxy.sol";
+diff --git a/contracts/strategies/StrategyCurveBTCVoterProxy.sol b/contracts/strategies/StrategyCurveBTCVoterProxy.sol
+index 44d8215..bfcf321 100644
+--- a/contracts/strategies/StrategyCurveBTCVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveBTCVoterProxy.sol
+@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/yearn/IToken.sol";
+diff --git a/contracts/strategies/StrategyCurveBUSDVoterProxy.sol b/contracts/strategies/StrategyCurveBUSDVoterProxy.sol
+index 4808d34..75fdb9e 100644
+--- a/contracts/strategies/StrategyCurveBUSDVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveBUSDVoterProxy.sol
+@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/yearn/IToken.sol";
+diff --git a/contracts/strategies/StrategyCurveCompoundVoterProxy.sol b/contracts/strategies/StrategyCurveCompoundVoterProxy.sol
+index 3d3b231..fa357e8 100644
+--- a/contracts/strategies/StrategyCurveCompoundVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveCompoundVoterProxy.sol
+@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/yearn/IToken.sol";
+diff --git a/contracts/strategies/StrategyCurveEURVoterProxy.sol b/contracts/strategies/StrategyCurveEURVoterProxy.sol
+index a0cbc4e..6828046 100644
+--- a/contracts/strategies/StrategyCurveEURVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveEURVoterProxy.sol
+@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/yearn/IVoterProxy.sol";
+diff --git a/contracts/strategies/StrategyCurveGUSDVoterProxy.sol b/contracts/strategies/StrategyCurveGUSDVoterProxy.sol
+index d13ae52..2404704 100644
+--- a/contracts/strategies/StrategyCurveGUSDVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveGUSDVoterProxy.sol
+@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/yearn/IVoterProxy.sol";
+diff --git a/contracts/strategies/StrategyCurveRENVoterProxy.sol b/contracts/strategies/StrategyCurveRENVoterProxy.sol
+index 08b0552..71a21ea 100644
+--- a/contracts/strategies/StrategyCurveRENVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveRENVoterProxy.sol
+@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/yearn/IVoterProxy.sol";
+diff --git a/contracts/strategies/StrategyCurveUSDNVoterProxy.sol b/contracts/strategies/StrategyCurveUSDNVoterProxy.sol
+index 10b755a..5137c8d 100644
+--- a/contracts/strategies/StrategyCurveUSDNVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveUSDNVoterProxy.sol
+@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/yearn/IVoterProxy.sol";
+diff --git a/contracts/strategies/StrategyCurveUSTVoterProxy.sol b/contracts/strategies/StrategyCurveUSTVoterProxy.sol
+index 9ebf21b..69f2ea8 100644
+--- a/contracts/strategies/StrategyCurveUSTVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveUSTVoterProxy.sol
+@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/yearn/IVoterProxy.sol";
+diff --git a/contracts/strategies/StrategyCurveYVoterProxy.sol b/contracts/strategies/StrategyCurveYVoterProxy.sol
+index f39c3ca..1aefcc4 100644
+--- a/contracts/strategies/StrategyCurveYVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveYVoterProxy.sol
+@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/yearn/IToken.sol";
+diff --git a/contracts/strategies/StrategyCurvemUSDVoterProxy.sol b/contracts/strategies/StrategyCurvemUSDVoterProxy.sol
+index d90eb49..d039637 100644
+--- a/contracts/strategies/StrategyCurvemUSDVoterProxy.sol
++++ b/contracts/strategies/StrategyCurvemUSDVoterProxy.sol
+@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/yearn/IVoterProxy.sol";
+diff --git a/contracts/strategies/StrategyDAICurve.sol b/contracts/strategies/StrategyDAICurve.sol
+index e8d9ad6..69aa3bc 100644
+--- a/contracts/strategies/StrategyDAICurve.sol
++++ b/contracts/strategies/StrategyDAICurve.sol
+@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/yearn/IToken.sol";
+diff --git a/contracts/strategies/StrategyProxy.sol b/contracts/strategies/StrategyProxy.sol
+index 4d2df90..37eb4df 100644
+--- a/contracts/strategies/StrategyProxy.sol
++++ b/contracts/strategies/StrategyProxy.sol
+@@ -8,8 +8,8 @@ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/yearn/IProxy.sol";
+-import "../../interfaces/curve/Mintr.sol";
+-import "../../interfaces/curve/FeeDistribution.sol";
++import "../../interfaces/curve-dao/Minter.sol";
++import "../../interfaces/curve-dao/FeeDistributor.sol";
+ import "../../interfaces/curve/Gauge.sol";
+ 
+ library SafeProxy {
+@@ -36,7 +36,7 @@ contract StrategyProxy {
+     address public constant gauge = address(0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB);
+     address public constant yveCRV = address(0xc5bDdf9843308380375a611c18B50Fb9341f502A);
+     address public constant CRV3 = address(0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490);
+-    FeeDistribution public constant feeDistribution = FeeDistribution(0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc);
++    FeeDistributor public constant feeDistribution = FeeDistributor(0xA464e6DCda8AC41e03616F95f4BC98a13b8922Dc);
+ 
+     // gauge => strategies
+     mapping(address => address) public strategies;
+diff --git a/contracts/strategies/StrategyTUSDCurve.sol b/contracts/strategies/StrategyTUSDCurve.sol
+index 2b00f95..591739d 100644
+--- a/contracts/strategies/StrategyTUSDCurve.sol
++++ b/contracts/strategies/StrategyTUSDCurve.sol
+@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+ import "../../interfaces/curve/Curve.sol";
+ import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Mintr.sol";
++import "../../interfaces/curve-dao/Minter.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ import "../../interfaces/yearn/IToken.sol";
+-- 
+2.34.1
+

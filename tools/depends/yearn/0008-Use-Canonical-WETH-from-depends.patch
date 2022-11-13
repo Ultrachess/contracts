@@ -1,0 +1,43 @@
+From 09d0b2852b9c3fec9a8f2de05833ce9894e69aee Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Sat, 12 Nov 2022 20:32:36 -0800
+Subject: [PATCH 08/12] Use Canonical WETH from depends
+
+---
+ contracts/vaults/yWETH.sol | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/contracts/vaults/yWETH.sol b/contracts/vaults/yWETH.sol
+index 8d003b8..68542ff 100644
+--- a/contracts/vaults/yWETH.sol
++++ b/contracts/vaults/yWETH.sol
+@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+ import "@openzeppelin/contracts/access/Ownable.sol";
+ 
+-import "../../interfaces/weth/WETH.sol";
++import "../../../depends/canonical-weth/WETH9.sol";
+ import "../../interfaces/yearn/IController.sol";
+ 
+ // NOTE: The name of this contract was modified from yVault so as not to conflict with yVault.sol
+@@ -93,7 +93,7 @@ contract yWETH is ERC20 {
+         uint256 _pool = balance();
+         uint256 _before = token.balanceOf(address(this));
+         uint256 _amount = msg.value;
+-        WETH(address(token)).deposit.value(_amount)();
++        WETH9(address(token)).deposit.value(_amount)();
+         uint256 _after = token.balanceOf(address(this));
+         _amount = _after.sub(_before); // Additional check for deflationary tokens
+         uint256 shares = 0;
+@@ -157,7 +157,7 @@ contract yWETH is ERC20 {
+             }
+         }
+ 
+-        WETH(address(token)).withdraw(r);
++        WETH9(address(token)).withdraw(r);
+         msg.sender.transfer(r);
+     }
+ 
+-- 
+2.34.1
+

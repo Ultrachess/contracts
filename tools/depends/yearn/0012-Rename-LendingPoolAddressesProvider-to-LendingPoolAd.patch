@@ -1,0 +1,89 @@
+From 58a7243f15855790d192268a9a1ab019b124a8c6 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Sun, 13 Nov 2022 00:46:31 -0800
+Subject: [PATCH 12/12] Rename LendingPoolAddressesProvider to
+ LendingPoolAddressesProviderV1
+
+---
+ contracts/strategies/StrategyVaultUSDC.sol                | 4 ++--
+ contracts/vaults/yDelegatedVault.sol                      | 8 ++++----
+ ...sesProvider.sol => LendingPoolAddressesProviderV1.sol} | 2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
+ rename interfaces/aave/{LendingPoolAddressesProvider.sol => LendingPoolAddressesProviderV1.sol} (83%)
+
+diff --git a/contracts/strategies/StrategyVaultUSDC.sol b/contracts/strategies/StrategyVaultUSDC.sol
+index ca8467d..1ae4de8 100644
+--- a/contracts/strategies/StrategyVaultUSDC.sol
++++ b/contracts/strategies/StrategyVaultUSDC.sol
+@@ -8,7 +8,7 @@ import "../../openzeppelin-v3/utils/Address.sol";
+ import "../../openzeppelin-v3/token/ERC20/SafeERC20.sol";
+ 
+ import "../../../interfaces/aave-v1/Aave.sol";
+-import "../../../interfaces/aave-v1/LendingPoolAddressesProvider.sol";
++import "../../../interfaces/aave-v1/LendingPoolAddressesProviderV1.sol";
+ 
+ import "../../../interfaces/yearn/IController.sol";
+ import "../../../interfaces/yearn/IVault.sol";
+@@ -41,7 +41,7 @@ contract StrategyVaultUSDC {
+     }
+ 
+     function getAave() public view returns (address) {
+-        return LendingPoolAddressesProvider(aave).getLendingPool();
++        return LendingPoolAddressesProviderV1(aave).getLendingPool();
+     }
+ 
+     function getName() external pure returns (string memory) {
+diff --git a/contracts/vaults/yDelegatedVault.sol b/contracts/vaults/yDelegatedVault.sol
+index 2e84d1f..657a153 100644
+--- a/contracts/vaults/yDelegatedVault.sol
++++ b/contracts/vaults/yDelegatedVault.sol
+@@ -10,7 +10,7 @@ import "../../openzeppelin-v3/access/Ownable.sol";
+ import "../../../interfaces/aave-v1/Aave.sol";
+ import "../../../interfaces/aave-v1/AaveToken.sol";
+ import "../../../interfaces/aave-v1/Oracle.sol";
+-import "../../../interfaces/aave-v1/LendingPoolAddressesProvider.sol";
++import "../../../interfaces/aave-v1/LendingPoolAddressesProviderV1.sol";
+ import "../../../interfaces/yearn/IController.sol";
+ 
+ contract yDelegatedVault is ERC20 {
+@@ -66,11 +66,11 @@ contract yDelegatedVault is ERC20 {
+     }
+ 
+     function getAave() public view returns (address) {
+-        return LendingPoolAddressesProvider(aave).getLendingPool();
++        return LendingPoolAddressesProviderV1(aave).getLendingPool();
+     }
+ 
+     function getAaveCore() public view returns (address) {
+-        return LendingPoolAddressesProvider(aave).getLendingPoolCore();
++        return LendingPoolAddressesProviderV1(aave).getLendingPoolCore();
+     }
+ 
+     function setHealthFactor(uint256 _hf) external {
+@@ -118,7 +118,7 @@ contract yDelegatedVault is ERC20 {
+     }
+ 
+     function getAaveOracle() public view returns (address) {
+-        return LendingPoolAddressesProvider(aave).getPriceOracle();
++        return LendingPoolAddressesProviderV1(aave).getPriceOracle();
+     }
+ 
+     function getReservePriceETH(address reserve) public view returns (uint256) {
+diff --git a/interfaces/aave/LendingPoolAddressesProvider.sol b/interfaces/aave/LendingPoolAddressesProviderV1.sol
+similarity index 83%
+rename from interfaces/aave/LendingPoolAddressesProvider.sol
+rename to interfaces/aave/LendingPoolAddressesProviderV1.sol
+index 0b9ca26..ba2656d 100644
+--- a/interfaces/aave/LendingPoolAddressesProvider.sol
++++ b/interfaces/aave/LendingPoolAddressesProviderV1.sol
+@@ -1,6 +1,6 @@
+ pragma solidity ^0.6.12;
+ 
+-interface LendingPoolAddressesProvider {
++interface LendingPoolAddressesProviderV1 {
+     function getLendingPool() external view returns (address);
+ 
+     function getLendingPoolCore() external view returns (address);
+-- 
+2.34.1
+

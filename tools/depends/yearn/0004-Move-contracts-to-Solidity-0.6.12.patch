@@ -1,0 +1,547 @@
+From 52bae657032f1028f064654cebb58bbaa1c48c09 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Fri, 11 Jun 2021 01:20:22 -0700
+Subject: [PATCH 04/12] Move contracts to Solidity 0.6.12
+
+---
+ contracts/controllers/Controller.sol                     | 2 +-
+ contracts/controllers/DelegatedController.sol            | 2 +-
+ contracts/exploits/EvilGauge.sol                         | 2 +-
+ contracts/registries/YRegistry.sol                       | 2 +-
+ contracts/strategies/CurveYCRVVoter.sol                  | 2 +-
+ contracts/strategies/StrategyCreamYFI.sol                | 2 +-
+ contracts/strategies/StrategyCurve3CrvVoterProxy.sol     | 2 +-
+ contracts/strategies/StrategyCurveBBTCVoterProxy.sol     | 2 +-
+ contracts/strategies/StrategyCurveBTCVoterProxy.sol      | 2 +-
+ contracts/strategies/StrategyCurveBUSDVoterProxy.sol     | 2 +-
+ contracts/strategies/StrategyCurveCompoundVoterProxy.sol | 2 +-
+ contracts/strategies/StrategyCurveEURVoterProxy.sol      | 2 +-
+ contracts/strategies/StrategyCurveGUSDVoterProxy.sol     | 2 +-
+ contracts/strategies/StrategyCurveRENVoterProxy.sol      | 2 +-
+ contracts/strategies/StrategyCurveUSDNVoterProxy.sol     | 2 +-
+ contracts/strategies/StrategyCurveUSTVoterProxy.sol      | 2 +-
+ contracts/strategies/StrategyCurveYVoterProxy.sol        | 2 +-
+ contracts/strategies/StrategyCurvemUSDVoterProxy.sol     | 2 +-
+ contracts/strategies/StrategyDAI3pool.sol                | 2 +-
+ contracts/strategies/StrategyDAI3poolV2.sol              | 2 +-
+ contracts/strategies/StrategyDAICurve.sol                | 2 +-
+ contracts/strategies/StrategyDForceUSDC.sol              | 2 +-
+ contracts/strategies/StrategyDForceUSDT.sol              | 2 +-
+ contracts/strategies/StrategyGUSDRescue.sol              | 2 +-
+ contracts/strategies/StrategyMKRVaultDAIDelegate.sol     | 2 +-
+ contracts/strategies/StrategyProxy.sol                   | 2 +-
+ contracts/strategies/StrategyTUSDCurve.sol               | 2 +-
+ contracts/strategies/StrategyTUSDypool.sol               | 2 +-
+ contracts/strategies/StrategyUSDC3pool.sol               | 2 +-
+ contracts/strategies/StrategyUSDT3pool.sol               | 2 +-
+ contracts/strategies/StrategyVaultUSDC.sol               | 2 +-
+ contracts/strategies/StrategyYFIGovernance.sol           | 2 +-
+ contracts/strategies/StrategymUSDCurve.sol               | 2 +-
+ contracts/test/Token.sol                                 | 2 +-
+ contracts/utils/BTCOSMedianizer.sol                      | 2 +-
+ contracts/utils/ETHOSMedianizer.sol                      | 2 +-
+ contracts/vaults/CurveVault.sol                          | 2 +-
+ contracts/vaults/yDelegatedVault.sol                     | 4 ++--
+ contracts/vaults/yVault.sol                              | 4 ++--
+ contracts/vaults/yWETH.sol                               | 8 ++++----
+ 40 files changed, 45 insertions(+), 45 deletions(-)
+
+diff --git a/contracts/controllers/Controller.sol b/contracts/controllers/Controller.sol
+index 6cf703a..af05c4c 100644
+--- a/contracts/controllers/Controller.sol
++++ b/contracts/controllers/Controller.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/controllers/DelegatedController.sol b/contracts/controllers/DelegatedController.sol
+index a332c3e..ff38eb7 100644
+--- a/contracts/controllers/DelegatedController.sol
++++ b/contracts/controllers/DelegatedController.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/exploits/EvilGauge.sol b/contracts/exploits/EvilGauge.sol
+index 940a1bd..7c0666b 100644
+--- a/contracts/exploits/EvilGauge.sol
++++ b/contracts/exploits/EvilGauge.sol
+@@ -1,4 +1,4 @@
+-pragma solidity =0.5.17;
++pragma solidity =0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ 
+diff --git a/contracts/registries/YRegistry.sol b/contracts/registries/YRegistry.sol
+index 2c27e8f..f2a9b7d 100644
+--- a/contracts/registries/YRegistry.sol
++++ b/contracts/registries/YRegistry.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+diff --git a/contracts/strategies/CurveYCRVVoter.sol b/contracts/strategies/CurveYCRVVoter.sol
+index 72a06cf..b168c0d 100644
+--- a/contracts/strategies/CurveYCRVVoter.sol
++++ b/contracts/strategies/CurveYCRVVoter.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyCreamYFI.sol b/contracts/strategies/StrategyCreamYFI.sol
+index 35f0283..3fb1b32 100644
+--- a/contracts/strategies/StrategyCreamYFI.sol
++++ b/contracts/strategies/StrategyCreamYFI.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyCurve3CrvVoterProxy.sol b/contracts/strategies/StrategyCurve3CrvVoterProxy.sol
+index 3d18098..6910364 100644
+--- a/contracts/strategies/StrategyCurve3CrvVoterProxy.sol
++++ b/contracts/strategies/StrategyCurve3CrvVoterProxy.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyCurveBBTCVoterProxy.sol b/contracts/strategies/StrategyCurveBBTCVoterProxy.sol
+index e0493e5..e601b46 100644
+--- a/contracts/strategies/StrategyCurveBBTCVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveBBTCVoterProxy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: AGPL-3.0
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyCurveBTCVoterProxy.sol b/contracts/strategies/StrategyCurveBTCVoterProxy.sol
+index 8b5d3c9..44d8215 100644
+--- a/contracts/strategies/StrategyCurveBTCVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveBTCVoterProxy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyCurveBUSDVoterProxy.sol b/contracts/strategies/StrategyCurveBUSDVoterProxy.sol
+index 5591a35..4808d34 100644
+--- a/contracts/strategies/StrategyCurveBUSDVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveBUSDVoterProxy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyCurveCompoundVoterProxy.sol b/contracts/strategies/StrategyCurveCompoundVoterProxy.sol
+index 4307f0c..3d3b231 100644
+--- a/contracts/strategies/StrategyCurveCompoundVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveCompoundVoterProxy.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyCurveEURVoterProxy.sol b/contracts/strategies/StrategyCurveEURVoterProxy.sol
+index f1a227f..a0cbc4e 100644
+--- a/contracts/strategies/StrategyCurveEURVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveEURVoterProxy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: AGPL-3.0
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyCurveGUSDVoterProxy.sol b/contracts/strategies/StrategyCurveGUSDVoterProxy.sol
+index 1e353ed..d13ae52 100644
+--- a/contracts/strategies/StrategyCurveGUSDVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveGUSDVoterProxy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyCurveRENVoterProxy.sol b/contracts/strategies/StrategyCurveRENVoterProxy.sol
+index edc0006..08b0552 100644
+--- a/contracts/strategies/StrategyCurveRENVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveRENVoterProxy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: AGPL-3.0
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyCurveUSDNVoterProxy.sol b/contracts/strategies/StrategyCurveUSDNVoterProxy.sol
+index 9988011..10b755a 100644
+--- a/contracts/strategies/StrategyCurveUSDNVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveUSDNVoterProxy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: AGPL-3.0
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyCurveUSTVoterProxy.sol b/contracts/strategies/StrategyCurveUSTVoterProxy.sol
+index 202580a..9ebf21b 100644
+--- a/contracts/strategies/StrategyCurveUSTVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveUSTVoterProxy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: AGPL-3.0
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyCurveYVoterProxy.sol b/contracts/strategies/StrategyCurveYVoterProxy.sol
+index 867768f..f39c3ca 100644
+--- a/contracts/strategies/StrategyCurveYVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveYVoterProxy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyCurvemUSDVoterProxy.sol b/contracts/strategies/StrategyCurvemUSDVoterProxy.sol
+index 14a6c0c..d90eb49 100644
+--- a/contracts/strategies/StrategyCurvemUSDVoterProxy.sol
++++ b/contracts/strategies/StrategyCurvemUSDVoterProxy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyDAI3pool.sol b/contracts/strategies/StrategyDAI3pool.sol
+index 7ab13e9..7bfb9e3 100644
+--- a/contracts/strategies/StrategyDAI3pool.sol
++++ b/contracts/strategies/StrategyDAI3pool.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyDAI3poolV2.sol b/contracts/strategies/StrategyDAI3poolV2.sol
+index 44fe087..a3fc6b3 100644
+--- a/contracts/strategies/StrategyDAI3poolV2.sol
++++ b/contracts/strategies/StrategyDAI3poolV2.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: AGPL-3.0
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyDAICurve.sol b/contracts/strategies/StrategyDAICurve.sol
+index 202bbca..e8d9ad6 100644
+--- a/contracts/strategies/StrategyDAICurve.sol
++++ b/contracts/strategies/StrategyDAICurve.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyDForceUSDC.sol b/contracts/strategies/StrategyDForceUSDC.sol
+index 1263da9..12870c2 100644
+--- a/contracts/strategies/StrategyDForceUSDC.sol
++++ b/contracts/strategies/StrategyDForceUSDC.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyDForceUSDT.sol b/contracts/strategies/StrategyDForceUSDT.sol
+index ca9a424..bad61de 100644
+--- a/contracts/strategies/StrategyDForceUSDT.sol
++++ b/contracts/strategies/StrategyDForceUSDT.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyGUSDRescue.sol b/contracts/strategies/StrategyGUSDRescue.sol
+index 4b37296..36a644f 100644
+--- a/contracts/strategies/StrategyGUSDRescue.sol
++++ b/contracts/strategies/StrategyGUSDRescue.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface IERC20 {
+     function totalSupply() external view returns (uint256);
+diff --git a/contracts/strategies/StrategyMKRVaultDAIDelegate.sol b/contracts/strategies/StrategyMKRVaultDAIDelegate.sol
+index 32c58ea..4715710 100644
+--- a/contracts/strategies/StrategyMKRVaultDAIDelegate.sol
++++ b/contracts/strategies/StrategyMKRVaultDAIDelegate.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyProxy.sol b/contracts/strategies/StrategyProxy.sol
+index 4ad8d8f..4d2df90 100644
+--- a/contracts/strategies/StrategyProxy.sol
++++ b/contracts/strategies/StrategyProxy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyTUSDCurve.sol b/contracts/strategies/StrategyTUSDCurve.sol
+index 4343fdf..2b00f95 100644
+--- a/contracts/strategies/StrategyTUSDCurve.sol
++++ b/contracts/strategies/StrategyTUSDCurve.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyTUSDypool.sol b/contracts/strategies/StrategyTUSDypool.sol
+index 00a7446..9fb6c13 100644
+--- a/contracts/strategies/StrategyTUSDypool.sol
++++ b/contracts/strategies/StrategyTUSDypool.sol
+@@ -2,7 +2,7 @@
+  *Submitted for verification at Etherscan.io on 2020-11-16
+  */
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyUSDC3pool.sol b/contracts/strategies/StrategyUSDC3pool.sol
+index ac5ba88..e24074c 100644
+--- a/contracts/strategies/StrategyUSDC3pool.sol
++++ b/contracts/strategies/StrategyUSDC3pool.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyUSDT3pool.sol b/contracts/strategies/StrategyUSDT3pool.sol
+index 0086231..4b51a3b 100644
+--- a/contracts/strategies/StrategyUSDT3pool.sol
++++ b/contracts/strategies/StrategyUSDT3pool.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyVaultUSDC.sol b/contracts/strategies/StrategyVaultUSDC.sol
+index 0796180..f3612eb 100644
+--- a/contracts/strategies/StrategyVaultUSDC.sol
++++ b/contracts/strategies/StrategyVaultUSDC.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategyYFIGovernance.sol b/contracts/strategies/StrategyYFIGovernance.sol
+index 49f6b82..4368a0c 100644
+--- a/contracts/strategies/StrategyYFIGovernance.sol
++++ b/contracts/strategies/StrategyYFIGovernance.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/strategies/StrategymUSDCurve.sol b/contracts/strategies/StrategymUSDCurve.sol
+index b3d2706..4e084d5 100644
+--- a/contracts/strategies/StrategymUSDCurve.sol
++++ b/contracts/strategies/StrategymUSDCurve.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/test/Token.sol b/contracts/test/Token.sol
+index cbaab9d..80c2646 100644
+--- a/contracts/test/Token.sol
++++ b/contracts/test/Token.sol
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: MIT
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+ 
+diff --git a/contracts/utils/BTCOSMedianizer.sol b/contracts/utils/BTCOSMedianizer.sol
+index 8b5fd07..5498ac4 100644
+--- a/contracts/utils/BTCOSMedianizer.sol
++++ b/contracts/utils/BTCOSMedianizer.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+ 
+diff --git a/contracts/utils/ETHOSMedianizer.sol b/contracts/utils/ETHOSMedianizer.sol
+index 862f5ce..7e4786d 100644
+--- a/contracts/utils/ETHOSMedianizer.sol
++++ b/contracts/utils/ETHOSMedianizer.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "../../interfaces/maker/OracleSecurityModule.sol";
+ 
+diff --git a/contracts/vaults/CurveVault.sol b/contracts/vaults/CurveVault.sol
+index 4050ff1..c4a3d69 100644
+--- a/contracts/vaults/CurveVault.sol
++++ b/contracts/vaults/CurveVault.sol
+@@ -3,7 +3,7 @@
+  */
+ 
+ // SPDX-License-Identifier: MIT
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+diff --git a/contracts/vaults/yDelegatedVault.sol b/contracts/vaults/yDelegatedVault.sol
+index e86457b..fee4a68 100644
+--- a/contracts/vaults/yDelegatedVault.sol
++++ b/contracts/vaults/yDelegatedVault.sol
+@@ -1,11 +1,11 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+-import "@openzeppelin/contracts/ownership/Ownable.sol";
++import "@openzeppelin/contracts/access/Ownable.sol";
+ 
+ import "../../interfaces/aave/Aave.sol";
+ import "../../interfaces/aave/AaveToken.sol";
+diff --git a/contracts/vaults/yVault.sol b/contracts/vaults/yVault.sol
+index 9e12882..c75d76e 100644
+--- a/contracts/vaults/yVault.sol
++++ b/contracts/vaults/yVault.sol
+@@ -1,11 +1,11 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+-import "@openzeppelin/contracts/ownership/Ownable.sol";
++import "@openzeppelin/contracts/access/Ownable.sol";
+ 
+ import "../../interfaces/yearn/IController.sol";
+ 
+diff --git a/contracts/vaults/yWETH.sol b/contracts/vaults/yWETH.sol
+index a2000ce..8d003b8 100644
+--- a/contracts/vaults/yWETH.sol
++++ b/contracts/vaults/yWETH.sol
+@@ -1,11 +1,11 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+-import "@openzeppelin/contracts/ownership/Ownable.sol";
++import "@openzeppelin/contracts/access/Ownable.sol";
+ 
+ import "../../interfaces/weth/WETH.sol";
+ import "../../interfaces/yearn/IController.sol";
+@@ -158,14 +158,14 @@ contract yWETH is ERC20 {
+         }
+ 
+         WETH(address(token)).withdraw(r);
+-        address(msg.sender).transfer(r);
++        msg.sender.transfer(r);
+     }
+ 
+     function getPricePerFullShare() public view returns (uint256) {
+         return balance().mul(1e18).div(totalSupply());
+     }
+ 
+-    function() external payable {
++    receive() external payable {
+         if (msg.sender != address(token)) {
+             depositETH();
+         }
+-- 
+2.34.1
+

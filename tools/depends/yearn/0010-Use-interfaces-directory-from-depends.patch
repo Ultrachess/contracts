@@ -1,0 +1,757 @@
+From 95707ed097c884dcc37042b01e4c4b35fe993e35 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Sat, 12 Nov 2022 23:06:04 -0800
+Subject: [PATCH 10/12] Use interfaces directory from depends
+
+---
+ contracts/controllers/Controller.sol               |  6 +++---
+ contracts/controllers/DelegatedController.sol      |  8 ++++----
+ contracts/registries/YRegistry.sol                 |  8 ++++----
+ contracts/strategies/CurveYCRVVoter.sol            | 12 ++++++------
+ contracts/strategies/StrategyCreamYFI.sol          |  8 ++++----
+ .../strategies/StrategyCurve3CrvVoterProxy.sol     | 14 +++++++-------
+ .../strategies/StrategyCurveBBTCVoterProxy.sol     | 12 ++++++------
+ .../strategies/StrategyCurveBTCVoterProxy.sol      | 14 +++++++-------
+ .../strategies/StrategyCurveBUSDVoterProxy.sol     | 14 +++++++-------
+ .../strategies/StrategyCurveCompoundVoterProxy.sol | 14 +++++++-------
+ .../strategies/StrategyCurveEURVoterProxy.sol      | 12 ++++++------
+ .../strategies/StrategyCurveGUSDVoterProxy.sol     | 12 ++++++------
+ .../strategies/StrategyCurveRENVoterProxy.sol      | 12 ++++++------
+ .../strategies/StrategyCurveUSDNVoterProxy.sol     | 12 ++++++------
+ .../strategies/StrategyCurveUSTVoterProxy.sol      | 12 ++++++------
+ contracts/strategies/StrategyCurveYVoterProxy.sol  | 14 +++++++-------
+ .../strategies/StrategyCurvemUSDVoterProxy.sol     | 12 ++++++------
+ contracts/strategies/StrategyDAI3pool.sol          |  4 ++--
+ contracts/strategies/StrategyDAI3poolV2.sol        |  4 ++--
+ contracts/strategies/StrategyDAICurve.sol          |  8 ++++----
+ contracts/strategies/StrategyDForceUSDC.sol        |  8 ++++----
+ contracts/strategies/StrategyDForceUSDT.sol        |  8 ++++----
+ .../strategies/StrategyMKRVaultDAIDelegate.sol     | 10 +++++-----
+ contracts/strategies/StrategyProxy.sol             |  8 ++++----
+ contracts/strategies/StrategyTUSDCurve.sol         | 10 +++++-----
+ contracts/strategies/StrategyTUSDypool.sol         |  4 ++--
+ contracts/strategies/StrategyUSDC3pool.sol         |  4 ++--
+ contracts/strategies/StrategyUSDT3pool.sol         |  4 ++--
+ contracts/strategies/StrategyVaultUSDC.sol         |  8 ++++----
+ contracts/strategies/StrategyYFIGovernance.sol     | 10 +++++-----
+ contracts/strategies/StrategymUSDCurve.sol         |  4 ++--
+ contracts/utils/BTCOSMedianizer.sol                |  2 +-
+ contracts/utils/ETHOSMedianizer.sol                |  2 +-
+ contracts/vaults/yDelegatedVault.sol               | 10 +++++-----
+ contracts/vaults/yVault.sol                        |  2 +-
+ contracts/vaults/yWETH.sol                         |  2 +-
+ 36 files changed, 154 insertions(+), 154 deletions(-)
+
+diff --git a/contracts/controllers/Controller.sol b/contracts/controllers/Controller.sol
+index d82cf9f..7109ae8 100644
+--- a/contracts/controllers/Controller.sol
++++ b/contracts/controllers/Controller.sol
+@@ -7,9 +7,9 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IConverter.sol";
+-import "../../interfaces/yearn/IOneSplitAudit.sol";
+-import "../../interfaces/yearn/IStrategy.sol";
++import "../../../interfaces/yearn/IConverter.sol";
++import "../../../interfaces/yearn/IOneSplitAudit.sol";
++import "../../../interfaces/yearn/IStrategy.sol";
+ 
+ contract YearnController {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/controllers/DelegatedController.sol b/contracts/controllers/DelegatedController.sol
+index ff38eb7..d37f801 100644
+--- a/contracts/controllers/DelegatedController.sol
++++ b/contracts/controllers/DelegatedController.sol
+@@ -7,10 +7,10 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IStrategy.sol";
+-import "../../interfaces/yearn/IConverter.sol";
+-import "../../interfaces/yearn/IOneSplitAudit.sol";
+-import "../../interfaces/yearn/IDelegatedVault.sol";
++import "../../../interfaces/yearn/IStrategy.sol";
++import "../../../interfaces/yearn/IConverter.sol";
++import "../../../interfaces/yearn/IOneSplitAudit.sol";
++import "../../../interfaces/yearn/IDelegatedVault.sol";
+ 
+ contract DelegatedController {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/registries/YRegistry.sol b/contracts/registries/YRegistry.sol
+index f2a9b7d..e3f838c 100644
+--- a/contracts/registries/YRegistry.sol
++++ b/contracts/registries/YRegistry.sol
+@@ -6,10 +6,10 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/utils/EnumerableSet.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/yearn/IStrategy.sol";
+-import "../../interfaces/yearn/IVault.sol";
+-import "../../interfaces/yearn/IWrappedVault.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/yearn/IStrategy.sol";
++import "../../../interfaces/yearn/IVault.sol";
++import "../../../interfaces/yearn/IWrappedVault.sol";
+ 
+ contract YRegistry {
+     using Address for address;
+diff --git a/contracts/strategies/CurveYCRVVoter.sol b/contracts/strategies/CurveYCRVVoter.sol
+index 46784b6..3c06605 100644
+--- a/contracts/strategies/CurveYCRVVoter.sol
++++ b/contracts/strategies/CurveYCRVVoter.sol
+@@ -7,12 +7,12 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/curve-dao/VotingEscrow.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/yearn/IToken.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/curve-dao/VotingEscrow.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/yearn/IToken.sol";
+ 
+ contract CurveYCRVVoter {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyCreamYFI.sol b/contracts/strategies/StrategyCreamYFI.sol
+index 3fb1b32..60e5ed2 100644
+--- a/contracts/strategies/StrategyCreamYFI.sol
++++ b/contracts/strategies/StrategyCreamYFI.sol
+@@ -7,11 +7,11 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/cream/Controller.sol";
+-import "../../interfaces/compound/Token.sol";
+-import "../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/cream/Controller.sol";
++import "../../../interfaces/compound/Token.sol";
++import "../../../interfaces/uniswap/Uni.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
++import "../../../interfaces/yearn/IController.sol";
+ 
+ contract StrategyCreamYFI {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyCurve3CrvVoterProxy.sol b/contracts/strategies/StrategyCurve3CrvVoterProxy.sol
+index 9f8314f..e3a822b 100644
+--- a/contracts/strategies/StrategyCurve3CrvVoterProxy.sol
++++ b/contracts/strategies/StrategyCurve3CrvVoterProxy.sol
+@@ -5,13 +5,13 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IToken.sol";
+-import "../../interfaces/yearn/IVoterProxy.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IToken.sol";
++import "../../../interfaces/yearn/IVoterProxy.sol";
+ 
+ contract StrategyCurve3CrvVoterProxy {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyCurveBBTCVoterProxy.sol b/contracts/strategies/StrategyCurveBBTCVoterProxy.sol
+index 29b218e..5aedf29 100644
+--- a/contracts/strategies/StrategyCurveBBTCVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveBBTCVoterProxy.sol
+@@ -7,12 +7,12 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IVoterProxy.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IVoterProxy.sol";
+ 
+ contract StrategyCurveBBTCVoterProxy {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyCurveBTCVoterProxy.sol b/contracts/strategies/StrategyCurveBTCVoterProxy.sol
+index bfcf321..7e827d6 100644
+--- a/contracts/strategies/StrategyCurveBTCVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveBTCVoterProxy.sol
+@@ -7,13 +7,13 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IToken.sol";
+-import "../../interfaces/yearn/IVoterProxy.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IToken.sol";
++import "../../../interfaces/yearn/IVoterProxy.sol";
+ 
+ contract StrategyCurveBTCVoterProxy {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyCurveBUSDVoterProxy.sol b/contracts/strategies/StrategyCurveBUSDVoterProxy.sol
+index 75fdb9e..430d5cd 100644
+--- a/contracts/strategies/StrategyCurveBUSDVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveBUSDVoterProxy.sol
+@@ -7,13 +7,13 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IToken.sol";
+-import "../../interfaces/yearn/IVoterProxy.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IToken.sol";
++import "../../../interfaces/yearn/IVoterProxy.sol";
+ 
+ contract StrategyCurveBUSDVoterProxy {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyCurveCompoundVoterProxy.sol b/contracts/strategies/StrategyCurveCompoundVoterProxy.sol
+index fa357e8..2124965 100644
+--- a/contracts/strategies/StrategyCurveCompoundVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveCompoundVoterProxy.sol
+@@ -5,13 +5,13 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IToken.sol";
+-import "../../interfaces/yearn/IVoterProxy.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IToken.sol";
++import "../../../interfaces/yearn/IVoterProxy.sol";
+ 
+ contract StrategyCurveCompoundVoterProxy {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyCurveEURVoterProxy.sol b/contracts/strategies/StrategyCurveEURVoterProxy.sol
+index 6828046..1ba5674 100644
+--- a/contracts/strategies/StrategyCurveEURVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveEURVoterProxy.sol
+@@ -7,12 +7,12 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IVoterProxy.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IVoterProxy.sol";
+ 
+ contract StrategyCurveEURVoterProxy {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyCurveGUSDVoterProxy.sol b/contracts/strategies/StrategyCurveGUSDVoterProxy.sol
+index 2404704..abbfc4e 100644
+--- a/contracts/strategies/StrategyCurveGUSDVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveGUSDVoterProxy.sol
+@@ -7,12 +7,12 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IVoterProxy.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IVoterProxy.sol";
+ 
+ contract StrategyCurveGUSDVoterProxy {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyCurveRENVoterProxy.sol b/contracts/strategies/StrategyCurveRENVoterProxy.sol
+index 71a21ea..5ec3b55 100644
+--- a/contracts/strategies/StrategyCurveRENVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveRENVoterProxy.sol
+@@ -7,12 +7,12 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IVoterProxy.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IVoterProxy.sol";
+ 
+ contract StrategyCurveRENVoterProxy {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyCurveUSDNVoterProxy.sol b/contracts/strategies/StrategyCurveUSDNVoterProxy.sol
+index 5137c8d..c273e50 100644
+--- a/contracts/strategies/StrategyCurveUSDNVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveUSDNVoterProxy.sol
+@@ -7,12 +7,12 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IVoterProxy.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IVoterProxy.sol";
+ 
+ contract StrategyCurveUSDNVoterProxy {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyCurveUSTVoterProxy.sol b/contracts/strategies/StrategyCurveUSTVoterProxy.sol
+index 69f2ea8..3e6adee 100644
+--- a/contracts/strategies/StrategyCurveUSTVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveUSTVoterProxy.sol
+@@ -7,12 +7,12 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IVoterProxy.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IVoterProxy.sol";
+ 
+ contract StrategyCurveUSTVoterProxy {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyCurveYVoterProxy.sol b/contracts/strategies/StrategyCurveYVoterProxy.sol
+index 1aefcc4..61cab5d 100644
+--- a/contracts/strategies/StrategyCurveYVoterProxy.sol
++++ b/contracts/strategies/StrategyCurveYVoterProxy.sol
+@@ -7,13 +7,13 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IToken.sol";
+-import "../../interfaces/yearn/IVoterProxy.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IToken.sol";
++import "../../../interfaces/yearn/IVoterProxy.sol";
+ 
+ contract StrategyCurveYVoterProxy {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyCurvemUSDVoterProxy.sol b/contracts/strategies/StrategyCurvemUSDVoterProxy.sol
+index d039637..e7e09ac 100644
+--- a/contracts/strategies/StrategyCurvemUSDVoterProxy.sol
++++ b/contracts/strategies/StrategyCurvemUSDVoterProxy.sol
+@@ -7,12 +7,12 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Gauge.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IVoterProxy.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IVoterProxy.sol";
+ 
+ contract StrategyCurvemUSDVoterProxy {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyDAI3pool.sol b/contracts/strategies/StrategyDAI3pool.sol
+index 7bfb9e3..03f2049 100644
+--- a/contracts/strategies/StrategyDAI3pool.sol
++++ b/contracts/strategies/StrategyDAI3pool.sol
+@@ -7,8 +7,8 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IController.sol";
+ 
+ interface yvERC20 {
+     function deposit(uint256) external;
+diff --git a/contracts/strategies/StrategyDAI3poolV2.sol b/contracts/strategies/StrategyDAI3poolV2.sol
+index a3fc6b3..0bf388b 100644
+--- a/contracts/strategies/StrategyDAI3poolV2.sol
++++ b/contracts/strategies/StrategyDAI3poolV2.sol
+@@ -7,8 +7,8 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IController.sol";
+ 
+ interface yvERC20 {
+     function deposit(uint256) external;
+diff --git a/contracts/strategies/StrategyDAICurve.sol b/contracts/strategies/StrategyDAICurve.sol
+index 69aa3bc..95d8aa7 100644
+--- a/contracts/strategies/StrategyDAICurve.sol
++++ b/contracts/strategies/StrategyDAICurve.sol
+@@ -7,11 +7,11 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/yearn/IToken.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/yearn/IToken.sol";
+ 
+ contract StrategyDAICurve {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyDForceUSDC.sol b/contracts/strategies/StrategyDForceUSDC.sol
+index 12870c2..e730549 100644
+--- a/contracts/strategies/StrategyDForceUSDC.sol
++++ b/contracts/strategies/StrategyDForceUSDC.sol
+@@ -7,11 +7,11 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/dforce/Rewards.sol";
+-import "../../interfaces/dforce/Token.sol";
+-import "../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/dforce/Rewards.sol";
++import "../../../interfaces/dforce/Token.sol";
++import "../../../interfaces/uniswap/Uni.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
++import "../../../interfaces/yearn/IController.sol";
+ 
+ contract StrategyDForceUSDC {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyDForceUSDT.sol b/contracts/strategies/StrategyDForceUSDT.sol
+index bad61de..78d1725 100644
+--- a/contracts/strategies/StrategyDForceUSDT.sol
++++ b/contracts/strategies/StrategyDForceUSDT.sol
+@@ -7,11 +7,11 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/dforce/Rewards.sol";
+-import "../../interfaces/dforce/Token.sol";
+-import "../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/dforce/Rewards.sol";
++import "../../../interfaces/dforce/Token.sol";
++import "../../../interfaces/uniswap/Uni.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
++import "../../../interfaces/yearn/IController.sol";
+ 
+ contract StrategyDForceUSDT {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyMKRVaultDAIDelegate.sol b/contracts/strategies/StrategyMKRVaultDAIDelegate.sol
+index 4715710..78c59de 100644
+--- a/contracts/strategies/StrategyMKRVaultDAIDelegate.sol
++++ b/contracts/strategies/StrategyMKRVaultDAIDelegate.sol
+@@ -5,12 +5,12 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/maker/Maker.sol";
+-import "../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/maker/Maker.sol";
++import "../../../interfaces/uniswap/Uni.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/yearn/IStrategy.sol";
+-import "../../interfaces/yearn/IVault.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/yearn/IStrategy.sol";
++import "../../../interfaces/yearn/IVault.sol";
+ 
+ /*
+ 
+diff --git a/contracts/strategies/StrategyProxy.sol b/contracts/strategies/StrategyProxy.sol
+index 37eb4df..1d54a0a 100644
+--- a/contracts/strategies/StrategyProxy.sol
++++ b/contracts/strategies/StrategyProxy.sol
+@@ -7,10 +7,10 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IProxy.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
+-import "../../interfaces/curve-dao/FeeDistributor.sol";
+-import "../../interfaces/curve/Gauge.sol";
++import "../../../interfaces/yearn/IProxy.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/curve-dao/FeeDistributor.sol";
++import "../../../interfaces/curve/Gauge.sol";
+ 
+ library SafeProxy {
+     function safeExecute(
+diff --git a/contracts/strategies/StrategyTUSDCurve.sol b/contracts/strategies/StrategyTUSDCurve.sol
+index 591739d..9bede2d 100644
+--- a/contracts/strategies/StrategyTUSDCurve.sol
++++ b/contracts/strategies/StrategyTUSDCurve.sol
+@@ -7,12 +7,12 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/curve/Curve.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve-dao/Minter.sol";
++import "../../../interfaces/curve/Curve.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve-dao/Minter.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/yearn/IToken.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/yearn/IToken.sol";
+ 
+ contract StrategyTUSDCurve {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyTUSDypool.sol b/contracts/strategies/StrategyTUSDypool.sol
+index 9fb6c13..7a1002b 100644
+--- a/contracts/strategies/StrategyTUSDypool.sol
++++ b/contracts/strategies/StrategyTUSDypool.sol
+@@ -9,8 +9,8 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Curve.sol";
+ 
+ interface yvERC20 {
+     function deposit(uint256) external;
+diff --git a/contracts/strategies/StrategyUSDC3pool.sol b/contracts/strategies/StrategyUSDC3pool.sol
+index e24074c..4afc62e 100644
+--- a/contracts/strategies/StrategyUSDC3pool.sol
++++ b/contracts/strategies/StrategyUSDC3pool.sol
+@@ -5,8 +5,8 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Curve.sol";
+ 
+ interface yvERC20 {
+     function deposit(uint256) external;
+diff --git a/contracts/strategies/StrategyUSDT3pool.sol b/contracts/strategies/StrategyUSDT3pool.sol
+index 4b51a3b..54f5781 100644
+--- a/contracts/strategies/StrategyUSDT3pool.sol
++++ b/contracts/strategies/StrategyUSDT3pool.sol
+@@ -5,8 +5,8 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Curve.sol";
+ 
+ interface yvERC20 {
+     function deposit(uint256) external;
+diff --git a/contracts/strategies/StrategyVaultUSDC.sol b/contracts/strategies/StrategyVaultUSDC.sol
+index f3612eb..9a07545 100644
+--- a/contracts/strategies/StrategyVaultUSDC.sol
++++ b/contracts/strategies/StrategyVaultUSDC.sol
+@@ -7,11 +7,11 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/aave/Aave.sol";
+-import "../../interfaces/aave/LendingPoolAddressesProvider.sol";
++import "../../../interfaces/aave-v1/Aave.sol";
++import "../../../interfaces/aave-v1/LendingPoolAddressesProvider.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/yearn/IVault.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/yearn/IVault.sol";
+ 
+ contract StrategyVaultUSDC {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/strategies/StrategyYFIGovernance.sol b/contracts/strategies/StrategyYFIGovernance.sol
+index 4368a0c..42ea9ed 100644
+--- a/contracts/strategies/StrategyYFIGovernance.sol
++++ b/contracts/strategies/StrategyYFIGovernance.sol
+@@ -7,11 +7,11 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/yearn/IGovernance.sol";
+-import "../../interfaces/yearn/IToken.sol";
+-import "../../interfaces/uniswap/Uni.sol";
+-import "../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/yearn/IGovernance.sol";
++import "../../../interfaces/yearn/IToken.sol";
++import "../../../interfaces/uniswap/Uni.sol";
++import "../../../interfaces/curve/Curve.sol";
+ 
+ /*
+ 
+diff --git a/contracts/strategies/StrategymUSDCurve.sol b/contracts/strategies/StrategymUSDCurve.sol
+index 4e084d5..a29e207 100644
+--- a/contracts/strategies/StrategymUSDCurve.sol
++++ b/contracts/strategies/StrategymUSDCurve.sol
+@@ -5,8 +5,8 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
+ import "@openzeppelin/contracts/utils/Address.sol";
+ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
+-import "../../interfaces/curve/Curve.sol";
++import "../../../interfaces/yearn/IController.sol";
++import "../../../interfaces/curve/Curve.sol";
+ 
+ interface yvERC20 {
+     function deposit(uint256) external;
+diff --git a/contracts/utils/BTCOSMedianizer.sol b/contracts/utils/BTCOSMedianizer.sol
+index 5498ac4..ef89f48 100644
+--- a/contracts/utils/BTCOSMedianizer.sol
++++ b/contracts/utils/BTCOSMedianizer.sol
+@@ -2,7 +2,7 @@ pragma solidity ^0.6.12;
+ 
+ import "@openzeppelin/contracts/math/SafeMath.sol";
+ 
+-import "../../interfaces/maker/OracleSecurityModule.sol";
++import "../../../interfaces/maker/OracleSecurityModule.sol";
+ 
+ interface UniswapAnchoredView {
+     function price(string calldata) external view returns (uint256);
+diff --git a/contracts/utils/ETHOSMedianizer.sol b/contracts/utils/ETHOSMedianizer.sol
+index 7e4786d..f61e0d3 100644
+--- a/contracts/utils/ETHOSMedianizer.sol
++++ b/contracts/utils/ETHOSMedianizer.sol
+@@ -1,6 +1,6 @@
+ pragma solidity ^0.6.12;
+ 
+-import "../../interfaces/maker/OracleSecurityModule.sol";
++import "../../../interfaces/maker/OracleSecurityModule.sol";
+ 
+ interface Medianizer {
+     function read() external view returns (bytes32);
+diff --git a/contracts/vaults/yDelegatedVault.sol b/contracts/vaults/yDelegatedVault.sol
+index fee4a68..e84cef1 100644
+--- a/contracts/vaults/yDelegatedVault.sol
++++ b/contracts/vaults/yDelegatedVault.sol
+@@ -7,11 +7,11 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+ import "@openzeppelin/contracts/access/Ownable.sol";
+ 
+-import "../../interfaces/aave/Aave.sol";
+-import "../../interfaces/aave/AaveToken.sol";
+-import "../../interfaces/aave/Oracle.sol";
+-import "../../interfaces/aave/LendingPoolAddressesProvider.sol";
+-import "../../interfaces/yearn/IController.sol";
++import "../../../interfaces/aave-v1/Aave.sol";
++import "../../../interfaces/aave-v1/AaveToken.sol";
++import "../../../interfaces/aave-v1/Oracle.sol";
++import "../../../interfaces/aave-v1/LendingPoolAddressesProvider.sol";
++import "../../../interfaces/yearn/IController.sol";
+ 
+ contract yDelegatedVault is ERC20 {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/vaults/yVault.sol b/contracts/vaults/yVault.sol
+index c75d76e..6dd4b8f 100644
+--- a/contracts/vaults/yVault.sol
++++ b/contracts/vaults/yVault.sol
+@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+ import "@openzeppelin/contracts/access/Ownable.sol";
+ 
+-import "../../interfaces/yearn/IController.sol";
++import "../../../interfaces/yearn/IController.sol";
+ 
+ contract yVault is ERC20 {
+     using SafeERC20 for IERC20;
+diff --git a/contracts/vaults/yWETH.sol b/contracts/vaults/yWETH.sol
+index 68542ff..58ab89d 100644
+--- a/contracts/vaults/yWETH.sol
++++ b/contracts/vaults/yWETH.sol
+@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+ import "@openzeppelin/contracts/access/Ownable.sol";
+ 
+ import "../../../depends/canonical-weth/WETH9.sol";
+-import "../../interfaces/yearn/IController.sol";
++import "../../../interfaces/yearn/IController.sol";
+ 
+ // NOTE: The name of this contract was modified from yVault so as not to conflict with yVault.sol
+ contract yWETH is ERC20 {
+-- 
+2.34.1
+

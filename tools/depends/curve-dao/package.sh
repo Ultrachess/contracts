@@ -104,7 +104,6 @@ function patch_curve_dao() {
   rm -rf "${REPO_DIR_CURVE_DAO}/contracts/vests"
 
   rm -rf "${REPO_DIR_CURVE_DAO}/contracts/CryptoPoolProxy.vy"
-  rm -rf "${REPO_DIR_CURVE_DAO}/contracts/FeeDistributor.vy"
   rm -rf "${REPO_DIR_CURVE_DAO}/contracts/GaugeProxy.vy"
   rm -rf "${REPO_DIR_CURVE_DAO}/contracts/PoolProxy.vy"
   rm -rf "${REPO_DIR_CURVE_DAO}/contracts/PoolProxySidechain.vy"

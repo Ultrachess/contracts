@@ -1,0 +1,357 @@
+From 51bf7e7d6058a3b95807995fe9a5a9d2ac9502ef Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Fri, 11 Jun 2021 01:00:19 -0700
+Subject: [PATCH 03/12] Move interfaces to Solidity 0.6.12
+
+---
+ interfaces/aave/Aave.sol                         | 2 +-
+ interfaces/aave/AaveToken.sol                    | 2 +-
+ interfaces/aave/LendingPoolAddressesProvider.sol | 2 +-
+ interfaces/aave/Oracle.sol                       | 2 +-
+ interfaces/compound/Token.sol                    | 2 +-
+ interfaces/cream/Controller.sol                  | 2 +-
+ interfaces/curve/Curve.sol                       | 2 +-
+ interfaces/curve/FeeDistribution.sol             | 2 +-
+ interfaces/curve/Gauge.sol                       | 2 +-
+ interfaces/curve/Mintr.sol                       | 2 +-
+ interfaces/curve/VoteEscrow.sol                  | 2 +-
+ interfaces/dforce/Rewards.sol                    | 2 +-
+ interfaces/dforce/Token.sol                      | 2 +-
+ interfaces/maker/Maker.sol                       | 2 +-
+ interfaces/maker/OracleSecurityModule.sol        | 2 +-
+ interfaces/uniswap/Uni.sol                       | 2 +-
+ interfaces/weth/WETH.sol                         | 2 +-
+ interfaces/yearn/IController.sol                 | 2 +-
+ interfaces/yearn/IConverter.sol                  | 2 +-
+ interfaces/yearn/IDelegatedVault.sol             | 2 +-
+ interfaces/yearn/IGovernance.sol                 | 2 +-
+ interfaces/yearn/IOneSplitAudit.sol              | 2 +-
+ interfaces/yearn/IProxy.sol                      | 2 +-
+ interfaces/yearn/IStrategy.sol                   | 2 +-
+ interfaces/yearn/IToken.sol                      | 2 +-
+ interfaces/yearn/IVault.sol                      | 2 +-
+ interfaces/yearn/IVoterProxy.sol                 | 2 +-
+ interfaces/yearn/IWrappedVault.sol               | 2 +-
+ 28 files changed, 28 insertions(+), 28 deletions(-)
+
+diff --git a/interfaces/aave/Aave.sol b/interfaces/aave/Aave.sol
+index 6b1bc2a..d9ffbff 100644
+--- a/interfaces/aave/Aave.sol
++++ b/interfaces/aave/Aave.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface Aave {
+     function borrow(
+diff --git a/interfaces/aave/AaveToken.sol b/interfaces/aave/AaveToken.sol
+index 4daf984..4e75363 100644
+--- a/interfaces/aave/AaveToken.sol
++++ b/interfaces/aave/AaveToken.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface AaveToken {
+     function underlyingAssetAddress() external view returns (address);
+diff --git a/interfaces/aave/LendingPoolAddressesProvider.sol b/interfaces/aave/LendingPoolAddressesProvider.sol
+index abbf4c1..0b9ca26 100644
+--- a/interfaces/aave/LendingPoolAddressesProvider.sol
++++ b/interfaces/aave/LendingPoolAddressesProvider.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface LendingPoolAddressesProvider {
+     function getLendingPool() external view returns (address);
+diff --git a/interfaces/aave/Oracle.sol b/interfaces/aave/Oracle.sol
+index 80c3d64..252b037 100644
+--- a/interfaces/aave/Oracle.sol
++++ b/interfaces/aave/Oracle.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface Oracle {
+     function getAssetPrice(address reserve) external view returns (uint256);
+diff --git a/interfaces/compound/Token.sol b/interfaces/compound/Token.sol
+index e3bc9c6..417f1e9 100644
+--- a/interfaces/compound/Token.sol
++++ b/interfaces/compound/Token.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface cToken {
+     function mint(uint256 mintAmount) external returns (uint256);
+diff --git a/interfaces/cream/Controller.sol b/interfaces/cream/Controller.sol
+index 1d2caab..83aeb3c 100644
+--- a/interfaces/cream/Controller.sol
++++ b/interfaces/cream/Controller.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface Creamtroller {
+     function claimComp(address holder) external;
+diff --git a/interfaces/curve/Curve.sol b/interfaces/curve/Curve.sol
+index d5f1273..6d9791f 100644
+--- a/interfaces/curve/Curve.sol
++++ b/interfaces/curve/Curve.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface ICurveFi {
+     function get_virtual_price() external view returns (uint256);
+diff --git a/interfaces/curve/FeeDistribution.sol b/interfaces/curve/FeeDistribution.sol
+index cf725f8..e6f5d56 100644
+--- a/interfaces/curve/FeeDistribution.sol
++++ b/interfaces/curve/FeeDistribution.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface FeeDistribution {
+     function claim_many(address[20] calldata) external returns (bool);
+diff --git a/interfaces/curve/Gauge.sol b/interfaces/curve/Gauge.sol
+index 16284dd..2195660 100644
+--- a/interfaces/curve/Gauge.sol
++++ b/interfaces/curve/Gauge.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface Gauge {
+     function deposit(uint256) external;
+diff --git a/interfaces/curve/Mintr.sol b/interfaces/curve/Mintr.sol
+index 7850526..ef22bd4 100644
+--- a/interfaces/curve/Mintr.sol
++++ b/interfaces/curve/Mintr.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface Mintr {
+     function mint(address) external;
+diff --git a/interfaces/curve/VoteEscrow.sol b/interfaces/curve/VoteEscrow.sol
+index 2ebf77e..c9b93a4 100644
+--- a/interfaces/curve/VoteEscrow.sol
++++ b/interfaces/curve/VoteEscrow.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface VoteEscrow {
+     function create_lock(uint256, uint256) external;
+diff --git a/interfaces/dforce/Rewards.sol b/interfaces/dforce/Rewards.sol
+index 1c3bfbd..b0ba0f2 100644
+--- a/interfaces/dforce/Rewards.sol
++++ b/interfaces/dforce/Rewards.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface dRewards {
+     function withdraw(uint256) external;
+diff --git a/interfaces/dforce/Token.sol b/interfaces/dforce/Token.sol
+index a7a2530..962ceac 100644
+--- a/interfaces/dforce/Token.sol
++++ b/interfaces/dforce/Token.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface dERC20 {
+     function mint(address, uint256) external;
+diff --git a/interfaces/maker/Maker.sol b/interfaces/maker/Maker.sol
+index 10e2907..67811d4 100644
+--- a/interfaces/maker/Maker.sol
++++ b/interfaces/maker/Maker.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface GemLike {
+     function approve(address, uint256) external;
+diff --git a/interfaces/maker/OracleSecurityModule.sol b/interfaces/maker/OracleSecurityModule.sol
+index e8b6c2c..e8dce0e 100644
+--- a/interfaces/maker/OracleSecurityModule.sol
++++ b/interfaces/maker/OracleSecurityModule.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface OracleSecurityModule {
+     function peek() external view returns (bytes32, bool);
+diff --git a/interfaces/uniswap/Uni.sol b/interfaces/uniswap/Uni.sol
+index f644d0a..95d14a2 100644
+--- a/interfaces/uniswap/Uni.sol
++++ b/interfaces/uniswap/Uni.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface Uni {
+     function swapExactTokensForTokens(
+diff --git a/interfaces/weth/WETH.sol b/interfaces/weth/WETH.sol
+index 4479cc9..39462db 100644
+--- a/interfaces/weth/WETH.sol
++++ b/interfaces/weth/WETH.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface WETH {
+     function deposit() external payable;
+diff --git a/interfaces/yearn/IController.sol b/interfaces/yearn/IController.sol
+index b7c58c0..3afce78 100644
+--- a/interfaces/yearn/IController.sol
++++ b/interfaces/yearn/IController.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface IController {
+     function withdraw(address, uint256) external;
+diff --git a/interfaces/yearn/IConverter.sol b/interfaces/yearn/IConverter.sol
+index df07978..adf42ba 100644
+--- a/interfaces/yearn/IConverter.sol
++++ b/interfaces/yearn/IConverter.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface IConverter {
+     function convert(address) external returns (uint256);
+diff --git a/interfaces/yearn/IDelegatedVault.sol b/interfaces/yearn/IDelegatedVault.sol
+index 5d9bb44..596b65f 100644
+--- a/interfaces/yearn/IDelegatedVault.sol
++++ b/interfaces/yearn/IDelegatedVault.sol
+@@ -1,4 +1,4 @@
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface IDelegatedVault {
+     function token() external view returns (address);
+diff --git a/interfaces/yearn/IGovernance.sol b/interfaces/yearn/IGovernance.sol
+index f0573cf..39457c5 100644
+--- a/interfaces/yearn/IGovernance.sol
++++ b/interfaces/yearn/IGovernance.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface IGovernance {
+     function withdraw(uint256) external;
+diff --git a/interfaces/yearn/IOneSplitAudit.sol b/interfaces/yearn/IOneSplitAudit.sol
+index daffdd7..6d62ced 100644
+--- a/interfaces/yearn/IOneSplitAudit.sol
++++ b/interfaces/yearn/IOneSplitAudit.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface IOneSplitAudit {
+     function swap(
+diff --git a/interfaces/yearn/IProxy.sol b/interfaces/yearn/IProxy.sol
+index 5323916..44edc66 100644
+--- a/interfaces/yearn/IProxy.sol
++++ b/interfaces/yearn/IProxy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface IProxy {
+     function execute(
+diff --git a/interfaces/yearn/IStrategy.sol b/interfaces/yearn/IStrategy.sol
+index 4b20a9f..901a2b2 100644
+--- a/interfaces/yearn/IStrategy.sol
++++ b/interfaces/yearn/IStrategy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface IStrategy {
+     function want() external view returns (address);
+diff --git a/interfaces/yearn/IToken.sol b/interfaces/yearn/IToken.sol
+index c45ca62..502034f 100644
+--- a/interfaces/yearn/IToken.sol
++++ b/interfaces/yearn/IToken.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ // NOTE: Basically an alias for Vaults
+ interface yERC20 {
+diff --git a/interfaces/yearn/IVault.sol b/interfaces/yearn/IVault.sol
+index 8376d39..4d60ac6 100644
+--- a/interfaces/yearn/IVault.sol
++++ b/interfaces/yearn/IVault.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface IVault {
+     function token() external view returns (address);
+diff --git a/interfaces/yearn/IVoterProxy.sol b/interfaces/yearn/IVoterProxy.sol
+index 9d9141b..0b6590b 100644
+--- a/interfaces/yearn/IVoterProxy.sol
++++ b/interfaces/yearn/IVoterProxy.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface IVoterProxy {
+     function withdraw(
+diff --git a/interfaces/yearn/IWrappedVault.sol b/interfaces/yearn/IWrappedVault.sol
+index 3b7b1c6..15d644e 100644
+--- a/interfaces/yearn/IWrappedVault.sol
++++ b/interfaces/yearn/IWrappedVault.sol
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: MIT
+ 
+-pragma solidity ^0.5.17;
++pragma solidity ^0.6.12;
+ 
+ interface IWrappedVault {
+     function token() external view returns (address);
+-- 
+2.34.1
+

@@ -85,6 +85,7 @@ const config: HardhatUserConfig = {
       },
       {
         // Required by Aave V2
+        // Required by Yearn
         version: "0.6.12",
         settings: {
           evmVersion: "berlin",
