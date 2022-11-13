@@ -109,6 +109,9 @@ jobs:
       - name: yarn audit-ci
         run: yarn audit-ci
 
+      - name: yarn lint-app
+        run: yarn lint-app
+
       # Set up static analysis
       - name: Install Python dependencies
         if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
@@ -119,9 +122,6 @@ jobs:
       - name: yarn depends
         if: steps.restore-contract-depends.outputs.cache-hit != 'true'
         run: yarn depends
-
-      - name: yarn lint-app
-        run: yarn lint-app
 
       - name: yarn lint-chain
         if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
