@@ -9,7 +9,7 @@
 // slither-disable-next-line solc-version
 pragma solidity >=0.6.0;
 
-import {IAaveIncentivesController} from "../../depends/aave-v2/interfaces/IAaveIncentivesController.sol";
+import {IAaveIncentivesController} from "../../interfaces/aave-v2/IAaveIncentivesController.sol";
 
 contract MockIncentivesController is IAaveIncentivesController {
   function getAssetData(

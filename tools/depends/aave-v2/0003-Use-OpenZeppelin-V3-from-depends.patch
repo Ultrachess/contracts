@@ -1,0 +1,617 @@
+From 5ae19022680da37855ee6c8367e351a022f8d9e0 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Sat, 12 Nov 2022 21:56:29 -0800
+Subject: [PATCH 3/4] Use OpenZeppelin V3 from depends
+
+---
+ contracts/adapters/BaseParaSwapAdapter.sol                | 8 ++++----
+ contracts/adapters/BaseUniswapAdapter.sol                 | 8 ++++----
+ contracts/adapters/FlashLiquidationAdapter.sol            | 2 +-
+ contracts/adapters/ParaSwapLiquiditySwapAdapter.sol       | 2 +-
+ contracts/adapters/UniswapLiquiditySwapAdapter.sol        | 2 +-
+ contracts/adapters/UniswapRepayAdapter.sol                | 2 +-
+ .../openzeppelin/contracts/IERC20Detailed.sol             | 2 +-
+ contracts/deployments/ATokensAndRatesHelper.sol           | 2 +-
+ contracts/deployments/StableAndVariableTokensHelper.sol   | 2 +-
+ contracts/flashloan/base/FlashLoanReceiverBase.sol        | 6 +++---
+ contracts/interfaces/IAToken.sol                          | 2 +-
+ contracts/interfaces/IERC20WithPermit.sol                 | 2 +-
+ contracts/interfaces/IExchangeAdapter.sol                 | 2 +-
+ contracts/interfaces/ILendingPool.sol                     | 2 +-
+ contracts/misc/AaveOracle.sol                             | 6 +++---
+ contracts/misc/WETHGateway.sol                            | 4 ++--
+ contracts/misc/WalletBalanceProvider.sol                  | 6 +++---
+ contracts/misc/interfaces/IERC20DetailedBytes.sol         | 2 +-
+ contracts/mocks/flashloan/MockFlashLoanReceiver.sol       | 6 +++---
+ contracts/mocks/oracle/LendingRateOracle.sol              | 2 +-
+ contracts/mocks/swap/MockParaSwapAugustus.sol             | 2 +-
+ contracts/mocks/swap/MockParaSwapTokenTransferProxy.sol   | 4 ++--
+ contracts/mocks/tokens/MintableDelegationERC20.sol        | 2 +-
+ contracts/mocks/tokens/MintableERC20.sol                  | 2 +-
+ .../configuration/LendingPoolAddressesProvider.sol        | 2 +-
+ .../LendingPoolAddressesProviderRegistry.sol              | 2 +-
+ .../lendingpool/DefaultReserveInterestRateStrategy.sol    | 4 ++--
+ contracts/protocol/lendingpool/LendingPool.sol            | 8 ++++----
+ .../protocol/lendingpool/LendingPoolCollateralManager.sol | 6 +++---
+ .../protocol/lendingpool/LendingPoolConfigurator.sol      | 2 +-
+ contracts/protocol/libraries/helpers/Helpers.sol          | 2 +-
+ contracts/protocol/libraries/logic/GenericLogic.sol       | 4 ++--
+ contracts/protocol/libraries/logic/ReserveLogic.sol       | 6 +++---
+ contracts/protocol/libraries/logic/ValidationLogic.sol    | 6 +++---
+ contracts/protocol/libraries/math/MathUtils.sol           | 2 +-
+ contracts/protocol/tokenization/AToken.sol                | 4 ++--
+ contracts/protocol/tokenization/IncentivizedERC20.sol     | 6 +++---
+ 37 files changed, 67 insertions(+), 67 deletions(-)
+
+diff --git a/contracts/adapters/BaseParaSwapAdapter.sol b/contracts/adapters/BaseParaSwapAdapter.sol
+index 9b84dd93..9343a6da 100644
+--- a/contracts/adapters/BaseParaSwapAdapter.sol
++++ b/contracts/adapters/BaseParaSwapAdapter.sol
+@@ -2,11 +2,11 @@
+ pragma solidity 0.6.12;
+ pragma experimental ABIEncoderV2;
+ 
+-import {SafeMath} from '../dependencies/openzeppelin/contracts/SafeMath.sol';
+-import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
++import {SafeMath} from '../../openzeppelin-v3/math/SafeMath.sol';
++import {IERC20} from '../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ import {IERC20Detailed} from '../dependencies/openzeppelin/contracts/IERC20Detailed.sol';
+-import {SafeERC20} from '../dependencies/openzeppelin/contracts/SafeERC20.sol';
+-import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
++import {SafeERC20} from '../../openzeppelin-v3/token/ERC20/SafeERC20.sol';
++import {Ownable} from '../../openzeppelin-v3/access/Ownable.sol';
+ import {ILendingPoolAddressesProvider} from '../interfaces/ILendingPoolAddressesProvider.sol';
+ import {DataTypes} from '../protocol/libraries/types/DataTypes.sol';
+ import {IPriceOracleGetter} from '../interfaces/IPriceOracleGetter.sol';
+diff --git a/contracts/adapters/BaseUniswapAdapter.sol b/contracts/adapters/BaseUniswapAdapter.sol
+index 5a866dba..d6b091f9 100644
+--- a/contracts/adapters/BaseUniswapAdapter.sol
++++ b/contracts/adapters/BaseUniswapAdapter.sol
+@@ -3,11 +3,11 @@ pragma solidity 0.6.12;
+ pragma experimental ABIEncoderV2;
+ 
+ import {PercentageMath} from '../protocol/libraries/math/PercentageMath.sol';
+-import {SafeMath} from '../dependencies/openzeppelin/contracts/SafeMath.sol';
+-import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
++import {SafeMath} from '../../openzeppelin-v3/math/SafeMath.sol';
++import {IERC20} from '../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ import {IERC20Detailed} from '../dependencies/openzeppelin/contracts/IERC20Detailed.sol';
+-import {SafeERC20} from '../dependencies/openzeppelin/contracts/SafeERC20.sol';
+-import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
++import {SafeERC20} from '../../openzeppelin-v3/token/ERC20/SafeERC20.sol';
++import {Ownable} from '../../openzeppelin-v3/access/Ownable.sol';
+ import {ILendingPoolAddressesProvider} from '../interfaces/ILendingPoolAddressesProvider.sol';
+ import {DataTypes} from '../protocol/libraries/types/DataTypes.sol';
+ import {IUniswapV2Router02} from '../interfaces/IUniswapV2Router02.sol';
+diff --git a/contracts/adapters/FlashLiquidationAdapter.sol b/contracts/adapters/FlashLiquidationAdapter.sol
+index d488ee7b..77808bc0 100644
+--- a/contracts/adapters/FlashLiquidationAdapter.sol
++++ b/contracts/adapters/FlashLiquidationAdapter.sol
+@@ -5,7 +5,7 @@ pragma experimental ABIEncoderV2;
+ import {BaseUniswapAdapter} from './BaseUniswapAdapter.sol';
+ import {ILendingPoolAddressesProvider} from '../interfaces/ILendingPoolAddressesProvider.sol';
+ import {IUniswapV2Router02} from '../interfaces/IUniswapV2Router02.sol';
+-import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ import {DataTypes} from '../protocol/libraries/types/DataTypes.sol';
+ import {Helpers} from '../protocol/libraries/helpers/Helpers.sol';
+ import {IPriceOracleGetter} from '../interfaces/IPriceOracleGetter.sol';
+diff --git a/contracts/adapters/ParaSwapLiquiditySwapAdapter.sol b/contracts/adapters/ParaSwapLiquiditySwapAdapter.sol
+index 7cc1105d..03e59622 100644
+--- a/contracts/adapters/ParaSwapLiquiditySwapAdapter.sol
++++ b/contracts/adapters/ParaSwapLiquiditySwapAdapter.sol
+@@ -8,7 +8,7 @@ import {IParaSwapAugustusRegistry} from '../interfaces/IParaSwapAugustusRegistry
+ import {IERC20Detailed} from '../dependencies/openzeppelin/contracts/IERC20Detailed.sol';
+ import {IERC20WithPermit} from '../interfaces/IERC20WithPermit.sol';
+ import {IParaSwapAugustus} from '../interfaces/IParaSwapAugustus.sol';
+-import {ReentrancyGuard} from '../dependencies/openzeppelin/contracts/ReentrancyGuard.sol';
++import {ReentrancyGuard} from '../../openzeppelin-v3/utils/ReentrancyGuard.sol';
+ 
+ /**
+  * @title ParaSwapLiquiditySwapAdapter
+diff --git a/contracts/adapters/UniswapLiquiditySwapAdapter.sol b/contracts/adapters/UniswapLiquiditySwapAdapter.sol
+index daac3547..df8b0dd5 100644
+--- a/contracts/adapters/UniswapLiquiditySwapAdapter.sol
++++ b/contracts/adapters/UniswapLiquiditySwapAdapter.sol
+@@ -5,7 +5,7 @@ pragma experimental ABIEncoderV2;
+ import {BaseUniswapAdapter} from './BaseUniswapAdapter.sol';
+ import {ILendingPoolAddressesProvider} from '../interfaces/ILendingPoolAddressesProvider.sol';
+ import {IUniswapV2Router02} from '../interfaces/IUniswapV2Router02.sol';
+-import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ 
+ /**
+  * @title UniswapLiquiditySwapAdapter
+diff --git a/contracts/adapters/UniswapRepayAdapter.sol b/contracts/adapters/UniswapRepayAdapter.sol
+index b1c95337..7e2c62b7 100644
+--- a/contracts/adapters/UniswapRepayAdapter.sol
++++ b/contracts/adapters/UniswapRepayAdapter.sol
+@@ -5,7 +5,7 @@ pragma experimental ABIEncoderV2;
+ import {BaseUniswapAdapter} from './BaseUniswapAdapter.sol';
+ import {ILendingPoolAddressesProvider} from '../interfaces/ILendingPoolAddressesProvider.sol';
+ import {IUniswapV2Router02} from '../interfaces/IUniswapV2Router02.sol';
+-import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ import {DataTypes} from '../protocol/libraries/types/DataTypes.sol';
+ 
+ /**
+diff --git a/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol b/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol
+index 3f4cd13b..8dc33790 100644
+--- a/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol
++++ b/contracts/dependencies/openzeppelin/contracts/IERC20Detailed.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {IERC20} from './IERC20.sol';
++import {IERC20} from '../../../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ 
+ interface IERC20Detailed is IERC20 {
+   function name() external view returns (string memory);
+diff --git a/contracts/deployments/ATokensAndRatesHelper.sol b/contracts/deployments/ATokensAndRatesHelper.sol
+index 2cac535b..79769984 100644
+--- a/contracts/deployments/ATokensAndRatesHelper.sol
++++ b/contracts/deployments/ATokensAndRatesHelper.sol
+@@ -11,7 +11,7 @@ import {AToken} from '../protocol/tokenization/AToken.sol';
+ import {
+   DefaultReserveInterestRateStrategy
+ } from '../protocol/lendingpool/DefaultReserveInterestRateStrategy.sol';
+-import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
++import {Ownable} from '../../openzeppelin-v3/access/Ownable.sol';
+ import {StringLib} from './StringLib.sol';
+ 
+ contract ATokensAndRatesHelper is Ownable {
+diff --git a/contracts/deployments/StableAndVariableTokensHelper.sol b/contracts/deployments/StableAndVariableTokensHelper.sol
+index e31651f3..d9455652 100644
+--- a/contracts/deployments/StableAndVariableTokensHelper.sol
++++ b/contracts/deployments/StableAndVariableTokensHelper.sol
+@@ -5,7 +5,7 @@ pragma experimental ABIEncoderV2;
+ import {StableDebtToken} from '../protocol/tokenization/StableDebtToken.sol';
+ import {VariableDebtToken} from '../protocol/tokenization/VariableDebtToken.sol';
+ import {LendingRateOracle} from '../mocks/oracle/LendingRateOracle.sol';
+-import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
++import {Ownable} from '../../openzeppelin-v3/access/Ownable.sol';
+ import {StringLib} from './StringLib.sol';
+ 
+ contract StableAndVariableTokensHelper is Ownable {
+diff --git a/contracts/flashloan/base/FlashLoanReceiverBase.sol b/contracts/flashloan/base/FlashLoanReceiverBase.sol
+index cab5e4db..110a38f2 100644
+--- a/contracts/flashloan/base/FlashLoanReceiverBase.sol
++++ b/contracts/flashloan/base/FlashLoanReceiverBase.sol
+@@ -1,9 +1,9 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {SafeMath} from '../../dependencies/openzeppelin/contracts/SafeMath.sol';
+-import {IERC20} from '../../dependencies/openzeppelin/contracts/IERC20.sol';
+-import {SafeERC20} from '../../dependencies/openzeppelin/contracts/SafeERC20.sol';
++import {SafeMath} from '../../../openzeppelin-v3/math/SafeMath.sol';
++import {IERC20} from '../../../openzeppelin-v3/token/ERC20/IERC20.sol';
++import {SafeERC20} from '../../../openzeppelin-v3/token/ERC20/SafeERC20.sol';
+ import {IFlashLoanReceiver} from '../interfaces/IFlashLoanReceiver.sol';
+ import {ILendingPoolAddressesProvider} from '../../interfaces/ILendingPoolAddressesProvider.sol';
+ import {ILendingPool} from '../../interfaces/ILendingPool.sol';
+diff --git a/contracts/interfaces/IAToken.sol b/contracts/interfaces/IAToken.sol
+index cf0ea261..304f9283 100644
+--- a/contracts/interfaces/IAToken.sol
++++ b/contracts/interfaces/IAToken.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../depends/openzeppelin-v3/token/ERC20/IERC20.sol';
+ import {IScaledBalanceToken} from './IScaledBalanceToken.sol';
+ import {IInitializableAToken} from './IInitializableAToken.sol';
+ import {IAaveIncentivesController} from './IAaveIncentivesController.sol';
+diff --git a/contracts/interfaces/IERC20WithPermit.sol b/contracts/interfaces/IERC20WithPermit.sol
+index 46466b90..315f0e61 100644
+--- a/contracts/interfaces/IERC20WithPermit.sol
++++ b/contracts/interfaces/IERC20WithPermit.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../depends/openzeppelin-v3/token/ERC20/IERC20.sol';
+ 
+ interface IERC20WithPermit is IERC20 {
+   function permit(
+diff --git a/contracts/interfaces/IExchangeAdapter.sol b/contracts/interfaces/IExchangeAdapter.sol
+index 59989cd0..ad3697db 100644
+--- a/contracts/interfaces/IExchangeAdapter.sol
++++ b/contracts/interfaces/IExchangeAdapter.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../depends/openzeppelin-v3/token/ERC20/IERC20.sol';
+ 
+ interface IExchangeAdapter {
+   event Exchange(
+diff --git a/contracts/interfaces/ILendingPool.sol b/contracts/interfaces/ILendingPool.sol
+index 64f726c0..cfba0a3f 100644
+--- a/contracts/interfaces/ILendingPool.sol
++++ b/contracts/interfaces/ILendingPool.sol
+@@ -3,7 +3,7 @@ pragma solidity 0.6.12;
+ pragma experimental ABIEncoderV2;
+ 
+ import {ILendingPoolAddressesProvider} from './ILendingPoolAddressesProvider.sol';
+-import {DataTypes} from '../protocol/libraries/types/DataTypes.sol';
++import {DataTypes} from '../../depends/aave-v2/protocol/libraries/types/DataTypes.sol';
+ 
+ interface ILendingPool {
+   /**
+diff --git a/contracts/misc/AaveOracle.sol b/contracts/misc/AaveOracle.sol
+index bc921468..c42e55d3 100644
+--- a/contracts/misc/AaveOracle.sol
++++ b/contracts/misc/AaveOracle.sol
+@@ -1,12 +1,12 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
+-import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
++import {Ownable} from '../../openzeppelin-v3/access/Ownable.sol';
++import {IERC20} from '../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ 
+ import {IPriceOracleGetter} from '../interfaces/IPriceOracleGetter.sol';
+ import {IChainlinkAggregator} from '../interfaces/IChainlinkAggregator.sol';
+-import {SafeERC20} from '../dependencies/openzeppelin/contracts/SafeERC20.sol';
++import {SafeERC20} from '../../openzeppelin-v3/token/ERC20/SafeERC20.sol';
+ 
+ /// @title AaveOracle
+ /// @author Aave
+diff --git a/contracts/misc/WETHGateway.sol b/contracts/misc/WETHGateway.sol
+index 336e8de2..2e87561a 100644
+--- a/contracts/misc/WETHGateway.sol
++++ b/contracts/misc/WETHGateway.sol
+@@ -2,8 +2,8 @@
+ pragma solidity 0.6.12;
+ pragma experimental ABIEncoderV2;
+ 
+-import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
+-import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
++import {Ownable} from '../../openzeppelin-v3/access/Ownable.sol';
++import {IERC20} from '../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ import {IWETH} from './interfaces/IWETH.sol';
+ import {IWETHGateway} from './interfaces/IWETHGateway.sol';
+ import {ILendingPool} from '../interfaces/ILendingPool.sol';
+diff --git a/contracts/misc/WalletBalanceProvider.sol b/contracts/misc/WalletBalanceProvider.sol
+index 3d4a9288..8e9e5fce 100644
+--- a/contracts/misc/WalletBalanceProvider.sol
++++ b/contracts/misc/WalletBalanceProvider.sol
+@@ -3,12 +3,12 @@ pragma solidity 0.6.12;
+ 
+ pragma experimental ABIEncoderV2;
+ 
+-import {Address} from '../dependencies/openzeppelin/contracts/Address.sol';
+-import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
++import {Address} from '../../openzeppelin-v3/utils/Address.sol';
++import {IERC20} from '../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ 
+ import {ILendingPoolAddressesProvider} from '../interfaces/ILendingPoolAddressesProvider.sol';
+ import {ILendingPool} from '../interfaces/ILendingPool.sol';
+-import {SafeERC20} from '../dependencies/openzeppelin/contracts/SafeERC20.sol';
++import {SafeERC20} from '../../openzeppelin-v3/token/ERC20/SafeERC20.sol';
+ import {ReserveConfiguration} from '../protocol/libraries/configuration/ReserveConfiguration.sol';
+ import {DataTypes} from '../protocol/libraries/types/DataTypes.sol';
+ 
+diff --git a/contracts/misc/interfaces/IERC20DetailedBytes.sol b/contracts/misc/interfaces/IERC20DetailedBytes.sol
+index 8c47df16..bb9b5c61 100644
+--- a/contracts/misc/interfaces/IERC20DetailedBytes.sol
++++ b/contracts/misc/interfaces/IERC20DetailedBytes.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {IERC20} from '../../dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ 
+ interface IERC20DetailedBytes is IERC20 {
+   function name() external view returns (bytes32);
+diff --git a/contracts/mocks/flashloan/MockFlashLoanReceiver.sol b/contracts/mocks/flashloan/MockFlashLoanReceiver.sol
+index 9bf29730..13d3f624 100644
+--- a/contracts/mocks/flashloan/MockFlashLoanReceiver.sol
++++ b/contracts/mocks/flashloan/MockFlashLoanReceiver.sol
+@@ -1,12 +1,12 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {SafeMath} from '../../dependencies/openzeppelin/contracts/SafeMath.sol';
+-import {IERC20} from '../../dependencies/openzeppelin/contracts/IERC20.sol';
++import {SafeMath} from '../../../openzeppelin-v3/math/SafeMath.sol';
++import {IERC20} from '../../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ 
+ import {FlashLoanReceiverBase} from '../../flashloan/base/FlashLoanReceiverBase.sol';
+ import {MintableERC20} from '../tokens/MintableERC20.sol';
+-import {SafeERC20} from '../../dependencies/openzeppelin/contracts/SafeERC20.sol';
++import {SafeERC20} from '../../../openzeppelin-v3/token/ERC20/SafeERC20.sol';
+ import {ILendingPoolAddressesProvider} from '../../interfaces/ILendingPoolAddressesProvider.sol';
+ 
+ contract MockFlashLoanReceiver is FlashLoanReceiverBase {
+diff --git a/contracts/mocks/oracle/LendingRateOracle.sol b/contracts/mocks/oracle/LendingRateOracle.sol
+index 50e454c4..47c5bac3 100644
+--- a/contracts/mocks/oracle/LendingRateOracle.sol
++++ b/contracts/mocks/oracle/LendingRateOracle.sol
+@@ -2,7 +2,7 @@
+ pragma solidity 0.6.12;
+ 
+ import {ILendingRateOracle} from '../../interfaces/ILendingRateOracle.sol';
+-import {Ownable} from '../../dependencies/openzeppelin/contracts/Ownable.sol';
++import {Ownable} from '../../../openzeppelin-v3/access/Ownable.sol';
+ 
+ contract LendingRateOracle is ILendingRateOracle, Ownable {
+   mapping(address => uint256) borrowRates;
+diff --git a/contracts/mocks/swap/MockParaSwapAugustus.sol b/contracts/mocks/swap/MockParaSwapAugustus.sol
+index 1cf32171..493fd926 100644
+--- a/contracts/mocks/swap/MockParaSwapAugustus.sol
++++ b/contracts/mocks/swap/MockParaSwapAugustus.sol
+@@ -4,7 +4,7 @@ pragma experimental ABIEncoderV2;
+ 
+ import {IParaSwapAugustus} from '../../interfaces/IParaSwapAugustus.sol';
+ import {MockParaSwapTokenTransferProxy} from './MockParaSwapTokenTransferProxy.sol';
+-import {IERC20} from '../../dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ import {MintableERC20} from '../tokens/MintableERC20.sol';
+ 
+ contract MockParaSwapAugustus is IParaSwapAugustus {
+diff --git a/contracts/mocks/swap/MockParaSwapTokenTransferProxy.sol b/contracts/mocks/swap/MockParaSwapTokenTransferProxy.sol
+index a405cec3..bb3fc3ad 100644
+--- a/contracts/mocks/swap/MockParaSwapTokenTransferProxy.sol
++++ b/contracts/mocks/swap/MockParaSwapTokenTransferProxy.sol
+@@ -2,8 +2,8 @@
+ pragma solidity 0.6.12;
+ pragma experimental ABIEncoderV2;
+ 
+-import {Ownable} from '../../dependencies/openzeppelin/contracts/Ownable.sol';
+-import {IERC20} from '../../dependencies/openzeppelin/contracts/IERC20.sol';
++import {Ownable} from '../../../openzeppelin-v3/access/Ownable.sol';
++import {IERC20} from '../../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ 
+ contract MockParaSwapTokenTransferProxy is Ownable {
+   function transferFrom(
+diff --git a/contracts/mocks/tokens/MintableDelegationERC20.sol b/contracts/mocks/tokens/MintableDelegationERC20.sol
+index f546b2d9..0430a91c 100644
+--- a/contracts/mocks/tokens/MintableDelegationERC20.sol
++++ b/contracts/mocks/tokens/MintableDelegationERC20.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {ERC20} from '../../dependencies/openzeppelin/contracts/ERC20.sol';
++import {ERC20} from '../../../openzeppelin-v3/token/ERC20/ERC20.sol';
+ 
+ /**
+  * @title ERC20Mintable
+diff --git a/contracts/mocks/tokens/MintableERC20.sol b/contracts/mocks/tokens/MintableERC20.sol
+index 56da583e..c3583865 100644
+--- a/contracts/mocks/tokens/MintableERC20.sol
++++ b/contracts/mocks/tokens/MintableERC20.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {ERC20} from '../../dependencies/openzeppelin/contracts/ERC20.sol';
++import {ERC20} from '../../../openzeppelin-v3/token/ERC20/ERC20.sol';
+ 
+ /**
+  * @title ERC20Mintable
+diff --git a/contracts/protocol/configuration/LendingPoolAddressesProvider.sol b/contracts/protocol/configuration/LendingPoolAddressesProvider.sol
+index 083a8ca8..ad00f2c9 100644
+--- a/contracts/protocol/configuration/LendingPoolAddressesProvider.sol
++++ b/contracts/protocol/configuration/LendingPoolAddressesProvider.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {Ownable} from '../../dependencies/openzeppelin/contracts/Ownable.sol';
++import {Ownable} from '../../../openzeppelin-v3/access/Ownable.sol';
+ 
+ // Prettier ignore to prevent buidler flatter bug
+ // prettier-ignore
+diff --git a/contracts/protocol/configuration/LendingPoolAddressesProviderRegistry.sol b/contracts/protocol/configuration/LendingPoolAddressesProviderRegistry.sol
+index 6528239d..ed56762c 100644
+--- a/contracts/protocol/configuration/LendingPoolAddressesProviderRegistry.sol
++++ b/contracts/protocol/configuration/LendingPoolAddressesProviderRegistry.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {Ownable} from '../../dependencies/openzeppelin/contracts/Ownable.sol';
++import {Ownable} from '../../../openzeppelin-v3/access/Ownable.sol';
+ import {
+   ILendingPoolAddressesProviderRegistry
+ } from '../../interfaces/ILendingPoolAddressesProviderRegistry.sol';
+diff --git a/contracts/protocol/lendingpool/DefaultReserveInterestRateStrategy.sol b/contracts/protocol/lendingpool/DefaultReserveInterestRateStrategy.sol
+index 7b321d0c..60bf2fef 100644
+--- a/contracts/protocol/lendingpool/DefaultReserveInterestRateStrategy.sol
++++ b/contracts/protocol/lendingpool/DefaultReserveInterestRateStrategy.sol
+@@ -1,13 +1,13 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {SafeMath} from '../../dependencies/openzeppelin/contracts/SafeMath.sol';
++import {SafeMath} from '../../../openzeppelin-v3/math/SafeMath.sol';
+ import {IReserveInterestRateStrategy} from '../../interfaces/IReserveInterestRateStrategy.sol';
+ import {WadRayMath} from '../libraries/math/WadRayMath.sol';
+ import {PercentageMath} from '../libraries/math/PercentageMath.sol';
+ import {ILendingPoolAddressesProvider} from '../../interfaces/ILendingPoolAddressesProvider.sol';
+ import {ILendingRateOracle} from '../../interfaces/ILendingRateOracle.sol';
+-import {IERC20} from '../../dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ 
+ /**
+  * @title DefaultReserveInterestRateStrategy contract
+diff --git a/contracts/protocol/lendingpool/LendingPool.sol b/contracts/protocol/lendingpool/LendingPool.sol
+index 8e38650c..b36aa3b3 100644
+--- a/contracts/protocol/lendingpool/LendingPool.sol
++++ b/contracts/protocol/lendingpool/LendingPool.sol
+@@ -2,10 +2,10 @@
+ pragma solidity 0.6.12;
+ pragma experimental ABIEncoderV2;
+ 
+-import {SafeMath} from '../../dependencies/openzeppelin/contracts/SafeMath.sol';
+-import {IERC20} from '../../dependencies/openzeppelin/contracts/IERC20.sol';
+-import {SafeERC20} from '../../dependencies/openzeppelin/contracts/SafeERC20.sol';
+-import {Address} from '../../dependencies/openzeppelin/contracts/Address.sol';
++import {SafeMath} from '../../../openzeppelin-v3/math/SafeMath.sol';
++import {IERC20} from '../../../openzeppelin-v3/token/ERC20/IERC20.sol';
++import {SafeERC20} from '../../../openzeppelin-v3/token/ERC20/SafeERC20.sol';
++import {Address} from '../../../openzeppelin-v3/utils/Address.sol';
+ import {ILendingPoolAddressesProvider} from '../../interfaces/ILendingPoolAddressesProvider.sol';
+ import {IAToken} from '../../interfaces/IAToken.sol';
+ import {IVariableDebtToken} from '../../interfaces/IVariableDebtToken.sol';
+diff --git a/contracts/protocol/lendingpool/LendingPoolCollateralManager.sol b/contracts/protocol/lendingpool/LendingPoolCollateralManager.sol
+index 80692726..b898d036 100644
+--- a/contracts/protocol/lendingpool/LendingPoolCollateralManager.sol
++++ b/contracts/protocol/lendingpool/LendingPoolCollateralManager.sol
+@@ -1,8 +1,8 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {SafeMath} from '../../dependencies/openzeppelin/contracts//SafeMath.sol';
+-import {IERC20} from '../../dependencies/openzeppelin/contracts//IERC20.sol';
++import {SafeMath} from '../../../openzeppelin-v3/math/SafeMath.sol';
++import {IERC20} from '../../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ import {IAToken} from '../../interfaces/IAToken.sol';
+ import {IStableDebtToken} from '../../interfaces/IStableDebtToken.sol';
+ import {IVariableDebtToken} from '../../interfaces/IVariableDebtToken.sol';
+@@ -13,7 +13,7 @@ import {GenericLogic} from '../libraries/logic/GenericLogic.sol';
+ import {Helpers} from '../libraries/helpers/Helpers.sol';
+ import {WadRayMath} from '../libraries/math/WadRayMath.sol';
+ import {PercentageMath} from '../libraries/math/PercentageMath.sol';
+-import {SafeERC20} from '../../dependencies/openzeppelin/contracts/SafeERC20.sol';
++import {SafeERC20} from '../../../openzeppelin-v3/token/ERC20/SafeERC20.sol';
+ import {Errors} from '../libraries/helpers/Errors.sol';
+ import {ValidationLogic} from '../libraries/logic/ValidationLogic.sol';
+ import {DataTypes} from '../libraries/types/DataTypes.sol';
+diff --git a/contracts/protocol/lendingpool/LendingPoolConfigurator.sol b/contracts/protocol/lendingpool/LendingPoolConfigurator.sol
+index 49451d92..2c1c297d 100644
+--- a/contracts/protocol/lendingpool/LendingPoolConfigurator.sol
++++ b/contracts/protocol/lendingpool/LendingPoolConfigurator.sol
+@@ -2,7 +2,7 @@
+ pragma solidity 0.6.12;
+ pragma experimental ABIEncoderV2;
+ 
+-import {SafeMath} from '../../dependencies/openzeppelin/contracts/SafeMath.sol';
++import {SafeMath} from '../../../openzeppelin-v3/math/SafeMath.sol';
+ import {VersionedInitializable} from '../libraries/aave-upgradeability/VersionedInitializable.sol';
+ import {
+   InitializableImmutableAdminUpgradeabilityProxy
+diff --git a/contracts/protocol/libraries/helpers/Helpers.sol b/contracts/protocol/libraries/helpers/Helpers.sol
+index b0117ef7..9eae40a9 100644
+--- a/contracts/protocol/libraries/helpers/Helpers.sol
++++ b/contracts/protocol/libraries/helpers/Helpers.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {IERC20} from '../../../dependencies/openzeppelin/contracts/IERC20.sol';
++import {IERC20} from '../../../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ import {DataTypes} from '../types/DataTypes.sol';
+ 
+ /**
+diff --git a/contracts/protocol/libraries/logic/GenericLogic.sol b/contracts/protocol/libraries/logic/GenericLogic.sol
+index d4081dda..36610424 100644
+--- a/contracts/protocol/libraries/logic/GenericLogic.sol
++++ b/contracts/protocol/libraries/logic/GenericLogic.sol
+@@ -2,8 +2,8 @@
+ pragma solidity 0.6.12;
+ pragma experimental ABIEncoderV2;
+ 
+-import {SafeMath} from '../../../dependencies/openzeppelin/contracts/SafeMath.sol';
+-import {IERC20} from '../../../dependencies/openzeppelin/contracts/IERC20.sol';
++import {SafeMath} from '../../../../openzeppelin-v3/math/SafeMath.sol';
++import {IERC20} from '../../../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ import {ReserveLogic} from './ReserveLogic.sol';
+ import {ReserveConfiguration} from '../configuration/ReserveConfiguration.sol';
+ import {UserConfiguration} from '../configuration/UserConfiguration.sol';
+diff --git a/contracts/protocol/libraries/logic/ReserveLogic.sol b/contracts/protocol/libraries/logic/ReserveLogic.sol
+index 2b5b2cf4..edfc22fe 100644
+--- a/contracts/protocol/libraries/logic/ReserveLogic.sol
++++ b/contracts/protocol/libraries/logic/ReserveLogic.sol
+@@ -1,9 +1,9 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {SafeMath} from '../../../dependencies/openzeppelin/contracts/SafeMath.sol';
+-import {IERC20} from '../../../dependencies/openzeppelin/contracts/IERC20.sol';
+-import {SafeERC20} from '../../../dependencies/openzeppelin/contracts/SafeERC20.sol';
++import {SafeMath} from '../../../../openzeppelin-v3/math/SafeMath.sol';
++import {IERC20} from '../../../../openzeppelin-v3/token/ERC20/IERC20.sol';
++import {SafeERC20} from '../../../../openzeppelin-v3/token/ERC20/SafeERC20.sol';
+ import {IAToken} from '../../../interfaces/IAToken.sol';
+ import {IStableDebtToken} from '../../../interfaces/IStableDebtToken.sol';
+ import {IVariableDebtToken} from '../../../interfaces/IVariableDebtToken.sol';
+diff --git a/contracts/protocol/libraries/logic/ValidationLogic.sol b/contracts/protocol/libraries/logic/ValidationLogic.sol
+index 080b792d..32a90cf5 100644
+--- a/contracts/protocol/libraries/logic/ValidationLogic.sol
++++ b/contracts/protocol/libraries/logic/ValidationLogic.sol
+@@ -2,13 +2,13 @@
+ pragma solidity 0.6.12;
+ pragma experimental ABIEncoderV2;
+ 
+-import {SafeMath} from '../../../dependencies/openzeppelin/contracts/SafeMath.sol';
+-import {IERC20} from '../../../dependencies/openzeppelin/contracts/IERC20.sol';
++import {SafeMath} from '../../../../openzeppelin-v3/math/SafeMath.sol';
++import {IERC20} from '../../../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ import {ReserveLogic} from './ReserveLogic.sol';
+ import {GenericLogic} from './GenericLogic.sol';
+ import {WadRayMath} from '../math/WadRayMath.sol';
+ import {PercentageMath} from '../math/PercentageMath.sol';
+-import {SafeERC20} from '../../../dependencies/openzeppelin/contracts/SafeERC20.sol';
++import {SafeERC20} from '../../../../openzeppelin-v3/token/ERC20/SafeERC20.sol';
+ import {ReserveConfiguration} from '../configuration/ReserveConfiguration.sol';
+ import {UserConfiguration} from '../configuration/UserConfiguration.sol';
+ import {Errors} from '../helpers/Errors.sol';
+diff --git a/contracts/protocol/libraries/math/MathUtils.sol b/contracts/protocol/libraries/math/MathUtils.sol
+index 7078a82f..c69a8d6f 100644
+--- a/contracts/protocol/libraries/math/MathUtils.sol
++++ b/contracts/protocol/libraries/math/MathUtils.sol
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {SafeMath} from '../../../dependencies/openzeppelin/contracts/SafeMath.sol';
++import {SafeMath} from '../../../../openzeppelin-v3/math/SafeMath.sol';
+ import {WadRayMath} from './WadRayMath.sol';
+ 
+ library MathUtils {
+diff --git a/contracts/protocol/tokenization/AToken.sol b/contracts/protocol/tokenization/AToken.sol
+index 46aae19f..e66258e3 100644
+--- a/contracts/protocol/tokenization/AToken.sol
++++ b/contracts/protocol/tokenization/AToken.sol
+@@ -1,8 +1,8 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {IERC20} from '../../dependencies/openzeppelin/contracts/IERC20.sol';
+-import {SafeERC20} from '../../dependencies/openzeppelin/contracts/SafeERC20.sol';
++import {IERC20} from '../../../openzeppelin-v3/token/ERC20/IERC20.sol';
++import {SafeERC20} from '../../../openzeppelin-v3/token/ERC20/SafeERC20.sol';
+ import {ILendingPool} from '../../interfaces/ILendingPool.sol';
+ import {IAToken} from '../../interfaces/IAToken.sol';
+ import {WadRayMath} from '../libraries/math/WadRayMath.sol';
+diff --git a/contracts/protocol/tokenization/IncentivizedERC20.sol b/contracts/protocol/tokenization/IncentivizedERC20.sol
+index fb831769..66478ffa 100644
+--- a/contracts/protocol/tokenization/IncentivizedERC20.sol
++++ b/contracts/protocol/tokenization/IncentivizedERC20.sol
+@@ -1,10 +1,10 @@
+ // SPDX-License-Identifier: agpl-3.0
+ pragma solidity 0.6.12;
+ 
+-import {Context} from '../../dependencies/openzeppelin/contracts/Context.sol';
+-import {IERC20} from '../../dependencies/openzeppelin/contracts/IERC20.sol';
++import {Context} from '../../../openzeppelin-v3/utils/Context.sol';
++import {IERC20} from '../../../openzeppelin-v3/token/ERC20/IERC20.sol';
+ import {IERC20Detailed} from '../../dependencies/openzeppelin/contracts/IERC20Detailed.sol';
+-import {SafeMath} from '../../dependencies/openzeppelin/contracts/SafeMath.sol';
++import {SafeMath} from '../../../openzeppelin-v3/math/SafeMath.sol';
+ import {IAaveIncentivesController} from '../../interfaces/IAaveIncentivesController.sol';
+ 
+ /**
+-- 
+2.34.1
+

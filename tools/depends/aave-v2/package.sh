@@ -19,6 +19,7 @@
 #   * DEPENDS_DIR - Location of dependency package files (TODO)
 #   * REPO_DIR - Place to download the repo
 #   * INSTALL_DIR - Place to install the contract files
+#   * INTERFACE_DIR - Place to install the contract interfaces
 #
 # Dependencies:
 #
@@ -36,7 +37,7 @@ set -o nounset
 #
 
 AAVE_V2_NAME="aave-v2"
-AAVE_V2_VERSION="61c2273a992f655c6d3e7d716a0c2f1b97a55a92" # master
+AAVE_V2_VERSION="0829f97c5463f22087cecbcb26e8ebe558592c16" # master
 AAVE_V2_REPO="https://github.com/aave/protocol-v2.git"
 
 #
@@ -49,8 +50,11 @@ DEPENDS_DIR_AAVE_V2="${DEPENDS_DIR}/${AAVE_V2_NAME}"
 # Checkout directory
 REPO_DIR_AAVE_V2="${REPO_DIR}/${AAVE_V2_NAME}"
 
-# Install directory for Aave V2
+# Install directory for Aave V2 contracts
 INSTALL_DIR_AAVE_V2="${INSTALL_DIR}/${AAVE_V2_NAME}"
+
+# Install directory for Aave V2 interfaces
+INTERFACE_DIR_AAVE_V2="${INTERFACE_DIR}/${AAVE_V2_NAME}"
 
 #
 # Checkout
@@ -67,6 +71,7 @@ function checkout_aave_v2() {
     cd "${REPO_DIR_AAVE_V2}"
     git fetch --all
     git reset --hard "${AAVE_V2_VERSION}"
+    git clean -xdf .
   )
 }
 
@@ -81,6 +86,10 @@ function patch_aave_v2() {
     "${DEPENDS_DIR_AAVE_V2}/0001-feat-add-owner-constructor-parameter-to-support-CREA.patch"
   patch -p1 --directory="${REPO_DIR_AAVE_V2}" < \
     "${DEPENDS_DIR_AAVE_V2}/0002-Make-initialization-state-public.patch"
+  patch -p1 --directory="${REPO_DIR_AAVE_V2}" < \
+    "${DEPENDS_DIR_AAVE_V2}/0003-Use-OpenZeppelin-V3-from-depends.patch"
+  patch -p1 --directory="${REPO_DIR_AAVE_V2}" < \
+    "${DEPENDS_DIR_AAVE_V2}/0004-Move-IFlashLoanReceiver.sol-to-parent-interfaces-dir.patch"
 }
 
 #
@@ -102,10 +111,18 @@ function install_aave_v2() {
   rm -rf "${INSTALL_DIR_AAVE_V2}"
   cp -r "${REPO_DIR_AAVE_V2}/contracts" "${INSTALL_DIR_AAVE_V2}"
 
+  # Relocate Aave V2 interfaces
+  rm -rf "${INTERFACE_DIR_AAVE_V2}"
+  mv "${INSTALL_DIR_AAVE_V2}/interfaces" "${INTERFACE_DIR_AAVE_V2}"
+
   # Remove problematic mock
   rm -rf "${INSTALL_DIR_AAVE_V2}/mocks/swap/MockUniswapV2Router02.sol"
 
   # These contracts cause an infinite recusion exception in Slither
   rm -rf "${INSTALL_DIR_AAVE_V2}/misc/UiIncentiveDataProviderV2.sol"
   rm -rf "${INSTALL_DIR_AAVE_V2}/misc/UiIncentiveDataProviderV2V3.sol"
+
+  # Patch Aave V2 contracts to use interfaces from depends
+  find "${INSTALL_DIR_AAVE_V2}" -type f -exec \
+    sed -i 's|\.\./interfaces/|../../../interfaces/aave-v2/|g' {} \;
 }

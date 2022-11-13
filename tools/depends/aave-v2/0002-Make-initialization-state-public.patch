@@ -1,7 +1,7 @@
-From 6a60178f8691428318761aeda3df2172c84e8c4f Mon Sep 17 00:00:00 2001
+From 57c1e142ef7481b6ebf5be13f0da92ddf60a7dee Mon Sep 17 00:00:00 2001
 From: juztamau5 <juztamau5@gmail.com>
 Date: Mon, 20 Jun 2022 17:52:42 -0700
-Subject: [PATCH 2/2] Make initialization state public
+Subject: [PATCH 2/4] Make initialization state public
 
 ---
  .../libraries/aave-upgradeability/VersionedInitializable.sol    | 2 +-
@@ -21,5 +21,5 @@ index b8e356ae..580a0954 100644
    /**
     * @dev Indicates that the contract is in the process of being initialized.
 -- 
-2.30.2
+2.34.1
 
