@@ -133,7 +133,11 @@ function install_uniswap_v3_periphery() {
     cp "${REPO_DIR_UNISWAP_V3_PERIPHERY}/contracts/interfaces/${file}" "${INTERFACE_DIR_UNISWAP_V3_PERIPHERY}"
 
     # Patch Uniswap V3 Periphery interfaces to use compatible version of OpenZeppelin
-    sed -i 's|../../openzeppelin-v3/|../../depends/openzeppelin-v3/|g' \
+    sed -i 's|../../openzeppelin-v3/token/ERC721/IERC721.sol|@openzeppelin/contracts/token/ERC721/IERC721.sol|g' \
+      "${INTERFACE_DIR_UNISWAP_V3_PERIPHERY}/${file}"
+    sed -i 's|../../openzeppelin-v3/token/ERC721/IERC721Enumerable.sol|@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol|g' \
+      "${INTERFACE_DIR_UNISWAP_V3_PERIPHERY}/${file}"
+    sed -i 's|../../openzeppelin-v3/token/ERC721/IERC721Metadata.sol|@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol|g' \
       "${INTERFACE_DIR_UNISWAP_V3_PERIPHERY}/${file}"
   done
 }

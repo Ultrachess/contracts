@@ -19,6 +19,7 @@
 #   * DEPENDS_DIR - Location of dependency package files (TODO)
 #   * REPO_DIR - Place to download the repo
 #   * INSTALL_DIR - Place to install the contract files
+#   * INTERFACE_DIR - Place to install the contract interfaces
 #
 # Dependencies:
 #
@@ -51,6 +52,9 @@ REPO_DIR_UNISWAP_V3_CORE="${REPO_DIR}/${UNISWAP_V3_CORE_NAME}"
 
 # Install directory for Uniswap V3 Core
 INSTALL_DIR_UNISWAP_V3_CORE="${INSTALL_DIR}/${UNISWAP_V3_CORE_NAME}"
+
+# Install directory for Uniswap V3 Core interfaces
+INTERFACE_DIR_UNISWAP_V3_CORE="${INTERFACE_DIR}/${UNISWAP_V3_CORE_NAME}"
 
 #
 # Checkout
@@ -106,4 +110,7 @@ function install_uniswap_v3_core() {
 
   # Remove test contracts
   rm -rf "${INSTALL_DIR_UNISWAP_V3_CORE}/test"
+
+  # Install Uniswap V3 Core interfaces
+  cp -r "${REPO_DIR_UNISWAP_V3_CORE}/contracts/interfaces" "${INTERFACE_DIR_UNISWAP_V3_CORE}"
 }
