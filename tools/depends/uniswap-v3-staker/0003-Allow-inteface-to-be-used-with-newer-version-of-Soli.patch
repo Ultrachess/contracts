@@ -1,0 +1,23 @@
+From dc321621d4b5fe7b85c206587e4d5a4b25ee62bd Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Wed, 16 Nov 2022 01:16:36 -0800
+Subject: [PATCH 3/3] Allow inteface to be used with newer version of Solidity
+
+---
+ contracts/interfaces/IUniswapV3Staker.sol | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contracts/interfaces/IUniswapV3Staker.sol b/contracts/interfaces/IUniswapV3Staker.sol
+index 3be5b46..03d6e6d 100644
+--- a/contracts/interfaces/IUniswapV3Staker.sol
++++ b/contracts/interfaces/IUniswapV3Staker.sol
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+-pragma solidity =0.7.6;
++pragma solidity >=0.7.6;
+ pragma abicoder v2;
+ 
+ import '../../openzeppelin-v3/token/ERC721/IERC721Receiver.sol';
+-- 
+2.34.1
+

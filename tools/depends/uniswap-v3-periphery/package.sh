@@ -112,7 +112,8 @@ function install_uniswap_v3_periphery() {
   rm -rf "${INSTALL_DIR_UNISWAP_V3_PERIPHERY}"
   cp -r "${REPO_DIR_UNISWAP_V3_PERIPHERY}/contracts" "${INSTALL_DIR_UNISWAP_V3_PERIPHERY}"
 
-  # Remove test contracts
+  # Remove example and test contracts
+  rm -rf "${INSTALL_DIR_UNISWAP_V3_PERIPHERY}/examples"
   rm -rf "${INSTALL_DIR_UNISWAP_V3_PERIPHERY}/test"
 
   # Remove V2 to V3 migrator, as it depends on UniV2 headers
@@ -125,6 +126,7 @@ function install_uniswap_v3_periphery() {
   mkdir -p "${INTERFACE_DIR_UNISWAP_V3_PERIPHERY}"
   for file in \
       IERC721Permit.sol \
+      IMulticall.sol \
       INonfungiblePositionManager.sol \
       IPeripheryImmutableState.sol \
       IPeripheryPayments.sol \

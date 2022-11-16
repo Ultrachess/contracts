@@ -1,0 +1,34 @@
+From ab2c6d527fc8a5dc674ac5065a88fecee8df1155 Mon Sep 17 00:00:00 2001
+From: juztamau5 <juztamau5@gmail.com>
+Date: Wed, 16 Nov 2022 00:15:07 -0800
+Subject: [PATCH 2/3] Fix duplicate symbol error
+
+Error was:
+
+  NFTPositionInfo.sol:8:1: DeclarationError: Identifier already declared.
+  import '../../uniswap-v3-periphery/libraries/PoolAddress.sol';
+  ^------------------------------------------------------------^
+
+  IUniswapV3Factory.sol:6:1: The previous declaration is here:
+  interface IUniswapV3Factory {
+  ^ (Relevant source part starts here and spans across multiple lines).
+---
+ contracts/libraries/NFTPositionInfo.sol | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contracts/libraries/NFTPositionInfo.sol b/contracts/libraries/NFTPositionInfo.sol
+index efe0ee5..c4f7663 100644
+--- a/contracts/libraries/NFTPositionInfo.sol
++++ b/contracts/libraries/NFTPositionInfo.sol
+@@ -5,7 +5,7 @@ import '../../uniswap-v3-periphery/interfaces/INonfungiblePositionManager.sol';
+ import '../../../interfaces/uniswap-v3-core/IUniswapV3Factory.sol';
+ import '../../../interfaces/uniswap-v3-core/IUniswapV3Pool.sol';
+ 
+-import '../../uniswap-v3-periphery/libraries/PoolAddress.sol';
++import {PoolAddress} from '../../uniswap-v3-periphery/libraries/PoolAddress.sol';
+ 
+ /// @notice Encapsulates the logic for getting info about a NFT token ID
+ library NFTPositionInfo {
+-- 
+2.34.1
+

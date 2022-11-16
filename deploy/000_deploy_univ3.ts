@@ -18,6 +18,7 @@ const CTSI_FAUCET_CONTRACT = "SimpleFaucet";
 const UNISWAP_V3_FACTORY_CONTRACT = "UniswapV3Factory";
 const UNISWAP_V3_NFT_DESCRIPTOR_CONTRACT = "NonfungibleTokenPositionDescriptor";
 const UNISWAP_V3_NFT_MANAGER_CONTRACT = "NonfungiblePositionManager";
+const UNISWAP_V3_STAKER_CONTRACT = "UniswapV3Staker";
 const WETH_CONTRACT = "WETH";
 
 // Library names
@@ -31,6 +32,7 @@ interface AddressBook {
   uniswapV3Factory: string;
   uniswapV3NftDescriptor: string;
   uniswapV3NftManager: string;
+  uniswapV3Staker: string;
 }
 let addressBook: AddressBook | undefined;
 
@@ -176,6 +178,11 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     UNISWAP_V3_NFT_MANAGER_CONTRACT,
     network
   );
+  let uniswapV3StakerAddress = getContractAddress(
+    "uniswapV3Staker",
+    UNISWAP_V3_STAKER_CONTRACT,
+    network
+  );
 
   // Deploy wrapped native token
   if (wrappedNativeAddress) {
@@ -312,6 +319,25 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       ],
     });
     uniswapV3NftManagerAddress = tx.address;
+  }
+
+  // Deploy UniswapV3Staker
+  if (uniswapV3StakerAddress) {
+    console.log(
+      `Using ${UNISWAP_V3_STAKER_CONTRACT} at ${uniswapV3StakerAddress}`
+    );
+  } else {
+    console.log(`Deploying ${UNISWAP_V3_STAKER_CONTRACT}`);
+    const tx = await deployments.deploy(UNISWAP_V3_STAKER_CONTRACT, {
+      ...opts,
+      args: [
+        uniswapV3FactoryAddress,
+        uniswapV3NftManagerAddress,
+        60, // _maxIncentiveStartLeadTime (TODO)
+        60, // _maxIncentiveDuration (TODO)
+      ],
+    });
+    uniswapV3StakerAddress = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
