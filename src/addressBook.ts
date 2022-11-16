@@ -14,6 +14,17 @@ import * as hardhat from "hardhat";
 import goerliAddresses from "./addresses/goerli.json";
 import polygonMainnetAddresses from "./addresses/polygon_mainnet.json";
 import {
+  ASSET_TOKEN_CONTRACT,
+  BASE_TOKEN_CONTRACT,
+  CURVE_AAVE_POOLER_CONTRACT,
+  CURVE_AAVE_STAKER_CONTRACT,
+  LP_SFT_CONTRACT,
+  UNI_V3_POOL_FACTORY_CONTRACT,
+  UNI_V3_POOLER_CONTRACT,
+  UNI_V3_STAKER_CONTRACT,
+  UNI_V3_SWAPPER_CONTRACT,
+} from "./contracts/dapp";
+import {
   AAVE_ADDRESS_CONFIG_CONTRACT,
   AAVE_INCENTIVES_CONTROLLER_CONTRACT,
   AAVE_INTEREST_RATE_STRATEGY_CONTRACT,
@@ -173,6 +184,11 @@ async function getAddressBook(networkName: string): Promise<AddressBook> {
       ADAI_VARIABLE_DEBT_TOKEN_CONTRACT,
       networkName
     ),
+    assetToken: await getContractAddress(
+      "assetToken",
+      ASSET_TOKEN_CONTRACT,
+      networkName
+    ),
     ausdcStableDebtToken: await getContractAddress(
       "ausdcStableDebtToken",
       AUSDC_STABLE_DEBT_TOKEN_CONTRACT,
@@ -213,6 +229,11 @@ async function getAddressBook(networkName: string): Promise<AddressBook> {
       AUSDT_VARIABLE_DEBT_TOKEN_CONTRACT,
       networkName
     ),
+    baseToken: await getContractAddress(
+      "baseToken",
+      BASE_TOKEN_CONTRACT,
+      networkName
+    ),
     crvController: await getContractAddress(
       "crvController",
       CRV_CONTROLLER_CONTRACT,
@@ -248,11 +269,22 @@ async function getAddressBook(networkName: string): Promise<AddressBook> {
       CURVE_AAVE_POOL_CONTRACT,
       networkName
     ),
+    curveAavePooler: await getContractAddress(
+      "curveAavePooler",
+      CURVE_AAVE_POOLER_CONTRACT,
+      networkName
+    ),
+    curveAaveStaker: await getContractAddress(
+      "curveAaveStaker",
+      CURVE_AAVE_STAKER_CONTRACT,
+      networkName
+    ),
     daiToken: await getContractAddress(
       "daiToken",
       DAI_TOKEN_CONTRACT,
       networkName
     ),
+    lpSft: await getContractAddress("lpSft", LP_SFT_CONTRACT, networkName),
     uniswapV3Factory: await getContractAddress(
       "uniswapV3Factory",
       UNISWAP_V3_FACTORY_CONTRACT,
@@ -276,6 +308,26 @@ async function getAddressBook(networkName: string): Promise<AddressBook> {
     uniswapV3Staker: await getContractAddress(
       "uniswapV3Staker",
       UNISWAP_V3_STAKER_CONTRACT,
+      networkName
+    ),
+    uniV3Pooler: await getContractAddress(
+      "uniV3Pooler",
+      UNI_V3_POOLER_CONTRACT,
+      networkName
+    ),
+    uniV3PoolFactory: await getContractAddress(
+      "uniV3PoolFactory",
+      UNI_V3_POOL_FACTORY_CONTRACT,
+      networkName
+    ),
+    uniV3Staker: await getContractAddress(
+      "uniV3Staker",
+      UNI_V3_STAKER_CONTRACT,
+      networkName
+    ),
+    uniV3Swapper: await getContractAddress(
+      "uniV3Swapper",
+      UNI_V3_SWAPPER_CONTRACT,
       networkName
     ),
     usdcToken: await getContractAddress(

@@ -14,6 +14,7 @@ import gaugeControllerArtifact from "../../contracts/bytecode/curve-dao/GaugeCon
 import liquidityGaugeArtifact from "../../contracts/bytecode/curve-dao/LiquidityGauge.json";
 import minterArtifact from "../../contracts/bytecode/curve-dao/Minter.json";
 import votingEscrowArtifact from "../../contracts/bytecode/curve-dao/VotingEscrow.json";
+import erc20Abi from "../abi/@openzeppelin/contracts/token/ERC20/IERC20.sol/IERC20.json";
 import aavePoolAbi from "../abi/contracts/depends/aave-v2/protocol/lendingpool/LendingPool.sol/LendingPool.json";
 import aTokenAbi from "../abi/contracts/depends/aave-v2/protocol/tokenization/AToken.sol/AToken.json";
 import uniswapV3FactoryAbi from "../abi/contracts/depends/uniswap-v3-core/UniswapV3Factory.sol/UniswapV3Factory.json";
@@ -70,6 +71,7 @@ export {
   liquidityGaugeArtifact,
   minterArtifact,
   votingEscrowArtifact,
+  erc20Abi,
   aavePoolAbi,
   aTokenAbi,
   uniswapV3FactoryAbi,

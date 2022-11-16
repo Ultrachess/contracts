@@ -13,12 +13,23 @@ import { DeploymentsExtension } from "hardhat-deploy/types";
 
 import { getAddressBook } from "../addressBook";
 import {
+  assetTokenAbi,
+  baseTokenAbi,
+  curveAavePoolerAbi,
+  curveAaveStakerAbi,
+  lpSftAbi,
+  uniV3PoolerAbi,
+  uniV3StakerAbi,
+  uniV3SwapperAbi,
+} from "../contracts/dapp";
+import {
   aTokenAbi,
   curveTokenV3Artifact,
   liquidityGaugeArtifact,
   stableSwapAaveArtifact,
   uniswapV3FactoryAbi,
   uniswapV3NftManagerAbi,
+  uniswapV3PoolAbi,
   uniswapV3StakerAbi,
 } from "../contracts/depends";
 import { daiTokenAbi, usdcTokenAbi, usdtTokenAbi } from "../contracts/testing";
@@ -57,6 +68,11 @@ async function setupFixture({
     aTokenAbi,
     beneficiary
   );
+  const assetTokenContract = new ethers.Contract(
+    addressBook.assetToken,
+    assetTokenAbi,
+    beneficiary
+  );
   const ausdcTokenContract = new ethers.Contract(
     addressBook.ausdcToken,
     aTokenAbi,
@@ -75,6 +91,11 @@ async function setupFixture({
   const ausdtTokenProxyContract = new ethers.Contract(
     addressBook.ausdtTokenProxy,
     aTokenAbi,
+    beneficiary
+  );
+  const baseTokenContract = new ethers.Contract(
+    addressBook.baseToken,
+    baseTokenAbi,
     beneficiary
   );
   const daiTokenContract = new ethers.Contract(
@@ -97,6 +118,21 @@ async function setupFixture({
     JSON.stringify(stableSwapAaveArtifact.abi), // Work around TypeScript problem
     beneficiary
   );
+  const curveAavePoolerContract = new ethers.Contract(
+    addressBook.curveAavePooler,
+    curveAavePoolerAbi,
+    beneficiary
+  );
+  const curveAaveStakerContract = new ethers.Contract(
+    addressBook.curveAaveStaker,
+    curveAaveStakerAbi,
+    beneficiary
+  );
+  const lpSftContract = new ethers.Contract(
+    addressBook.lpSft,
+    lpSftAbi,
+    beneficiary
+  );
   const uniswapV3FactoryContract = new ethers.Contract(
     addressBook.uniswapV3Factory,
     uniswapV3FactoryAbi,
@@ -107,9 +143,29 @@ async function setupFixture({
     uniswapV3NftManagerAbi,
     beneficiary
   );
+  const uniswapV3PoolContract = new ethers.Contract(
+    addressBook.uniswapV3Pool,
+    uniswapV3PoolAbi,
+    beneficiary
+  );
   const uniswapV3StakerContract = new ethers.Contract(
     addressBook.uniswapV3Staker,
     uniswapV3StakerAbi,
+    beneficiary
+  );
+  const uniV3PoolerContract = new ethers.Contract(
+    addressBook.uniV3Pooler,
+    uniV3PoolerAbi,
+    beneficiary
+  );
+  const uniV3StakerContract = new ethers.Contract(
+    addressBook.uniV3Staker,
+    uniV3StakerAbi,
+    beneficiary
+  );
+  const uniV3SwapperContract = new ethers.Contract(
+    addressBook.uniV3Swapper,
+    uniV3SwapperAbi,
     beneficiary
   );
   const usdcTokenContract = new ethers.Contract(
@@ -126,17 +182,26 @@ async function setupFixture({
   return {
     adaiTokenContract,
     adaiTokenProxyContract,
+    assetTokenContract,
     ausdcTokenContract,
     ausdcTokenProxyContract,
     ausdtTokenContract,
     ausdtTokenProxyContract,
+    baseTokenContract,
     daiTokenContract,
     curveAaveGaugeContract,
     curveAaveLpTokenContract,
     curveAavePoolContract,
+    curveAavePoolerContract,
+    curveAaveStakerContract,
+    lpSftContract,
     uniswapV3FactoryContract,
     uniswapV3NftManagerContract,
+    uniswapV3PoolContract,
     uniswapV3StakerContract,
+    uniV3PoolerContract,
+    uniV3StakerContract,
+    uniV3SwapperContract,
     usdcTokenContract,
     usdtTokenContract,
   };
