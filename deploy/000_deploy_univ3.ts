@@ -15,9 +15,9 @@ import { DeployFunction, DeployOptions } from "hardhat-deploy/types";
 // Contract names
 const CTSI_CONTRACT = "CartesiToken";
 const CTSI_FAUCET_CONTRACT = "SimpleFaucet";
-const UNI_V3_FACTORY_CONTRACT = "UniswapV3Factory";
-const UNI_V3_NFT_DESCRIPTOR_CONTRACT = "NonfungibleTokenPositionDescriptor";
-const UNI_V3_NFT_MANAGER_CONTRACT = "NonfungiblePositionManager";
+const UNISWAP_V3_FACTORY_CONTRACT = "UniswapV3Factory";
+const UNISWAP_V3_NFT_DESCRIPTOR_CONTRACT = "NonfungibleTokenPositionDescriptor";
+const UNISWAP_V3_NFT_MANAGER_CONTRACT = "NonfungiblePositionManager";
 const WETH_CONTRACT = "WETH";
 
 // Library names
@@ -28,9 +28,9 @@ interface AddressBook {
   wrappedNative: string;
   ctsi: string;
   ctsiFaucet: string;
-  uniV3Factory: string;
-  uniV3NftDescriptor: string;
-  uniV3NftManager: string;
+  uniswapV3Factory: string;
+  uniswapV3NftDescriptor: string;
+  uniswapV3NftManager: string;
 }
 let addressBook: AddressBook | undefined;
 
@@ -54,7 +54,8 @@ function loadDeployment(network: string, contract: string): string | undefined {
     if (deployment.address) return deployment.address;
   } catch (e) {}
 
-  return; // undefined
+  // Address not found
+  return;
 }
 function loadCtsiDeployment(
   network: string,
@@ -71,19 +72,9 @@ function loadCtsiDeployment(
     if (deployment.address) return deployment.address;
   } catch (e) {}
 
-  return; // undefined
+  // Address not found
+  return;
 }
-const getWrappedNativeAddress = (network: string): string | undefined => {
-  // Look up address in address book
-  if (addressBook && addressBook.wrappedNative)
-    return addressBook.wrappedNative;
-
-  // Look up address if the contract has a known deployment
-  const deploymentAddress = loadDeployment(network, WETH_CONTRACT);
-  if (deploymentAddress) return deploymentAddress;
-
-  return; // undefined
-};
 const getCtsiAddress = (network: string): string | undefined => {
   // Look up address in address book
   if (addressBook && addressBook.ctsi) return addressBook.ctsi;
@@ -96,7 +87,8 @@ const getCtsiAddress = (network: string): string | undefined => {
   const deploymentAddress = loadDeployment(network, CTSI_CONTRACT);
   if (deploymentAddress) return deploymentAddress;
 
-  return; // undefined
+  // Address not found
+  return;
 };
 const getCtsiFaucetAddress = (network: string): string | undefined => {
   // Look up address in address book
@@ -113,45 +105,24 @@ const getCtsiFaucetAddress = (network: string): string | undefined => {
   const deploymentAddress = loadDeployment(network, CTSI_FAUCET_CONTRACT);
   if (deploymentAddress) return deploymentAddress;
 
-  return; // undefined
+  // Address not found
+  return;
 };
-const getUniV3FactoryAddress = (network: string): string | undefined => {
+const getContractAddress = (
+  contractSymbol: string,
+  contractName: string,
+  network: string
+): string | undefined => {
   // Look up address in address book
-  if (addressBook && addressBook.uniV3Factory) return addressBook.uniV3Factory;
+  if (addressBook && addressBook[contractSymbol])
+    return addressBook[contractSymbol];
 
   // Look up address if the contract has a known deployment
-  const deploymentAddress = loadDeployment(network, UNI_V3_FACTORY_CONTRACT);
+  const deploymentAddress = loadDeployment(network, contractName);
   if (deploymentAddress) return deploymentAddress;
 
-  return; // undefined
-};
-const getUniV3NftDescriptorAddress = (network: string): string | undefined => {
-  // Look up address in address book
-  if (addressBook && addressBook.uniV3NftDescriptor)
-    return addressBook.uniV3NftDescriptor;
-
-  // Look up address if the contract has a known deployment
-  const deploymentAddress = loadDeployment(
-    network,
-    UNI_V3_NFT_DESCRIPTOR_CONTRACT
-  );
-  if (deploymentAddress) return deploymentAddress;
-
-  return; // undefined
-};
-const getUniV3NftManagerAddress = (network: string): string | undefined => {
-  // Look up address in address book
-  if (addressBook && addressBook.uniV3NftManager)
-    return addressBook.uniV3NftManager;
-
-  // Look up address if the contract has a known deployment
-  const deploymentAddress = loadDeployment(
-    network,
-    UNI_V3_NFT_MANAGER_CONTRACT
-  );
-  if (deploymentAddress) return deploymentAddress;
-
-  return; // undefined
+  // Address not found
+  return;
 };
 function writeAddress(
   network: string,
@@ -183,12 +154,28 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
 
   // Get the contract addresses
   loadAddresses(network);
-  let wrappedNativeAddress = getWrappedNativeAddress(network);
+  let wrappedNativeAddress = getContractAddress(
+    "wrappedNative",
+    WETH_CONTRACT,
+    network
+  );
   let ctsiAddress = getCtsiAddress(network);
   let ctsiFaucetAddress = getCtsiFaucetAddress(network);
-  let uniV3FactoryAddress = getUniV3FactoryAddress(network);
-  let uniV3NftDescriptorAddress = getUniV3NftDescriptorAddress(network);
-  let uniV3NftManagerAddress = getUniV3NftManagerAddress(network);
+  let uniswapV3FactoryAddress = getContractAddress(
+    "uniswapV3Factory",
+    UNISWAP_V3_FACTORY_CONTRACT,
+    network
+  );
+  let uniswapV3NftDescriptorAddress = getContractAddress(
+    "uniswapV3NftDescriptor",
+    UNISWAP_V3_NFT_DESCRIPTOR_CONTRACT,
+    network
+  );
+  let uniswapV3NftManagerAddress = getContractAddress(
+    "uniswapV3NftManager",
+    UNISWAP_V3_NFT_MANAGER_CONTRACT,
+    network
+  );
 
   // Deploy wrapped native token
   if (wrappedNativeAddress) {
@@ -259,28 +246,30 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     );
   }
 
-  // Deploy UniV3Factory
-  if (uniV3FactoryAddress) {
-    console.log(`Using ${UNI_V3_FACTORY_CONTRACT} at ${uniV3FactoryAddress}`);
+  // Deploy uniswapV3Factory
+  if (uniswapV3FactoryAddress) {
+    console.log(
+      `Using ${UNISWAP_V3_FACTORY_CONTRACT} at ${uniswapV3FactoryAddress}`
+    );
   } else {
-    console.log(`Deploying ${UNI_V3_FACTORY_CONTRACT}`);
-    const tx = await deployments.deploy(UNI_V3_FACTORY_CONTRACT, {
+    console.log(`Deploying ${UNISWAP_V3_FACTORY_CONTRACT}`);
+    const tx = await deployments.deploy(UNISWAP_V3_FACTORY_CONTRACT, {
       ...opts,
       args: [deployer],
     });
-    uniV3FactoryAddress = tx.address;
+    uniswapV3FactoryAddress = tx.address;
   }
 
   //
-  // Deploy UniV3NFTDescriptor
+  // Deploy UniswapV3NFTDescriptor
   //
   // TODO: This contract must be deployed with the ethers contract factory
   // because it requires a library, and as a result deployment files are
   // not generated. This is a known issue with hardhat-deploy.
   //
-  if (uniV3NftDescriptorAddress && network !== "hardhat") {
+  if (uniswapV3NftDescriptorAddress && network !== "hardhat") {
     console.log(
-      `Using ${UNI_V3_NFT_DESCRIPTOR_CONTRACT} at ${uniV3NftDescriptorAddress}`
+      `Using ${UNISWAP_V3_NFT_DESCRIPTOR_CONTRACT} at ${uniswapV3NftDescriptorAddress}`
     );
   } else {
     // Deploy NFTDescriptor
@@ -291,38 +280,38 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     const nftDescriptor = await NFTDescriptor.deploy();
 
     // Deploy UniV3NFTDescriptor
-    console.log(`Deploying ${UNI_V3_NFT_DESCRIPTOR_CONTRACT}`);
+    console.log(`Deploying ${UNISWAP_V3_NFT_DESCRIPTOR_CONTRACT}`);
     const UniV3NftDescriptor = await ethers.getContractFactory(
-      UNI_V3_NFT_DESCRIPTOR_CONTRACT,
+      UNISWAP_V3_NFT_DESCRIPTOR_CONTRACT,
       {
         libraries: {
           NFTDescriptor: nftDescriptor.address,
         },
       }
     );
-    const uniV3NftDescriptor = await UniV3NftDescriptor.deploy(
+    const uniswapV3NftDescriptor = await UniV3NftDescriptor.deploy(
       wrappedNativeAddress,
       ethers.utils.formatBytes32String("W-ETH")
     );
-    uniV3NftDescriptorAddress = uniV3NftDescriptor.address;
+    uniswapV3NftDescriptorAddress = uniswapV3NftDescriptor.address;
   }
 
   // Deploy UniV3NFTManager
-  if (uniV3NftManagerAddress) {
+  if (uniswapV3NftManagerAddress) {
     console.log(
-      `Using ${UNI_V3_NFT_MANAGER_CONTRACT} at ${uniV3NftManagerAddress}`
+      `Using ${UNISWAP_V3_NFT_MANAGER_CONTRACT} at ${uniswapV3NftManagerAddress}`
     );
   } else {
-    console.log(`Deploying ${UNI_V3_NFT_MANAGER_CONTRACT}`);
-    const tx = await deployments.deploy(UNI_V3_NFT_MANAGER_CONTRACT, {
+    console.log(`Deploying ${UNISWAP_V3_NFT_MANAGER_CONTRACT}`);
+    const tx = await deployments.deploy(UNISWAP_V3_NFT_MANAGER_CONTRACT, {
       ...opts,
       args: [
-        uniV3FactoryAddress,
+        uniswapV3FactoryAddress,
         wrappedNativeAddress,
-        uniV3NftDescriptorAddress,
+        uniswapV3NftDescriptorAddress,
       ],
     });
-    uniV3NftManagerAddress = tx.address;
+    uniswapV3NftManagerAddress = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -343,8 +332,8 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
 
   writeAddress(
     network,
-    UNI_V3_NFT_DESCRIPTOR_CONTRACT,
-    uniV3NftDescriptorAddress
+    UNISWAP_V3_NFT_DESCRIPTOR_CONTRACT,
+    uniswapV3NftDescriptorAddress
   );
 };
 

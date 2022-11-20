@@ -14,8 +14,8 @@ import { DeployFunction, DeployOptions } from "hardhat-deploy/types";
 
 // Contract names
 const CTSI_CONTRACT = "CartesiToken";
-const UNI_V3_FACTORY_CONTRACT = "UniswapV3Factory";
-const UNI_V3_POOL_FACTORY_CONTRACT = "UniswapV3PoolFactory";
+const UNI_V3_POOL_FACTORY_CONTRACT = "UniV3PoolFactory";
+const UNISWAP_V3_FACTORY_CONTRACT = "UniswapV3Factory";
 const WETH_CONTRACT = "WETH";
 
 // Constants
@@ -29,7 +29,7 @@ const enum FeeAmount {
 interface AddressBook {
   wrappedNative: string;
   ctsi: string;
-  uniV3Factory: string;
+  uniswapV3Factory: string;
   uniV3PoolFactory: string;
 }
 let addressBook: AddressBook | undefined;
@@ -112,23 +112,27 @@ const getCtsiAddress = async (
 
   return; // undefined
 };
-const getUniV3FactoryAddress = async (
+const getUniswapV3FactoryAddress = async (
   hre: HardhatRuntimeEnvironment,
   network: string
 ): Promise<string | undefined> => {
   // Look up address in address book
-  if (addressBook && addressBook.uniV3Factory) return addressBook.uniV3Factory;
+  if (addressBook && addressBook.uniswapV3Factory)
+    return addressBook.uniswapV3Factory;
 
   // Look up address if the contract has a known deployment
-  const deploymentAddress = loadDeployment(network, UNI_V3_FACTORY_CONTRACT);
+  const deploymentAddress = loadDeployment(
+    network,
+    UNISWAP_V3_FACTORY_CONTRACT
+  );
   if (deploymentAddress) return deploymentAddress;
 
   // Look up address in deployments system
-  const uniV3FactoryDeployment = await hre.deployments.get(
-    UNI_V3_FACTORY_CONTRACT
+  const uniswapV3FactoryDeployment = await hre.deployments.get(
+    UNISWAP_V3_FACTORY_CONTRACT
   );
-  if (uniV3FactoryDeployment && uniV3FactoryDeployment.address)
-    return uniV3FactoryDeployment.address;
+  if (uniswapV3FactoryDeployment && uniswapV3FactoryDeployment.address)
+    return uniswapV3FactoryDeployment.address;
 
   return; // undefined
 };
@@ -164,7 +168,10 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   loadAddresses(network);
   const wrappedNativeAddress = await getWrappedNativeAddress(hre, network);
   const ctsiAddress = await getCtsiAddress(hre, network);
-  const uniV3FactoryAddress = await getUniV3FactoryAddress(hre, network);
+  const uniswapV3FactoryAddress = await getUniswapV3FactoryAddress(
+    hre,
+    network
+  );
   let uniV3PoolFactoryAddress = await getUniV3PoolFactoryAddress(network);
 
   // Deploy Uniswap V3 Pool Factory
@@ -177,7 +184,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     const tx = await deployments.deploy(UNI_V3_POOL_FACTORY_CONTRACT, {
       ...opts,
       args: [
-        uniV3FactoryAddress,
+        uniswapV3FactoryAddress,
         ctsiAddress,
         wrappedNativeAddress,
         FeeAmount.HIGH,
@@ -188,4 +195,4 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
 };
 
 export default func;
-func.tags = ["UniswapV3PoolFactory"];
+func.tags = ["UniV3PoolFactory"];

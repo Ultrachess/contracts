@@ -6,11 +6,10 @@
  * See the file LICENSE for more information.
  */
 
-// slither-disable-next-line solc-version
 pragma solidity 0.8.16;
 
-import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Factory.sol";
-import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
+import {IUniswapV3Factory} from "../interfaces/uniswap-v3-core/IUniswapV3Factory.sol";
+import {IUniswapV3Pool} from "../interfaces/uniswap-v3-core/IUniswapV3Pool.sol";
 
 /**
  * @dev Test contract to create a Uniswap-V3 pool using a provided Uni-V3 factory
@@ -19,12 +18,16 @@ import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
  * networks. The pool is created in the constructor and stored in a member
  * variable so that it can be read back without the deployment system having
  * to parse transaction receipts.
+ *
+ * Note: Because upstream Uniswap sources are mixed with our own, a convention
+ * is adopted to distinguish between the two. Uniswap sources are prefixed with
+ * "uniswapv3" and our own are prefixed with "univ3".
  */
-contract UniswapV3PoolFactory {
+contract UniV3PoolFactory {
   /**
    * @dev The address of the pool for this token pair
    */
-  IUniswapV3Pool public immutable uniV3Pool;
+  IUniswapV3Pool public immutable uniswapV3Pool;
 
   //////////////////////////////////////////////////////////////////////////////
   // Initialization
@@ -45,7 +48,7 @@ contract UniswapV3PoolFactory {
     require(token1 != address(0), "Invalid token1");
 
     // Call external contracts
-    uniV3Pool = IUniswapV3Pool(
+    uniswapV3Pool = IUniswapV3Pool(
       IUniswapV3Factory(factory).createPool(token0, token1, fee)
     );
   }

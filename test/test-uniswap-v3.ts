@@ -20,8 +20,8 @@ chai.use(solidity);
 // Contract names
 const CTSI_CONTRACT = "CartesiToken";
 const CTSI_FAUCET_CONTRACT = "SimpleFaucet";
-const UNI_V3_NFT_MANAGER_CONTRACT = "NonfungiblePositionManager";
-const UNI_V3_POOL_FACTORY_CONTRACT = "UniswapV3PoolFactory";
+const UNISWAP_V3_NFT_MANAGER_CONTRACT = "NonfungiblePositionManager";
+const UNI_V3_POOL_FACTORY_CONTRACT = "UniV3PoolFactory";
 const WETH_CONTRACT = "WETH";
 
 // Contract ABIs
@@ -29,7 +29,7 @@ import { abi as CartesiTokenAbi } from "../node_modules/@cartesi/token/export/ar
 import { abi as CartesiFaucetAbi } from "../node_modules/@cartesi/token/export/artifacts/contracts/SimpleFaucet.sol/SimpleFaucet.json";
 import UniswapV3PoolAbi from "../src/abi/contracts/depends/uniswap-v3-core/UniswapV3Pool.sol/UniswapV3Pool.json";
 import NonfungiblePositionManagerAbi from "../src/abi/contracts/depends/uniswap-v3-periphery/NonfungiblePositionManager.sol/NonfungiblePositionManager.json";
-import UniswapV3PoolFactoryAbi from "../src/abi/contracts/src/UniswapV3PoolFactory.sol/UniswapV3PoolFactory.json";
+import UniV3PoolFactoryAbi from "../src/abi/contracts/src/UniV3PoolFactory.sol/UniV3PoolFactory.json";
 import WETHAbi from "../src/abi/contracts/test/token/WETH.sol/WETH.json";
 
 // TODO: Move to constants
@@ -55,7 +55,7 @@ interface AddressBook {
   wrappedNative: string;
   ctsi: string;
   ctsiFaucet: string;
-  uniV3NftManager: string;
+  uniswapV3NftManager: string;
   uniV3PoolFactory: string;
   ctsiNativePool: string;
 }
@@ -161,26 +161,26 @@ const getCtsiFaucetAddress = async (
 
   return; // undefined
 };
-const getUniV3NftManagerAddress = async (
+const getUniswapV3NftManagerAddress = async (
   network: string
 ): Promise<string | undefined> => {
   // Look up address in address book
-  if (addressBook && addressBook.uniV3NftManager)
-    return addressBook.uniV3NftManager;
+  if (addressBook && addressBook.uniswapV3NftManager)
+    return addressBook.uniswapV3NftManager;
 
   // Look up address if the contract has a known deployment
   const deploymentAddress = loadDeployment(
     network,
-    UNI_V3_NFT_MANAGER_CONTRACT
+    UNISWAP_V3_NFT_MANAGER_CONTRACT
   );
   if (deploymentAddress) return deploymentAddress;
 
   // Look up address in deployments system
-  const uniV3NftManagerDeployment = await hardhat.deployments.get(
-    UNI_V3_NFT_MANAGER_CONTRACT
+  const uniswapV3NftManagerDeployment = await hardhat.deployments.get(
+    UNISWAP_V3_NFT_MANAGER_CONTRACT
   );
-  if (uniV3NftManagerDeployment && uniV3NftManagerDeployment.address)
-    return uniV3NftManagerDeployment.address;
+  if (uniswapV3NftManagerDeployment && uniswapV3NftManagerDeployment.address)
+    return uniswapV3NftManagerDeployment.address;
 
   return; // undefined
 };
@@ -215,7 +215,7 @@ const getCtsiNativePoolAddress = async (
     return addressBook.ctsiNativePool;
 
   // Read address from the chain
-  return await uniV3PoolFactoryContract.uniV3Pool();
+  return await uniV3PoolFactoryContract.uniswapV3Pool();
 };
 function getMinTick(tickSpacing: number): number {
   return Math.ceil(-887272 / tickSpacing) * tickSpacing;
@@ -262,7 +262,9 @@ const setupTest = hardhat.deployments.createFixture(
     const wrappedNativeAddress = await getWrappedNativeAddress(network);
     const ctsiAddress = await getCtsiAddress(network);
     const ctsiFaucetAddress = await getCtsiFaucetAddress(network);
-    const uniV3NftManagerAddress = await getUniV3NftManagerAddress(network);
+    const uniswapV3NftManagerAddress = await getUniswapV3NftManagerAddress(
+      network
+    );
     const uniV3PoolFactoryAddress = await getUniV3PoolFactoryAddress(network);
 
     // Construct the contracts for beneficiary wallet
@@ -281,14 +283,14 @@ const setupTest = hardhat.deployments.createFixture(
       CartesiFaucetAbi,
       beneficiary
     );
-    const uniV3NftManagerContract = new ethers.Contract(
-      uniV3NftManagerAddress,
+    const uniswapV3NftManagerContract = new ethers.Contract(
+      uniswapV3NftManagerAddress,
       NonfungiblePositionManagerAbi,
       beneficiary
     );
     const uniV3PoolFactoryContract = new ethers.Contract(
       uniV3PoolFactoryAddress,
-      UniswapV3PoolFactoryAbi,
+      UniV3PoolFactoryAbi,
       beneficiary
     );
 
@@ -306,7 +308,7 @@ const setupTest = hardhat.deployments.createFixture(
       wrappedNativeContract,
       ctsiContract,
       ctsiFaucetContract,
-      uniV3NftManagerContract,
+      uniswapV3NftManagerContract,
       ctsiNativePoolContract,
     };
   }
@@ -415,10 +417,10 @@ describe("Uniswap V3", () => {
   it("should approve NFT manager spending CTSI", async function () {
     this.timeout(60 * 1000);
 
-    const { ctsiContract, uniV3NftManagerContract } = contracts;
+    const { ctsiContract, uniswapV3NftManagerContract } = contracts;
 
     const tx = ctsiContract.approve(
-      uniV3NftManagerContract.address,
+      uniswapV3NftManagerContract.address,
       CTSI_AMOUNT
     );
     await chai
@@ -426,7 +428,7 @@ describe("Uniswap V3", () => {
       .to.emit(ctsiContract, "Approval")
       .withArgs(
         beneficiaryAddress,
-        uniV3NftManagerContract.address,
+        uniswapV3NftManagerContract.address,
         CTSI_AMOUNT
       );
   });
@@ -434,10 +436,10 @@ describe("Uniswap V3", () => {
   it("should approve NFT manager spending wrapped native token", async function () {
     this.timeout(60 * 1000);
 
-    const { wrappedNativeContract, uniV3NftManagerContract } = contracts;
+    const { wrappedNativeContract, uniswapV3NftManagerContract } = contracts;
 
     const tx = wrappedNativeContract.approve(
-      uniV3NftManagerContract.address,
+      uniswapV3NftManagerContract.address,
       NATIVE_AMOUNT
     );
     await chai
@@ -445,7 +447,7 @@ describe("Uniswap V3", () => {
       .to.emit(wrappedNativeContract, "Approval")
       .withArgs(
         beneficiaryAddress,
-        uniV3NftManagerContract.address,
+        uniswapV3NftManagerContract.address,
         NATIVE_AMOUNT
       );
   });
@@ -453,7 +455,7 @@ describe("Uniswap V3", () => {
   it("should mint an NFT", async function () {
     this.timeout(60 * 1000);
 
-    const { uniV3NftManagerContract } = contracts;
+    const { uniswapV3NftManagerContract } = contracts;
 
     const mintParams = {
       token0: token0,
@@ -469,7 +471,7 @@ describe("Uniswap V3", () => {
       deadline: Math.floor(Date.now() / 1000) + 60 * 20, // 20 mins
     };
 
-    const tx = uniV3NftManagerContract.mint(Object.values(mintParams), {
+    const tx = uniswapV3NftManagerContract.mint(Object.values(mintParams), {
       gasLimit: 2_000_000, // 2M GWei
     });
 
@@ -484,7 +486,7 @@ describe("Uniswap V3", () => {
 
     await chai
       .expect(tx)
-      .to.emit(uniV3NftManagerContract, "IncreaseLiquidity")
+      .to.emit(uniswapV3NftManagerContract, "IncreaseLiquidity")
       .withArgs(
         nftTokenId, // tokenId
         LIQUIDITY_AMOUNT, // liquidity
@@ -493,16 +495,16 @@ describe("Uniswap V3", () => {
       );
     await chai
       .expect(tx)
-      .to.emit(uniV3NftManagerContract, "Transfer")
+      .to.emit(uniswapV3NftManagerContract, "Transfer")
       .withArgs(ZERO_ADDRESS, beneficiaryAddress, nftTokenId);
   });
 
   it("should check total NFT balance", async function () {
     this.timeout(60 * 1000);
 
-    const { uniV3NftManagerContract } = contracts;
+    const { uniswapV3NftManagerContract } = contracts;
 
-    const nftBalance = await uniV3NftManagerContract.balanceOf(
+    const nftBalance = await uniswapV3NftManagerContract.balanceOf(
       beneficiaryAddress
     );
     chai.expect(nftBalance.toNumber()).to.be.greaterThanOrEqual(1);
@@ -511,9 +513,9 @@ describe("Uniswap V3", () => {
   it("should check NFT position after minting", async function () {
     this.timeout(60 * 1000);
 
-    const { uniV3NftManagerContract } = contracts;
+    const { uniswapV3NftManagerContract } = contracts;
 
-    const position = await uniV3NftManagerContract.positions(nftTokenId);
+    const position = await uniswapV3NftManagerContract.positions(nftTokenId);
     const [
       nonce,
       operator,
@@ -546,9 +548,9 @@ describe("Uniswap V3", () => {
   it("should check NFT URI", async function () {
     this.timeout(60 * 1000);
 
-    const { uniV3NftManagerContract } = contracts;
+    const { uniswapV3NftManagerContract } = contracts;
 
-    const tokenUri = await uniV3NftManagerContract.tokenURI(nftTokenId);
+    const tokenUri = await uniswapV3NftManagerContract.tokenURI(nftTokenId);
 
     // Check that data URI has correct mime type
     chai.expect(tokenUri).to.match(/data:application\/json;base64,.+/);
@@ -566,7 +568,7 @@ describe("Uniswap V3", () => {
   it("should withdraw liquidity from the NFT", async function () {
     this.timeout(60 * 1000);
 
-    const { ctsiNativePoolContract, uniV3NftManagerContract } = contracts;
+    const { ctsiNativePoolContract, uniswapV3NftManagerContract } = contracts;
 
     const decreaseLiquidityParams = {
       tokenId: nftTokenId,
@@ -576,13 +578,13 @@ describe("Uniswap V3", () => {
       deadline: Math.floor(Date.now() / 1000) + 60 * 20, // 20 mins
     };
 
-    const tx = uniV3NftManagerContract.decreaseLiquidity(
+    const tx = uniswapV3NftManagerContract.decreaseLiquidity(
       Object.values(decreaseLiquidityParams)
     );
 
     await chai
       .expect(tx)
-      .to.emit(uniV3NftManagerContract, "DecreaseLiquidity")
+      .to.emit(uniswapV3NftManagerContract, "DecreaseLiquidity")
       .withArgs(
         nftTokenId, // tokenId
         LIQUIDITY_AMOUNT, // liquidity
@@ -590,7 +592,7 @@ describe("Uniswap V3", () => {
         amount1.sub(1) // amount1
       );
     await chai.expect(tx).to.emit(ctsiNativePoolContract, "Burn").withArgs(
-      uniV3NftManagerContract.address, // owner
+      uniswapV3NftManagerContract.address, // owner
       getMinTick(TICK_SPACINGS[FeeAmount.HIGH]), // tickLower
       getMaxTick(TICK_SPACINGS[FeeAmount.HIGH]), // tickUpper
       LIQUIDITY_AMOUNT, // amount
@@ -602,9 +604,9 @@ describe("Uniswap V3", () => {
   it("should check NFT position after decreasing liquidity", async function () {
     this.timeout(60 * 1000);
 
-    const { uniV3NftManagerContract } = contracts;
+    const { uniswapV3NftManagerContract } = contracts;
 
-    const position = await uniV3NftManagerContract.positions(nftTokenId);
+    const position = await uniswapV3NftManagerContract.positions(nftTokenId);
     const [
       nonce,
       operator,
@@ -637,7 +639,7 @@ describe("Uniswap V3", () => {
   it("should collect tokens from the NFT", async function () {
     this.timeout(60 * 1000);
 
-    const { ctsiNativePoolContract, uniV3NftManagerContract } = contracts;
+    const { ctsiNativePoolContract, uniswapV3NftManagerContract } = contracts;
 
     const collectParams = {
       tokenId: nftTokenId,
@@ -646,15 +648,20 @@ describe("Uniswap V3", () => {
       amount1Max: amount1,
     };
 
-    const tx = uniV3NftManagerContract.collect(Object.values(collectParams));
-    await chai.expect(tx).to.emit(uniV3NftManagerContract, "Collect").withArgs(
-      nftTokenId, // tokenId
-      beneficiaryAddress, // recipient
-      amount0.sub(1), // amount0Collect
-      amount1.sub(1) // amount1Collect
+    const tx = uniswapV3NftManagerContract.collect(
+      Object.values(collectParams)
     );
+    await chai
+      .expect(tx)
+      .to.emit(uniswapV3NftManagerContract, "Collect")
+      .withArgs(
+        nftTokenId, // tokenId
+        beneficiaryAddress, // recipient
+        amount0.sub(1), // amount0Collect
+        amount1.sub(1) // amount1Collect
+      );
     await chai.expect(tx).to.emit(ctsiNativePoolContract, "Collect").withArgs(
-      uniV3NftManagerContract.address, // owner
+      uniswapV3NftManagerContract.address, // owner
       beneficiaryAddress, // recipient
       getMinTick(TICK_SPACINGS[FeeAmount.HIGH]), // tickLower
       getMaxTick(TICK_SPACINGS[FeeAmount.HIGH]), // tickUpper
@@ -666,9 +673,9 @@ describe("Uniswap V3", () => {
   it("should check NFT position after collecting tokens", async function () {
     this.timeout(60 * 1000);
 
-    const { uniV3NftManagerContract } = contracts;
+    const { uniswapV3NftManagerContract } = contracts;
 
-    const position = await uniV3NftManagerContract.positions(nftTokenId);
+    const position = await uniswapV3NftManagerContract.positions(nftTokenId);
     const [
       nonce,
       operator,
@@ -701,14 +708,14 @@ describe("Uniswap V3", () => {
   it("should burn the NFT", async function () {
     this.timeout(60 * 1000);
 
-    const { uniV3NftManagerContract } = contracts;
+    const { uniswapV3NftManagerContract } = contracts;
 
-    const tx = uniV3NftManagerContract.burn(nftTokenId, {
+    const tx = uniswapV3NftManagerContract.burn(nftTokenId, {
       gasLimit: 2000000, // 2M GWei
     });
     await chai
       .expect(tx)
-      .to.emit(uniV3NftManagerContract, "Transfer")
+      .to.emit(uniswapV3NftManagerContract, "Transfer")
       .withArgs(beneficiaryAddress, ZERO_ADDRESS, nftTokenId);
   });
 });
