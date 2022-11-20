@@ -21,8 +21,10 @@ chai.use(solidity);
 const CTSI_CONTRACT = "CartesiToken";
 const CTSI_FAUCET_CONTRACT = "SimpleFaucet";
 const UNISWAP_V3_NFT_MANAGER_CONTRACT = "NonfungiblePositionManager";
-const UNI_V3_POOL_FACTORY_CONTRACT = "UniV3PoolFactory";
 const WETH_CONTRACT = "WETH";
+
+// Contract alises
+const CTSI_POOL_FACTORY_CONTRACT = "CtsiPoolFactory";
 
 // Contract ABIs
 import { abi as CartesiTokenAbi } from "../node_modules/@cartesi/token/export/artifacts/contracts/CartesiToken.sol/CartesiToken.json";
@@ -56,7 +58,7 @@ interface AddressBook {
   ctsi: string;
   ctsiFaucet: string;
   uniswapV3NftManager: string;
-  uniV3PoolFactory: string;
+  ctsiPoolFactory: string;
   ctsiNativePool: string;
 }
 let addressBook: AddressBook | undefined;
@@ -184,38 +186,35 @@ const getUniswapV3NftManagerAddress = async (
 
   return; // undefined
 };
-const getUniV3PoolFactoryAddress = async (
+const getCtsiPoolFactoryAddress = async (
   network: string
 ): Promise<string | undefined> => {
   // Look up address in address book
-  if (addressBook && addressBook.uniV3PoolFactory)
-    return addressBook.uniV3PoolFactory;
+  if (addressBook && addressBook.ctsiPoolFactory)
+    return addressBook.ctsiPoolFactory;
 
   // Look up address if the contract has a known deployment
-  const deploymentAddress = loadDeployment(
-    network,
-    UNI_V3_POOL_FACTORY_CONTRACT
-  );
+  const deploymentAddress = loadDeployment(network, CTSI_POOL_FACTORY_CONTRACT);
   if (deploymentAddress) return deploymentAddress;
 
   // Look up address in deployments system
-  const uniV3PoolFactoryDeployment = await hardhat.deployments.get(
-    UNI_V3_POOL_FACTORY_CONTRACT
+  const ctsiPoolFactoryDeployment = await hardhat.deployments.get(
+    CTSI_POOL_FACTORY_CONTRACT
   );
-  if (uniV3PoolFactoryDeployment && uniV3PoolFactoryDeployment.address)
-    return uniV3PoolFactoryDeployment.address;
+  if (ctsiPoolFactoryDeployment && ctsiPoolFactoryDeployment.address)
+    return ctsiPoolFactoryDeployment.address;
 
   return; // undefined
 };
 const getCtsiNativePoolAddress = async (
-  uniV3PoolFactoryContract: ethers.Contract
+  ctsiPoolFactoryContract: ethers.Contract
 ): Promise<string | undefined> => {
   // Look up address in address book
   if (addressBook && addressBook.ctsiNativePool)
     return addressBook.ctsiNativePool;
 
   // Read address from the chain
-  return await uniV3PoolFactoryContract.uniswapV3Pool();
+  return await ctsiPoolFactoryContract.uniswapV3Pool();
 };
 function getMinTick(tickSpacing: number): number {
   return Math.ceil(-887272 / tickSpacing) * tickSpacing;
@@ -265,7 +264,7 @@ const setupTest = hardhat.deployments.createFixture(
     const uniswapV3NftManagerAddress = await getUniswapV3NftManagerAddress(
       network
     );
-    const uniV3PoolFactoryAddress = await getUniV3PoolFactoryAddress(network);
+    const ctsiPoolFactoryAddress = await getCtsiPoolFactoryAddress(network);
 
     // Construct the contracts for beneficiary wallet
     const wrappedNativeContract = new hardhat.ethers.Contract(
@@ -288,15 +287,15 @@ const setupTest = hardhat.deployments.createFixture(
       NonfungiblePositionManagerAbi,
       beneficiary
     );
-    const uniV3PoolFactoryContract = new ethers.Contract(
-      uniV3PoolFactoryAddress,
+    const ctsiPoolFactoryContract = new ethers.Contract(
+      ctsiPoolFactoryAddress,
       UniV3PoolFactoryAbi,
       beneficiary
     );
 
     // CTSI-Native pool might need to be read from the chain
     const ctsiNativePoolAddress = await getCtsiNativePoolAddress(
-      uniV3PoolFactoryContract
+      ctsiPoolFactoryContract
     );
     const ctsiNativePoolContract = new ethers.Contract(
       ctsiNativePoolAddress,
@@ -314,7 +313,7 @@ const setupTest = hardhat.deployments.createFixture(
   }
 );
 
-describe("Uniswap V3", () => {
+describe("Uniswap V3 CTSI pool", () => {
   let beneficiaryAddress: string | undefined;
   let contracts: { [name: string]: ethers.Contract } = {};
   let nftTokenId: number | undefined; // Set when NFT is minted

@@ -18,6 +18,9 @@ const UNI_V3_POOL_FACTORY_CONTRACT = "UniV3PoolFactory";
 const UNISWAP_V3_FACTORY_CONTRACT = "UniswapV3Factory";
 const WETH_CONTRACT = "WETH";
 
+// Contract alises
+const CTSI_POOL_FACTORY_CONTRACT = "CtsiPoolFactory";
+
 // Constants
 const enum FeeAmount {
   LOW = 500, // 0.05%
@@ -30,7 +33,7 @@ interface AddressBook {
   wrappedNative: string;
   ctsi: string;
   uniswapV3Factory: string;
-  uniV3PoolFactory: string;
+  ctsiPoolFactory: string;
 }
 let addressBook: AddressBook | undefined;
 
@@ -136,20 +139,25 @@ const getUniswapV3FactoryAddress = async (
 
   return; // undefined
 };
-const getUniV3PoolFactoryAddress = (network: string): string | undefined => {
+const getCtsiPoolFactoryAddress = (network: string): string | undefined => {
   // Look up address in address book
-  if (addressBook && addressBook.uniV3PoolFactory)
-    return addressBook.uniV3PoolFactory;
+  if (addressBook && addressBook.ctsiPoolFactory)
+    return addressBook.ctsiPoolFactory;
 
   // Look up address if the contract has a known deployment
-  const deploymentAddress = loadDeployment(
-    network,
-    UNI_V3_POOL_FACTORY_CONTRACT
-  );
+  const deploymentAddress = loadDeployment(network, CTSI_POOL_FACTORY_CONTRACT);
   if (deploymentAddress) return deploymentAddress;
 
   return; // undefined
 };
+function writeAddress(
+  network: string,
+  contract: string,
+  address: string
+): void {
+  const addressFile = `${__dirname}/../deployments/${network}/${contract}.json`;
+  fs.writeFileSync(addressFile, JSON.stringify({ address }, undefined, 2));
+}
 
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const { deployments, getNamedAccounts } = hre;
@@ -172,15 +180,15 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     hre,
     network
   );
-  let uniV3PoolFactoryAddress = await getUniV3PoolFactoryAddress(network);
+  let ctsiPoolFactoryAddress = await getCtsiPoolFactoryAddress(network);
 
   // Deploy Uniswap V3 Pool Factory
-  if (uniV3PoolFactoryAddress) {
+  if (ctsiPoolFactoryAddress && network != "hardhat") {
     console.log(
-      `Using ${UNI_V3_POOL_FACTORY_CONTRACT} at ${uniV3PoolFactoryAddress}`
+      `Using ${CTSI_POOL_FACTORY_CONTRACT} at ${ctsiPoolFactoryAddress}`
     );
   } else {
-    console.log(`Deploying ${UNI_V3_POOL_FACTORY_CONTRACT}`);
+    console.log(`Deploying ${CTSI_POOL_FACTORY_CONTRACT}`);
     const tx = await deployments.deploy(UNI_V3_POOL_FACTORY_CONTRACT, {
       ...opts,
       args: [
@@ -190,9 +198,15 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
         FeeAmount.HIGH,
       ],
     });
-    uniV3PoolFactoryAddress = tx.address;
+    ctsiPoolFactoryAddress = tx.address;
   }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Record addresses
+  //////////////////////////////////////////////////////////////////////////////
+
+  writeAddress(network, CTSI_POOL_FACTORY_CONTRACT, ctsiPoolFactoryAddress);
 };
 
 export default func;
-func.tags = ["UniV3PoolFactory"];
+func.tags = ["CTSIPoolFactory"];
