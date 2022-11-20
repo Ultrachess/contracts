@@ -1,0 +1,947 @@
+{
+  "contractName": "IUniswapV3Staker",
+  "sourceName": "contracts/interfaces/uniswap-v3-staker/IUniswapV3Staker.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "oldOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "DepositTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "contract IERC20Minimal",
+          "name": "rewardToken",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "contract IUniswapV3Pool",
+          "name": "pool",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "startTime",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "endTime",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "refundee",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "reward",
+          "type": "uint256"
+        }
+      ],
+      "name": "IncentiveCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "incentiveId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "refund",
+          "type": "uint256"
+        }
+      ],
+      "name": "IncentiveEnded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "reward",
+          "type": "uint256"
+        }
+      ],
+      "name": "RewardClaimed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "incentiveId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint128",
+          "name": "liquidity",
+          "type": "uint128"
+        }
+      ],
+      "name": "TokenStaked",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "incentiveId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "TokenUnstaked",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IERC20Minimal",
+          "name": "rewardToken",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountRequested",
+          "type": "uint256"
+        }
+      ],
+      "name": "claimReward",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "reward",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "contract IERC20Minimal",
+              "name": "rewardToken",
+              "type": "address"
+            },
+            {
+              "internalType": "contract IUniswapV3Pool",
+              "name": "pool",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "endTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "refundee",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct IUniswapV3Staker.IncentiveKey",
+          "name": "key",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "reward",
+          "type": "uint256"
+        }
+      ],
+      "name": "createIncentive",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "deposits",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "internalType": "uint48",
+          "name": "numberOfStakes",
+          "type": "uint48"
+        },
+        {
+          "internalType": "int24",
+          "name": "tickLower",
+          "type": "int24"
+        },
+        {
+          "internalType": "int24",
+          "name": "tickUpper",
+          "type": "int24"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "contract IERC20Minimal",
+              "name": "rewardToken",
+              "type": "address"
+            },
+            {
+              "internalType": "contract IUniswapV3Pool",
+              "name": "pool",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "endTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "refundee",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct IUniswapV3Staker.IncentiveKey",
+          "name": "key",
+          "type": "tuple"
+        }
+      ],
+      "name": "endIncentive",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "refund",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "factory",
+      "outputs": [
+        {
+          "internalType": "contract IUniswapV3Factory",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "contract IERC20Minimal",
+              "name": "rewardToken",
+              "type": "address"
+            },
+            {
+              "internalType": "contract IUniswapV3Pool",
+              "name": "pool",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "endTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "refundee",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct IUniswapV3Staker.IncentiveKey",
+          "name": "key",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getRewardInfo",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "reward",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint160",
+          "name": "secondsInsideX128",
+          "type": "uint160"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "incentiveId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "incentives",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "totalRewardUnclaimed",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint160",
+          "name": "totalSecondsClaimedX128",
+          "type": "uint160"
+        },
+        {
+          "internalType": "uint96",
+          "name": "numberOfStakes",
+          "type": "uint96"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxIncentiveDuration",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxIncentiveStartLeadTime",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes[]",
+          "name": "data",
+          "type": "bytes[]"
+        }
+      ],
+      "name": "multicall",
+      "outputs": [
+        {
+          "internalType": "bytes[]",
+          "name": "results",
+          "type": "bytes[]"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "nonfungiblePositionManager",
+      "outputs": [
+        {
+          "internalType": "contract INonfungiblePositionManager",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "onERC721Received",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IERC20Minimal",
+          "name": "rewardToken",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "rewards",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "rewardsOwed",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "contract IERC20Minimal",
+              "name": "rewardToken",
+              "type": "address"
+            },
+            {
+              "internalType": "contract IUniswapV3Pool",
+              "name": "pool",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "endTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "refundee",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct IUniswapV3Staker.IncentiveKey",
+          "name": "key",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "stakeToken",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "incentiveId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "stakes",
+      "outputs": [
+        {
+          "internalType": "uint160",
+          "name": "secondsPerLiquidityInsideInitialX128",
+          "type": "uint160"
+        },
+        {
+          "internalType": "uint128",
+          "name": "liquidity",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        }
+      ],
+      "name": "transferDeposit",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "contract IERC20Minimal",
+              "name": "rewardToken",
+              "type": "address"
+            },
+            {
+              "internalType": "contract IUniswapV3Pool",
+              "name": "pool",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "endTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "refundee",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct IUniswapV3Staker.IncentiveKey",
+          "name": "key",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "unstakeToken",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "withdrawToken",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "events": {
+      "DepositTransferred(uint256,address,address)": {
+        "params": {
+          "newOwner": "The owner after the deposit was transferred",
+          "oldOwner": "The owner before the deposit was transferred",
+          "tokenId": "The ID of the deposit (and token) that is being transferred"
+        }
+      },
+      "IncentiveCreated(address,address,uint256,uint256,address,uint256)": {
+        "params": {
+          "endTime": "The time when rewards stop accruing",
+          "pool": "The Uniswap V3 pool",
+          "refundee": "The address which receives any remaining reward tokens after the end time",
+          "reward": "The amount of reward tokens to be distributed",
+          "rewardToken": "The token being distributed as a reward",
+          "startTime": "The time when the incentive program begins"
+        }
+      },
+      "IncentiveEnded(bytes32,uint256)": {
+        "params": {
+          "incentiveId": "The incentive which is ending",
+          "refund": "The amount of reward tokens refunded"
+        }
+      },
+      "RewardClaimed(address,uint256)": {
+        "params": {
+          "reward": "The amount of reward tokens claimed",
+          "to": "The address where claimed rewards were sent to"
+        }
+      },
+      "TokenStaked(uint256,bytes32,uint128)": {
+        "params": {
+          "incentiveId": "The incentive in which the token is staking",
+          "liquidity": "The amount of liquidity staked",
+          "tokenId": "The unique identifier of an Uniswap V3 LP token"
+        }
+      },
+      "TokenUnstaked(uint256,bytes32)": {
+        "params": {
+          "incentiveId": "The incentive in which the token is staking",
+          "tokenId": "The unique identifier of an Uniswap V3 LP token"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "claimReward(address,address,uint256)": {
+        "params": {
+          "amountRequested": "The amount of reward tokens to claim. Claims entire reward amount if set to 0.",
+          "rewardToken": "The token being distributed as a reward",
+          "to": "The address where claimed rewards will be sent to"
+        },
+        "returns": {
+          "reward": "The amount of reward tokens claimed"
+        }
+      },
+      "createIncentive((address,address,uint256,uint256,address),uint256)": {
+        "params": {
+          "key": "Details of the incentive to create",
+          "reward": "The amount of reward tokens to be distributed"
+        }
+      },
+      "deposits(uint256)": {
+        "returns": {
+          "numberOfStakes": "Counter of how many incentives for which the liquidity is staked",
+          "owner": "The owner of the deposited NFT",
+          "tickLower": "The lower tick of the range",
+          "tickUpper": "The upper tick of the range"
+        }
+      },
+      "endIncentive((address,address,uint256,uint256,address))": {
+        "params": {
+          "key": "Details of the incentive to end"
+        },
+        "returns": {
+          "refund": "The remaining reward tokens when the incentive is ended"
+        }
+      },
+      "getRewardInfo((address,address,uint256,uint256,address),uint256)": {
+        "params": {
+          "key": "The key of the incentive",
+          "tokenId": "The ID of the token"
+        },
+        "returns": {
+          "reward": "The reward accrued to the NFT for the given incentive thus far"
+        }
+      },
+      "incentives(bytes32)": {
+        "params": {
+          "incentiveId": "The ID of the incentive computed from its parameters"
+        },
+        "returns": {
+          "numberOfStakes": "The count of deposits that are currently staked for the incentive",
+          "totalRewardUnclaimed": "The amount of reward token not yet claimed by users",
+          "totalSecondsClaimedX128": "Total liquidity-seconds claimed, represented as a UQ32.128"
+        }
+      },
+      "multicall(bytes[])": {
+        "details": "The `msg.value` should not be trusted for any method callable from multicall.",
+        "params": {
+          "data": "The encoded function data for each of the calls to make to this contract"
+        },
+        "returns": {
+          "results": "The results from each of the calls passed in via data"
+        }
+      },
+      "onERC721Received(address,address,uint256,bytes)": {
+        "details": "Whenever an {IERC721} `tokenId` token is transferred to this contract via {IERC721-safeTransferFrom} by `operator` from `from`, this function is called. It must return its Solidity selector to confirm the token transfer. If any other value is returned or the interface is not implemented by the recipient, the transfer will be reverted. The selector can be obtained in Solidity with `IERC721Receiver.onERC721Received.selector`."
+      },
+      "rewards(address,address)": {
+        "params": {
+          "owner": "The owner for which the rewards owed are checked",
+          "rewardToken": "The token for which to check rewards"
+        },
+        "returns": {
+          "rewardsOwed": "The amount of the reward token claimable by the owner"
+        }
+      },
+      "stakeToken((address,address,uint256,uint256,address),uint256)": {
+        "params": {
+          "key": "The key of the incentive for which to stake the NFT",
+          "tokenId": "The ID of the token to stake"
+        }
+      },
+      "stakes(uint256,bytes32)": {
+        "params": {
+          "incentiveId": "The ID of the incentive for which the token is staked",
+          "tokenId": "The ID of the staked token"
+        },
+        "returns": {
+          "liquidity": "The amount of liquidity in the NFT as of the last time the rewards were computed",
+          "secondsPerLiquidityInsideInitialX128": "secondsPerLiquidity represented as a UQ32.128"
+        }
+      },
+      "transferDeposit(uint256,address)": {
+        "params": {
+          "to": "The new owner of the deposit",
+          "tokenId": "The ID of the token (and the deposit) to transfer"
+        }
+      },
+      "unstakeToken((address,address,uint256,uint256,address),uint256)": {
+        "params": {
+          "key": "The key of the incentive for which to unstake the NFT",
+          "tokenId": "The ID of the token to unstake"
+        }
+      },
+      "withdrawToken(uint256,address,bytes)": {
+        "params": {
+          "data": "An optional data array that will be passed along to the `to` address via the NFT safeTransferFrom",
+          "to": "The address where the LP token will be sent",
+          "tokenId": "The unique identifier of an Uniswap V3 LP token"
+        }
+      }
+    },
+    "title": "Uniswap V3 Staker Interface",
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "DepositTransferred(uint256,address,address)": {
+        "notice": "Emitted when ownership of a deposit changes"
+      },
+      "IncentiveCreated(address,address,uint256,uint256,address,uint256)": {
+        "notice": "Event emitted when a liquidity mining incentive has been created"
+      },
+      "IncentiveEnded(bytes32,uint256)": {
+        "notice": "Event that can be emitted when a liquidity mining incentive has ended"
+      },
+      "RewardClaimed(address,uint256)": {
+        "notice": "Event emitted when a reward token has been claimed"
+      },
+      "TokenStaked(uint256,bytes32,uint128)": {
+        "notice": "Event emitted when a Uniswap V3 LP token has been staked"
+      },
+      "TokenUnstaked(uint256,bytes32)": {
+        "notice": "Event emitted when a Uniswap V3 LP token has been unstaked"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "claimReward(address,address,uint256)": {
+        "notice": "Transfers `amountRequested` of accrued `rewardToken` rewards from the contract to the recipient `to`"
+      },
+      "createIncentive((address,address,uint256,uint256,address),uint256)": {
+        "notice": "Creates a new liquidity mining incentive program"
+      },
+      "deposits(uint256)": {
+        "notice": "Returns information about a deposited NFT"
+      },
+      "endIncentive((address,address,uint256,uint256,address))": {
+        "notice": "Ends an incentive after the incentive end time has passed and all stakes have been withdrawn"
+      },
+      "factory()": {
+        "notice": "The Uniswap V3 Factory"
+      },
+      "getRewardInfo((address,address,uint256,uint256,address),uint256)": {
+        "notice": "Calculates the reward amount that will be received for the given stake"
+      },
+      "incentives(bytes32)": {
+        "notice": "Represents a staking incentive"
+      },
+      "maxIncentiveDuration()": {
+        "notice": "The max duration of an incentive in seconds"
+      },
+      "maxIncentiveStartLeadTime()": {
+        "notice": "The max amount of seconds into the future the incentive startTime can be set"
+      },
+      "multicall(bytes[])": {
+        "notice": "Call multiple functions in the current contract and return the data from all of them if they all succeed"
+      },
+      "nonfungiblePositionManager()": {
+        "notice": "The nonfungible position manager with which this staking contract is compatible"
+      },
+      "rewards(address,address)": {
+        "notice": "Returns amounts of reward tokens owed to a given address according to the last time all stakes were updated"
+      },
+      "stakeToken((address,address,uint256,uint256,address),uint256)": {
+        "notice": "Stakes a Uniswap V3 LP token"
+      },
+      "stakes(uint256,bytes32)": {
+        "notice": "Returns information about a staked liquidity NFT"
+      },
+      "transferDeposit(uint256,address)": {
+        "notice": "Transfers ownership of a deposit from the sender to the given recipient"
+      },
+      "unstakeToken((address,address,uint256,uint256,address),uint256)": {
+        "notice": "Unstakes a Uniswap V3 LP token"
+      },
+      "withdrawToken(uint256,address,bytes)": {
+        "notice": "Withdraws a Uniswap V3 LP token `tokenId` from this contract to the recipient `to`"
+      }
+    },
+    "notice": "Allows staking nonfungible liquidity tokens in exchange for reward tokens",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "claimReward(address,address,uint256)": "2f2d783d",
+      "createIncentive((address,address,uint256,uint256,address),uint256)": "5cc5e3d9",
+      "deposits(uint256)": "b02c43d0",
+      "endIncentive((address,address,uint256,uint256,address))": "b5ada6e4",
+      "factory()": "c45a0155",
+      "getRewardInfo((address,address,uint256,uint256,address),uint256)": "d953186e",
+      "incentives(bytes32)": "60777795",
+      "maxIncentiveDuration()": "3dc0714b",
+      "maxIncentiveStartLeadTime()": "01b75440",
+      "multicall(bytes[])": "ac9650d8",
+      "nonfungiblePositionManager()": "b44a2722",
+      "onERC721Received(address,address,uint256,bytes)": "150b7a02",
+      "rewards(address,address)": "e70b9e27",
+      "stakeToken((address,address,uint256,uint256,address),uint256)": "f2d2909b",
+      "stakes(uint256,bytes32)": "c36c1ea5",
+      "transferDeposit(uint256,address)": "26bfee04",
+      "unstakeToken((address,address,uint256,uint256,address),uint256)": "f549ab42",
+      "withdrawToken(uint256,address,bytes)": "3c423f0b"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "contractName": "NFTPositionInfo",
+  "sourceName": "contracts/depends/uniswap-v3-staker/libraries/NFTPositionInfo.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220aa93b4542b3ffe21c4dfb2dc0e51b7e643937bc2089d6274dca41223482c0c6264736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220aa93b4542b3ffe21c4dfb2dc0e51b7e643937bc2089d6274dca41223482c0c6264736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Encapsulates the logic for getting info about a NFT token ID",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "getPositionInfo(contract IUniswapV3Factory,contract INonfungiblePositionManager,uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

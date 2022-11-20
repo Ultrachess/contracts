@@ -1,0 +1,34 @@
+{
+  "contractName": "RewardMath",
+  "sourceName": "contracts/depends/uniswap-v3-staker/libraries/RewardMath.sol",
+  "abi": [],
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220ed9fa442af5b1444cd12d171014831595f7a5e97ac5e7b08179a5938b55ce02a64736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220ed9fa442af5b1444cd12d171014831595f7a5e97ac5e7b08179a5938b55ce02a64736f6c63430007060033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "title": "Math for computing rewards",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Allows computing rewards given some parameters of stakes and incentives",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": {
+      "creation": {
+        "codeDepositCost": "17200",
+        "executionCost": "97",
+        "totalCost": "17297"
+      },
+      "internal": {
+        "computeRewardAmount(uint256,uint160,uint256,uint256,uint128,uint160,uint160,uint256)": "infinite"
+      }
+    },
+    "methodIdentifiers": {}
+  }
+}

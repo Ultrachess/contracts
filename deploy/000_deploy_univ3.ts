@@ -286,9 +286,9 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     );
     const nftDescriptor = await NFTDescriptor.deploy();
 
-    // Deploy UniV3NFTDescriptor
+    // Deploy UniswapV3NFTDescriptor
     console.log(`Deploying ${UNISWAP_V3_NFT_DESCRIPTOR_CONTRACT}`);
-    const UniV3NftDescriptor = await ethers.getContractFactory(
+    const UniswapV3NftDescriptor = await ethers.getContractFactory(
       UNISWAP_V3_NFT_DESCRIPTOR_CONTRACT,
       {
         libraries: {
@@ -296,14 +296,14 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
         },
       }
     );
-    const uniswapV3NftDescriptor = await UniV3NftDescriptor.deploy(
+    const uniswapV3NftDescriptor = await UniswapV3NftDescriptor.deploy(
       wrappedNativeAddress,
       ethers.utils.formatBytes32String("W-ETH")
     );
     uniswapV3NftDescriptorAddress = uniswapV3NftDescriptor.address;
   }
 
-  // Deploy UniV3NFTManager
+  // Deploy UniswapV3NftManager
   if (uniswapV3NftManagerAddress) {
     console.log(
       `Using ${UNISWAP_V3_NFT_MANAGER_CONTRACT} at ${uniswapV3NftManagerAddress}`

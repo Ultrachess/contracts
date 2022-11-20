@@ -1,0 +1,70 @@
+{
+  "contractName": "IUniswapV3PoolDeployer",
+  "sourceName": "contracts/interfaces/uniswap-v3-core/IUniswapV3PoolDeployer.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "parameters",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "factory",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "token0",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "token1",
+          "type": "address"
+        },
+        {
+          "internalType": "uint24",
+          "name": "fee",
+          "type": "uint24"
+        },
+        {
+          "internalType": "int24",
+          "name": "tickSpacing",
+          "type": "int24"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "This is used to avoid having constructor arguments in the pool contract, which results in the init code hash of the pool being constant allowing the CREATE2 address of the pool to be cheaply computed on-chain",
+    "kind": "dev",
+    "methods": {
+      "parameters()": {
+        "details": "Called by the pool constructor to fetch the parameters of the pool Returns factory The factory address Returns token0 The first token of the pool by address sort order Returns token1 The second token of the pool by address sort order Returns fee The fee collected upon every swap in the pool, denominated in hundredths of a bip Returns tickSpacing The minimum number of ticks between initialized ticks"
+      }
+    },
+    "title": "An interface for a contract that is capable of deploying Uniswap V3 Pools",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "parameters()": {
+        "notice": "Get the parameters to be used in constructing the pool, set transiently during pool creation."
+      }
+    },
+    "notice": "A contract that constructs a pool must implement this to pass arguments to the pool",
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "parameters()": "89035730"
+    }
+  }
+}
