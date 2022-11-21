@@ -1,0 +1,11 @@
+# vscode uses rules in both .gitignore and .ignore. Since Git only recognizes
+# .gitignore, we can negate some rules in this file to bring them back in
+# the vscode search result.
+
+# Dependencies build system
+!/contracts/depends
+!/contracts/interfaces
+
+# Expose Vyper code
+!/tools/repos/curve
+!/tools/repos/curve-dao
