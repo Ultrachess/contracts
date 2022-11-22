@@ -177,11 +177,11 @@ describe("Curve Aave pool", function () {
   let contracts: any;
 
   // Test parameters
-  const DAI_BALANCE = ethers.constants.WeiPerEther.mul(10); // 10 DAI
-  const USDC_BALANCE = ethers.BigNumber.from("10000000"); // 10 USDC
-  const USDT_BALANCE = ethers.BigNumber.from("10000000"); // 10 USDT
-  const CURVE_AAVE_LP_BALANCE = ethers.BigNumber.from("30000000000000000000"); // 30 * 10^18
-  const DAI_FINAL_BALANCE = ethers.BigNumber.from("29995349048505105051"); // About 29.995 DAI
+  const DAI_BALANCE = ethers.utils.parseUnits("1000", 18);
+  const USDC_BALANCE = ethers.utils.parseUnits("1000", 6);
+  const USDT_BALANCE = ethers.utils.parseUnits("1000", 6);
+  const CURVE_AAVE_LP_BALANCE = ethers.BigNumber.from("3000213166068145661607"); // About 3,000 tokens
+  const DAI_FINAL_BALANCE = ethers.BigNumber.from("2997852697195385161615"); // About 2,998 DAI
 
   before(async function () {
     this.timeout(60 * 1000);
@@ -238,6 +238,10 @@ describe("Curve Aave pool", function () {
     await chai.expect(tx).to.not.be.reverted;
   });
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Test Curve Aave pool
+  //////////////////////////////////////////////////////////////////////////////
+
   it("should approve Curve Aave pool to transfer stablecoins", async function () {
     this.timeout(60 * 1000);
 
@@ -291,6 +295,10 @@ describe("Curve Aave pool", function () {
     );
     chai.expect(balance).to.eq(CURVE_AAVE_LP_BALANCE);
   });
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Test Curve DAO
+  //////////////////////////////////////////////////////////////////////////////
 
   it("should approve Curve gauge spending am3CRV tokens", async function () {
     this.timeout(60 * 1000);
@@ -363,6 +371,10 @@ describe("Curve Aave pool", function () {
     );
     chai.expect(balance).to.eq(CURVE_AAVE_LP_BALANCE);
   });
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Test Curve Aave pool
+  //////////////////////////////////////////////////////////////////////////////
 
   it("should remove liquidity from Curve Aave pool", async function () {
     this.timeout(60 * 1000);

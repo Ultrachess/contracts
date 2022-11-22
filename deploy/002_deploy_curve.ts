@@ -212,7 +212,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       ...opts,
       contract: CurveTokenV3Artifact,
       args: [
-        "Curve.fi amDAI/amUSDC/amUSDT", // name
+        "Funny Curve.fi amDAI/amUSDC/amUSDT", // name
         "am3CRV", // symbol
         deployer, // minter (will be transfered to Curve Aave pool in setup)
         deployer, // initial token holder
@@ -424,92 +424,150 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
 
   //////////////////////////////////////////////////////////////////////////////
   //
+  // Seed the stablecoins with some funds
+  //
+  //////////////////////////////////////////////////////////////////////////////
+
+  // Initial stablecoin amounts for Curve Aave MATIC pool. Values retrieved
+  // from https://curve.fi/#/polygon/pools/aave/deposit on 2022-11-22.
+  const INITIAL_DAI = ethers.utils.parseUnits("5687092", 18); // 5,687,092 DAI
+  const INITIAL_USDC = ethers.utils.parseUnits("6255520", 6); // 6,255,520 USDC
+  const INITIAL_USDT = ethers.utils.parseUnits("19583657", 6); // 19,583,657 USDT
+  const INITIAL_CURVE_AAVE_LP_TOKENS = ethers.BigNumber.from(
+    "31522774262425669316161975"
+  ); // About 31,522,774 LP tokens
+
+  //
+  // Mint DAI
+  //
+
+  console.log("Minting DAI");
+
+  const daiBalance = await read(
+    DAI_TOKEN_CONTRACT,
+    { from: deployer },
+    "balanceOf",
+    deployer
+  );
+  if (daiBalance.lt(INITIAL_DAI)) {
+    await execute(
+      DAI_TOKEN_CONTRACT,
+      {
+        from: deployer,
+        log: true,
+      },
+      "mint",
+      deployer,
+      INITIAL_DAI.sub(daiBalance)
+    );
+  }
+
+  //
+  // Mint USDC
+  //
+
+  console.log("Minting USDC");
+
+  const usdcBalance = await read(
+    USDC_TOKEN_CONTRACT,
+    { from: deployer },
+    "balanceOf",
+    deployer
+  );
+  if (usdcBalance.lt(INITIAL_USDC)) {
+    await execute(
+      USDC_TOKEN_CONTRACT,
+      {
+        from: deployer,
+        log: true,
+      },
+      "mint",
+      deployer,
+      INITIAL_USDC.sub(usdcBalance)
+    );
+  }
+
+  //
+  // Mint USDT
+  //
+
+  console.log("Minting USDT");
+
+  const usdtBalance = await read(
+    USDT_TOKEN_CONTRACT,
+    { from: deployer },
+    "balanceOf",
+    deployer
+  );
+  if (usdtBalance.lt(INITIAL_USDT)) {
+    await execute(
+      USDT_TOKEN_CONTRACT,
+      {
+        from: deployer,
+        log: true,
+      },
+      "mint",
+      deployer,
+      INITIAL_USDT.sub(usdtBalance)
+    );
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  //
   // Approve Curve Aave pool spending stablecoins
   //
   //////////////////////////////////////////////////////////////////////////////
 
-  // Initial stablecoin amounts for Aave pool
-  const INITIAL_DAI = ethers.BigNumber.from("1000000000000000000000"); // 1000 DAI
-  const INITIAL_USDC = ethers.BigNumber.from("1000000000"); // 1000 USDC
-  const INITIAL_USDT = ethers.BigNumber.from("1000000000"); // 1000 USDT
-
   //
-  // DAI
+  // Approve DAI
   //
 
   console.log("Approving DAI transfer");
 
-  if (
-    (await read(
-      DAI_TOKEN_CONTRACT,
-      { from: deployer },
-      "allowance",
-      deployer,
-      curveAavePoolAddress
-    )) < INITIAL_DAI
-  )
-    await execute(
-      DAI_TOKEN_CONTRACT,
-      {
-        from: deployer,
-        log: true,
-      },
-      "approve",
-      curveAavePoolAddress,
-      INITIAL_DAI
-    );
+  await execute(
+    DAI_TOKEN_CONTRACT,
+    {
+      from: deployer,
+      log: true,
+    },
+    "approve",
+    curveAavePoolAddress,
+    INITIAL_DAI
+  );
 
   //
-  // USDC
+  // Approve USDC
   //
 
   console.log("Approving USDC transfer");
 
-  if (
-    (await read(
-      USDC_TOKEN_CONTRACT,
-      { from: deployer },
-      "allowance",
-      deployer,
-      curveAavePoolAddress
-    )) < INITIAL_USDC
-  )
-    await execute(
-      USDC_TOKEN_CONTRACT,
-      {
-        from: deployer,
-        log: true,
-      },
-      "approve",
-      curveAavePoolAddress,
-      INITIAL_USDC
-    );
+  await execute(
+    USDC_TOKEN_CONTRACT,
+    {
+      from: deployer,
+      log: true,
+    },
+    "approve",
+    curveAavePoolAddress,
+    INITIAL_USDC
+  );
 
   //
-  // USDT
+  // Appove USDT
   //
 
   console.log("Approving USDT transfer");
 
-  if (
-    (await read(
-      USDT_TOKEN_CONTRACT,
-      { from: deployer },
-      "allowance",
-      deployer,
-      curveAavePoolAddress
-    )) < INITIAL_USDT
-  )
-    await execute(
-      USDT_TOKEN_CONTRACT,
-      {
-        from: deployer,
-        log: true,
-      },
-      "approve",
-      curveAavePoolAddress,
-      INITIAL_USDT
-    );
+  await execute(
+    USDT_TOKEN_CONTRACT,
+    {
+      from: deployer,
+      log: true,
+    },
+    "approve",
+    curveAavePoolAddress,
+    INITIAL_USDT
+  );
 
   //////////////////////////////////////////////////////////////////////////////
   //
@@ -523,7 +581,6 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     CURVE_AAVE_POOL_CONTRACT,
     {
       from: deployer,
-      gasLimit: 2000000, // 2M GWei
       log: true,
     },
     "add_liquidity(uint256[3],uint256,bool)",
@@ -539,7 +596,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   //////////////////////////////////////////////////////////////////////////////
 
   //
-  // First check token balance
+  // First check token balance and allowance
   //
 
   const curveAaveLpBalance = await read(
@@ -549,49 +606,54 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     deployer
   );
 
-  if (curveAaveLpBalance.gt(0)) {
-    //
-    // Approve Curve gauge spending LP tokens
-    //
+  if (!curveAaveLpBalance.eq(INITIAL_CURVE_AAVE_LP_TOKENS)) {
+    console.error("!!! Unexpected Curve Aave LP token balance");
+    console.error("!!! Expected: ", INITIAL_CURVE_AAVE_LP_TOKENS.toString());
+    console.error("!!! Actual: ", curveAaveLpBalance.toString());
+  }
 
-    const curveAaveLpAllowance = await read(
-      CURVE_AAVE_LP_TOKEN_CONTRACT,
-      { from: deployer },
-      "allowance",
-      deployer,
-      curveAaveGaugeAddress
-    );
+  const curveAaveLpAllowance = await read(
+    CURVE_AAVE_LP_TOKEN_CONTRACT,
+    { from: deployer },
+    "allowance",
+    deployer,
+    curveAaveGaugeAddress
+  );
 
-    if (curveAaveLpAllowance.lt(curveAaveLpBalance)) {
-      console.log("Approving am3Crv spending by Curve gauge");
+  //
+  // Approve Curve gauge spending LP tokens
+  //
 
-      await execute(
-        CURVE_AAVE_LP_TOKEN_CONTRACT,
-        {
-          from: deployer,
-          log: true,
-        },
-        "approve",
-        curveAaveGaugeAddress,
-        curveAaveLpBalance.sub(curveAaveLpAllowance)
-      );
-    }
-
-    console.log("Staking funds in Curve gauge");
+  if (curveAaveLpAllowance.lt(curveAaveLpBalance)) {
+    console.log("Approving am3Crv spending by Curve gauge");
 
     await execute(
-      CURVE_AAVE_GAUGE_CONTRACT,
+      CURVE_AAVE_LP_TOKEN_CONTRACT,
       {
         from: deployer,
-        gasLimit: 2000000, // 2M GWei
         log: true,
       },
-      "deposit(uint256)",
-      curveAaveLpBalance
+      "approve",
+      curveAaveGaugeAddress,
+      curveAaveLpBalance.sub(curveAaveLpAllowance)
     );
-  } else {
-    console.log("No funds to stake in Curve Aave gauge");
   }
+
+  //
+  // Stake LP tokens with the Curve gauge
+  //
+
+  console.log("Staking funds in Curve gauge");
+
+  await execute(
+    CURVE_AAVE_GAUGE_CONTRACT,
+    {
+      from: deployer,
+      log: true,
+    },
+    "deposit(uint256)",
+    curveAaveLpBalance
+  );
 
   //////////////////////////////////////////////////////////////////////////////
   // Record addresses
