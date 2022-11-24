@@ -155,6 +155,7 @@ function writeAddress(
   contract: string,
   address: string
 ): void {
+  console.log(`Deployed ${contract} to ${address}`);
   const addressFile = `${__dirname}/../deployments/${network}/${contract}.json`;
   fs.writeFileSync(addressFile, JSON.stringify({ address }, undefined, 2));
 }

@@ -52,7 +52,10 @@ const AUSDT_VARIABLE_DEBT_TOKEN_CONTRACT = "AUSDTVariableDebt";
 // Contract ABIs
 import AavePoolAbi from "../src/abi/contracts/depends/aave-v2/protocol/lendingpool/LendingPool.sol/LendingPool.json";
 
+//
 // Address book
+//
+
 interface AddressBook {
   daiToken: string;
   usdcToken: string;
@@ -75,7 +78,12 @@ interface AddressBook {
 }
 let addressBook: AddressBook | undefined;
 
+//
 // Utility functions
+//
+// TODO: Move to utils
+//
+
 function loadAddresses(network: string): void {
   try {
     addressBook = JSON.parse(
@@ -85,6 +93,7 @@ function loadAddresses(network: string): void {
     );
   } catch (e) {}
 }
+
 function loadDeployment(network: string, contract: string): string | undefined {
   try {
     const deployment = JSON.parse(
@@ -97,6 +106,7 @@ function loadDeployment(network: string, contract: string): string | undefined {
 
   return; // undefined
 }
+
 const getContractAddress = async (
   contractSymbol: string,
   contractName: string,
@@ -112,18 +122,21 @@ const getContractAddress = async (
 
   return; // undefined
 };
+
 function writeAddress(
   network: string,
   contract: string,
   address: string
 ): void {
+  console.log(`Deployed ${contract} to ${address}`);
   const addressFile = `${__dirname}/../deployments/${network}/${contract}.json`;
   fs.writeFileSync(addressFile, JSON.stringify({ address }, undefined, 2));
 }
 
-/**
- * Steps to deploy the Aave environment
- */
+//
+// Deploy the Aave environment
+//
+
 const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   const { deployments, ethers, getNamedAccounts } = hardhat_re;
 

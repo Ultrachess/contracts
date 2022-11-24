@@ -36,7 +36,10 @@ interface AddressBook {
 }
 let addressBook: AddressBook | undefined;
 
+//
 // Utility functions
+//
+
 function loadAddresses(network: string): void {
   try {
     addressBook = JSON.parse(
@@ -46,6 +49,7 @@ function loadAddresses(network: string): void {
     );
   } catch (e) {}
 }
+
 function loadDeployment(network: string, contract: string): string | undefined {
   try {
     const deployment = JSON.parse(
@@ -59,6 +63,7 @@ function loadDeployment(network: string, contract: string): string | undefined {
   // Address not found
   return;
 }
+
 function loadCtsiDeployment(
   network: string,
   contract: string
@@ -77,6 +82,7 @@ function loadCtsiDeployment(
   // Address not found
   return;
 }
+
 const getCtsiAddress = (network: string): string | undefined => {
   // Look up address in address book
   if (addressBook && addressBook.ctsi) return addressBook.ctsi;
@@ -92,6 +98,7 @@ const getCtsiAddress = (network: string): string | undefined => {
   // Address not found
   return;
 };
+
 const getCtsiFaucetAddress = (network: string): string | undefined => {
   // Look up address in address book
   if (addressBook && addressBook.ctsiFaucet) return addressBook.ctsiFaucet;
@@ -110,6 +117,7 @@ const getCtsiFaucetAddress = (network: string): string | undefined => {
   // Address not found
   return;
 };
+
 const getContractAddress = (
   contractSymbol: string,
   contractName: string,
@@ -126,14 +134,20 @@ const getContractAddress = (
   // Address not found
   return;
 };
+
 function writeAddress(
   network: string,
   contract: string,
   address: string
 ): void {
+  console.log(`Deployed ${contract} to ${address}`);
   const addressFile = `${__dirname}/../deployments/${network}/${contract}.json`;
   fs.writeFileSync(addressFile, JSON.stringify({ address }, undefined, 2));
 }
+
+//
+// Deploy the Uniswap V3 environment
+//
 
 const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   const { deployments, ethers, getNamedAccounts } = hardhat_re;
@@ -153,6 +167,11 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   // Get the network name
   const network = hardhat_re.network.name;
   const chainId = await hardhat_re.getChainId();
+
+  // Log the wallet addresses
+  const namedAccounts = await hardhat_re.getNamedAccounts();
+  console.log(`Deployer: ${namedAccounts.deployer}`);
+  console.log(`Beneficiary: ${namedAccounts.beneficiary}`);
 
   // Get the contract addresses
   loadAddresses(network);
@@ -333,8 +352,8 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       args: [
         uniswapV3FactoryAddress,
         uniswapV3NftManagerAddress,
-        60, // _maxIncentiveStartLeadTime (TODO)
-        60, // _maxIncentiveDuration (TODO)
+        0, // maxIncentiveStartLeadTime
+        ethers.constants.MaxUint256, // maxIncentiveDuration
       ],
     });
     uniswapV3StakerAddress = tx.address;

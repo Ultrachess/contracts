@@ -34,25 +34,36 @@ import NonfungiblePositionManagerAbi from "../src/abi/contracts/depends/uniswap-
 import UniV3PoolFactoryAbi from "../src/abi/contracts/src/UniV3PoolFactory.sol/UniV3PoolFactory.json";
 import WETHAbi from "../src/abi/contracts/test/token/WETH.sol/WETH.json";
 
-// TODO: Move to constants
-const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+//
+// Constants
+//
+// TODO: Move to utils
+//
+
 const enum FeeAmount {
   LOW = 500, // 0.05%
   MEDIUM = 3_000, // 0.3%
   HIGH = 10_000, // 1%
 }
+
 const TICK_SPACINGS: { [amount in FeeAmount]: number } = {
   [FeeAmount.LOW]: 10,
   [FeeAmount.MEDIUM]: 60,
   [FeeAmount.HIGH]: 200,
 };
 
+//
 // Test parameters
+//
+
 const NATIVE_AMOUNT = ethers.constants.WeiPerEther; // 1 token
 const CTSI_AMOUNT = ethers.constants.WeiPerEther; // 1 CTSI
 const LIQUIDITY_AMOUNT = ethers.constants.WeiPerEther; // Deposited 1:1
 
+//
 // Address book
+//
+
 interface AddressBook {
   wrappedNative: string;
   ctsi: string;
@@ -63,7 +74,20 @@ interface AddressBook {
 }
 let addressBook: AddressBook | undefined;
 
+//
+// Configuration
+//
+// TODO: Move to utils
+//
+
+bn.config({ EXPONENTIAL_AT: 999999, DECIMAL_PLACES: 40 });
+
+//
 // Utility functions
+//
+// TODO: Move to utils
+//
+
 function loadAddresses(network: string): void {
   try {
     addressBook = JSON.parse(
@@ -73,6 +97,7 @@ function loadAddresses(network: string): void {
     );
   } catch (e) {}
 }
+
 function loadDeployment(network: string, contract: string): string | undefined {
   try {
     const deployment = JSON.parse(
@@ -85,6 +110,7 @@ function loadDeployment(network: string, contract: string): string | undefined {
 
   return; // undefined
 }
+
 function loadCtsiDeployment(
   network: string,
   contract: string
@@ -102,6 +128,7 @@ function loadCtsiDeployment(
 
   return; // undefined
 }
+
 const getWrappedNativeAddress = async (
   network: string
 ): Promise<string | undefined> => {
@@ -119,6 +146,7 @@ const getWrappedNativeAddress = async (
 
   return; // undefined
 };
+
 const getCtsiAddress = async (network: string): Promise<string | undefined> => {
   // Look up address in address book
   if (addressBook && addressBook.ctsi) return addressBook.ctsi;
@@ -137,6 +165,7 @@ const getCtsiAddress = async (network: string): Promise<string | undefined> => {
 
   return; // undefined
 };
+
 const getCtsiFaucetAddress = async (
   network: string
 ): Promise<string | undefined> => {
@@ -163,6 +192,7 @@ const getCtsiFaucetAddress = async (
 
   return; // undefined
 };
+
 const getUniswapV3NftManagerAddress = async (
   network: string
 ): Promise<string | undefined> => {
@@ -186,6 +216,7 @@ const getUniswapV3NftManagerAddress = async (
 
   return; // undefined
 };
+
 const getCtsiPoolFactoryAddress = async (
   network: string
 ): Promise<string | undefined> => {
@@ -206,6 +237,7 @@ const getCtsiPoolFactoryAddress = async (
 
   return; // undefined
 };
+
 const getCtsiNativePoolAddress = async (
   ctsiPoolFactoryContract: ethers.Contract
 ): Promise<string | undefined> => {
@@ -216,13 +248,15 @@ const getCtsiNativePoolAddress = async (
   // Read address from the chain
   return await ctsiPoolFactoryContract.uniswapV3Pool();
 };
+
 function getMinTick(tickSpacing: number): number {
   return Math.ceil(-887272 / tickSpacing) * tickSpacing;
 }
+
 function getMaxTick(tickSpacing: number): number {
   return Math.floor(887272 / tickSpacing) * tickSpacing;
 }
-bn.config({ EXPONENTIAL_AT: 999999, DECIMAL_PLACES: 40 });
+
 // Returns the sqrt price as a 64x96
 function encodePriceSqrt(reserve1: number, reserve0: number): ethers.BigNumber {
   return ethers.BigNumber.from(
@@ -234,6 +268,7 @@ function encodePriceSqrt(reserve1: number, reserve0: number): ethers.BigNumber {
       .toString()
   );
 }
+
 function extractJSONFromURI(uri: string): {
   name: string;
   description: string;
@@ -244,7 +279,10 @@ function extractJSONFromURI(uri: string): {
   return JSON.parse(decodedJSON);
 }
 
+//
 // Fixture setup
+//
+
 const setupTest = hardhat.deployments.createFixture(
   async ({ deployments, ethers }) => {
     // Ensure we start from a fresh deployment
@@ -313,10 +351,14 @@ const setupTest = hardhat.deployments.createFixture(
   }
 );
 
+//
+// Tests
+//
+
 describe("Uniswap V3 CTSI pool", () => {
   let beneficiaryAddress: string | undefined;
   let contracts: { [name: string]: ethers.Contract } = {};
-  let nftTokenId: number | undefined; // Set when NFT is minted
+  let nftTokenId: number | undefined; // Set when LP NFT is minted
   let token0: string | undefined;
   let token1: string | undefined;
   let amount0: ethers.BigNumber | undefined;
@@ -380,7 +422,7 @@ describe("Uniswap V3 CTSI pool", () => {
   });
 
   //////////////////////////////////////////////////////////////////////////////
-  // Test Uniswap V3 NFT
+  // Test Uniswap V3 LP NFT
   //////////////////////////////////////////////////////////////////////////////
 
   it("should initialize liquidity pool", async function () {
@@ -451,7 +493,7 @@ describe("Uniswap V3 CTSI pool", () => {
       );
   });
 
-  it("should mint an NFT", async function () {
+  it("should mint an LP NFT", async function () {
     this.timeout(60 * 1000);
 
     const { uniswapV3NftManagerContract } = contracts;
@@ -474,14 +516,14 @@ describe("Uniswap V3 CTSI pool", () => {
       gasLimit: 2_000_000, // 2M GWei
     });
 
-    // Get NFT token ID
+    // Get LP NFT token ID
     const rc = await (await tx).wait();
     const event = rc.events.find(
       (event) => event.event === "IncreaseLiquidity"
     );
     const [tokenId] = event.args;
     nftTokenId = tokenId.toNumber();
-    console.log("    NFT token ID:", nftTokenId);
+    console.log("    LP NFT token ID:", nftTokenId);
 
     await chai
       .expect(tx)
@@ -495,10 +537,10 @@ describe("Uniswap V3 CTSI pool", () => {
     await chai
       .expect(tx)
       .to.emit(uniswapV3NftManagerContract, "Transfer")
-      .withArgs(ZERO_ADDRESS, beneficiaryAddress, nftTokenId);
+      .withArgs(ethers.constants.AddressZero, beneficiaryAddress, nftTokenId);
   });
 
-  it("should check total NFT balance", async function () {
+  it("should check total LP NFT balance", async function () {
     this.timeout(60 * 1000);
 
     const { uniswapV3NftManagerContract } = contracts;
@@ -509,7 +551,7 @@ describe("Uniswap V3 CTSI pool", () => {
     chai.expect(nftBalance.toNumber()).to.be.greaterThanOrEqual(1);
   });
 
-  it("should check NFT position after minting", async function () {
+  it("should check LP NFT position after minting", async function () {
     this.timeout(60 * 1000);
 
     const { uniswapV3NftManagerContract } = contracts;
@@ -531,7 +573,7 @@ describe("Uniswap V3 CTSI pool", () => {
     ] = position;
 
     chai.expect(nonce).to.eq(0);
-    chai.expect(operator).to.eq(ZERO_ADDRESS); // TODO: Why is this address(0)?
+    chai.expect(operator).to.eq(ethers.constants.AddressZero); // TODO: Why is this address(0)?
     chai.expect(token0).to.eq(token0);
     chai.expect(token1).to.eq(token1);
     chai.expect(fee).to.eq(FeeAmount.HIGH);
@@ -544,7 +586,7 @@ describe("Uniswap V3 CTSI pool", () => {
     chai.expect(tokensOwed1).to.eq(0);
   });
 
-  it("should check NFT URI", async function () {
+  it("should check LP NFT URI", async function () {
     this.timeout(60 * 1000);
 
     const { uniswapV3NftManagerContract } = contracts;
@@ -560,11 +602,11 @@ describe("Uniswap V3 CTSI pool", () => {
     chai.expect(content).to.haveOwnProperty("description").is.a("string");
     chai.expect(content).to.haveOwnProperty("image").is.a("string");
 
-    console.log(`    NFT token name: ${content.name}`);
-    console.log(`    NFT token image: ${content.image}`);
+    console.log(`    LP NFT token name: ${content.name}`);
+    // console.log(`    LP NFT token image: ${content.image}`);
   });
 
-  it("should withdraw liquidity from the NFT", async function () {
+  it("should withdraw liquidity from the LP NFT", async function () {
     this.timeout(60 * 1000);
 
     const { ctsiNativePoolContract, uniswapV3NftManagerContract } = contracts;
@@ -600,7 +642,7 @@ describe("Uniswap V3 CTSI pool", () => {
     );
   });
 
-  it("should check NFT position after decreasing liquidity", async function () {
+  it("should check LP NFT position after decreasing liquidity", async function () {
     this.timeout(60 * 1000);
 
     const { uniswapV3NftManagerContract } = contracts;
@@ -622,7 +664,7 @@ describe("Uniswap V3 CTSI pool", () => {
     ] = position;
 
     chai.expect(nonce).to.eq(0);
-    chai.expect(operator).to.eq(ZERO_ADDRESS); // TODO: Why is this address(0)?
+    chai.expect(operator).to.eq(ethers.constants.AddressZero); // TODO: Why is this address(0)?
     chai.expect(token0).to.eq(token0);
     chai.expect(token1).to.eq(token1);
     chai.expect(fee).to.eq(FeeAmount.HIGH);
@@ -635,7 +677,7 @@ describe("Uniswap V3 CTSI pool", () => {
     chai.expect(tokensOwed1).to.eq(amount1.sub(1));
   });
 
-  it("should collect tokens from the NFT", async function () {
+  it("should collect tokens from the LP NFT", async function () {
     this.timeout(60 * 1000);
 
     const { ctsiNativePoolContract, uniswapV3NftManagerContract } = contracts;
@@ -669,7 +711,7 @@ describe("Uniswap V3 CTSI pool", () => {
     );
   });
 
-  it("should check NFT position after collecting tokens", async function () {
+  it("should check LP NFT position after collecting tokens", async function () {
     this.timeout(60 * 1000);
 
     const { uniswapV3NftManagerContract } = contracts;
@@ -691,7 +733,7 @@ describe("Uniswap V3 CTSI pool", () => {
     ] = position;
 
     chai.expect(nonce).to.eq(0);
-    chai.expect(operator).to.eq(ZERO_ADDRESS); // TODO: Why is this address(0)?
+    chai.expect(operator).to.eq(ethers.constants.AddressZero); // TODO: Why is this address(0)?
     chai.expect(token0).to.eq(token0);
     chai.expect(token1).to.eq(token1);
     chai.expect(fee).to.eq(FeeAmount.HIGH);
@@ -704,7 +746,7 @@ describe("Uniswap V3 CTSI pool", () => {
     chai.expect(tokensOwed1).to.eq(0);
   });
 
-  it("should burn the NFT", async function () {
+  it("should burn the LP NFT", async function () {
     this.timeout(60 * 1000);
 
     const { uniswapV3NftManagerContract } = contracts;
@@ -715,6 +757,6 @@ describe("Uniswap V3 CTSI pool", () => {
     await chai
       .expect(tx)
       .to.emit(uniswapV3NftManagerContract, "Transfer")
-      .withArgs(beneficiaryAddress, ZERO_ADDRESS, nftTokenId);
+      .withArgs(beneficiaryAddress, ethers.constants.AddressZero, nftTokenId);
   });
 });
