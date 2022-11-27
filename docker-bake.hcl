@@ -2,11 +2,11 @@
 target "docker-metadata-action" {}
 
 group "default" {
-  targets = ["contract-deployer"]
+  targets = ["ultrachess-deployer"]
 }
 
-target "contract-deployer" {
+target "ultrachess-deployer" {
   inherits = ["docker-metadata-action"]
   context  = "."
-  target   = "contract-deployer"
+  target   = "ultrachess-deployer"
 }

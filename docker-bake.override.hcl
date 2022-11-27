@@ -7,6 +7,6 @@ variable "DOCKER_ORGANIZATION" {
   default = "ultrachess"
 }
 
-target "contract-deployer" {
-  tags = ["${DOCKER_ORGANIZATION}/contract-deployer:${TAG}"]
+target "ultrachess-deployer" {
+  tags = ["${DOCKER_ORGANIZATION}/ultrachess-deployer:${TAG}"]
 }

@@ -1,6 +1,6 @@
 # syntax=docker.io/docker/dockerfile:1.4
 # Need to use Debian-based image because solc >= 0.6 requires modern glibc instead of musl
-FROM node:18.10.0-bullseye-slim as base
+FROM node:18.12.1-bullseye-slim as base
 
 # This stage installs system dependencies for building the node projects
 FROM base as builder
@@ -23,19 +23,27 @@ EOF
 
 
 # This stage copies the project and build it
-FROM builder as contract-builder
+FROM builder as ultrachess-builder
 
-# Build
-COPY . /app/contracts
+# Install yarn dependencies
 WORKDIR /app/contracts
+COPY package.json yarn.lock /app/contracts
 RUN yarn install --non-interactive
+
+# Build depends
+COPY tools /app/contracts/tools
+COPY .prettierrc /app/contracts
+RUN yarn depends
+
+# Build contracts
+COPY . /app/contracts
 RUN yarn package
 
 # This stage is runtime image for rollups (hardhat)
-FROM base as contract-deployer
+FROM base as ultrachess-deployer
 
 # Copy yarn build
-COPY --from=contract-builder /app /app
+COPY --from=ultrachess-builder /app /app
 WORKDIR /app/contracts
 
 ENTRYPOINT ["npx", "hardhat"]
