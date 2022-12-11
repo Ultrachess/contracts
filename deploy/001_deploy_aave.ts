@@ -379,6 +379,9 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     aavePoolAddress = aavePool.address;
   }
 
+  // Mine the next block to commit contractfactory deployment
+  await ethers.provider.send("evm_mine", []);
+
   //////////////////////////////////////////////////////////////////////////////
   //
   // Deploy Aave tokens
