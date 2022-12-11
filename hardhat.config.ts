@@ -15,17 +15,9 @@ import "hardhat-gas-reporter";
 
 import { HardhatUserConfig } from "hardhat/config";
 import { HttpNetworkUserConfig } from "hardhat/types";
-import path from "path";
 
 // read MNEMONIC from env variable
 const mnemonic = process.env.MNEMONIC;
-
-const ppath = (packageName: string, pathname: string) => {
-  return path.join(
-    path.dirname(require.resolve(`${packageName}/package.json`)),
-    pathname
-  );
-};
 
 const infuraNetwork = (
   network: string,
@@ -135,38 +127,8 @@ const config: HardhatUserConfig = {
     apiKey: process.env.ETHERSCAN_API_KEY,
   },
   external: {
-    contracts: [
-      {
-        artifacts: ppath("@cartesi/util", "/export/artifacts"),
-        deploy: ppath("@cartesi/util", "/dist/deploy"),
-      },
-      {
-        artifacts: ppath("@cartesi/token", "/export/artifacts"),
-        deploy: ppath("@cartesi/token", "/dist/deploy"),
-      },
-    ],
     deployments: {
       localhost: ["deployments/localhost"],
-      mainnet: [
-        ppath("@cartesi/util", "/deployments/mainnet"),
-        ppath("@cartesi/token", "/deployments/mainnet"),
-      ],
-      goerli: [
-        ppath("@cartesi/util", "/deployments/goerli"),
-        ppath("@cartesi/token", "/deployments/goerli"),
-      ],
-      polygon_mumbai: [
-        ppath("@cartesi/util", "/deployments/polygon_mumbai"),
-        ppath("@cartesi/token", "/deployments/polygon_mumbai"),
-      ],
-      arbitrum_goerli: [
-        ppath("@cartesi/util", "/deployments/arbitrum_goerli"),
-        ppath("@cartesi/token", "/deployments/arbitrum_goerli"),
-      ],
-      optimism_goerli: [
-        ppath("@cartesi/util", "/deployments/optimism_goerli"),
-        ppath("@cartesi/token", "/deployments/optimism_goerli"),
-      ],
     },
   },
   namedAccounts: {

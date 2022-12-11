@@ -56,8 +56,6 @@
     "test": "hardhat test"
   },
   "devDependencies": {
-    "@cartesi/token": "^1.7.0",
-    "@cartesi/util": "^5.0.0",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bytes": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",

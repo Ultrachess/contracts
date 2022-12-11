@@ -13,8 +13,6 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction, DeployOptions } from "hardhat-deploy/types";
 
 // Contract names
-const CTSI_CONTRACT = "CartesiToken";
-const CTSI_FAUCET_CONTRACT = "SimpleFaucet";
 const UNISWAP_V3_FACTORY_CONTRACT = "UniswapV3Factory";
 const UNISWAP_V3_NFT_DESCRIPTOR_CONTRACT = "NonfungibleTokenPositionDescriptor";
 const UNISWAP_V3_NFT_MANAGER_CONTRACT = "NonfungiblePositionManager";
@@ -27,8 +25,6 @@ const NFT_DESCRIPTOR_LIBRARY = "NFTDescriptor";
 // Address book
 interface AddressBook {
   wrappedNative: string;
-  ctsi: string;
-  ctsiFaucet: string;
   uniswapV3Factory: string;
   uniswapV3NftDescriptor: string;
   uniswapV3NftManager: string;
@@ -63,60 +59,6 @@ function loadDeployment(network: string, contract: string): string | undefined {
   // Address not found
   return;
 }
-
-function loadCtsiDeployment(
-  network: string,
-  contract: string
-): string | undefined {
-  try {
-    const deployment = JSON.parse(
-      fs
-        .readFileSync(
-          `${__dirname}/../node_modules/@cartesi/token/deployments/${network}/${contract}.json`
-        )
-        .toString()
-    );
-    if (deployment.address) return deployment.address;
-  } catch (e) {}
-
-  // Address not found
-  return;
-}
-
-const getCtsiAddress = (network: string): string | undefined => {
-  // Look up address in address book
-  if (addressBook && addressBook.ctsi) return addressBook.ctsi;
-
-  // Look up address in NPM package
-  const ctsiDeploymentAddress = loadCtsiDeployment(network, CTSI_CONTRACT);
-  if (ctsiDeploymentAddress) return ctsiDeploymentAddress;
-
-  // Look up address if the contract has a known deployment
-  const deploymentAddress = loadDeployment(network, CTSI_CONTRACT);
-  if (deploymentAddress) return deploymentAddress;
-
-  // Address not found
-  return;
-};
-
-const getCtsiFaucetAddress = (network: string): string | undefined => {
-  // Look up address in address book
-  if (addressBook && addressBook.ctsiFaucet) return addressBook.ctsiFaucet;
-
-  // Look up address in NPM package
-  const ctsiDeploymentAddress = loadCtsiDeployment(
-    network,
-    CTSI_FAUCET_CONTRACT
-  );
-  if (ctsiDeploymentAddress) return ctsiDeploymentAddress;
-
-  // Look up address if the contract has a known deployment
-  const deploymentAddress = loadDeployment(network, CTSI_FAUCET_CONTRACT);
-  if (deploymentAddress) return deploymentAddress;
-
-  // Address not found
-  return;
-};
 
 const getContractAddress = (
   contractSymbol: string,
@@ -159,11 +101,6 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     log: true,
   };
 
-  // Constants
-  const CTSI_FAUCET_AMOUNT = ethers.BigNumber.from("100000").mul(
-    ethers.constants.WeiPerEther
-  ); // 100k CTSI
-
   // Get the network name
   const network = hardhat_re.network.name;
   const chainId = await hardhat_re.getChainId();
@@ -180,8 +117,6 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     WETH_CONTRACT,
     network
   );
-  let ctsiAddress = getCtsiAddress(network);
-  let ctsiFaucetAddress = getCtsiFaucetAddress(network);
   let uniswapV3FactoryAddress = getContractAddress(
     "uniswapV3Factory",
     UNISWAP_V3_FACTORY_CONTRACT,
@@ -210,66 +145,6 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     console.log(`Deploying ${WETH_CONTRACT}`);
     const tx = await deployments.deploy(WETH_CONTRACT, opts);
     wrappedNativeAddress = tx.address;
-  }
-
-  // Deploy CTSI
-  if (ctsiAddress) {
-    console.log(`Using ${CTSI_CONTRACT} at ${ctsiAddress}`);
-  } else {
-    console.log(`Deploying ${CTSI_CONTRACT}`);
-    const tx = await deployments.deploy(CTSI_CONTRACT, {
-      ...opts,
-      args: [deployer],
-    });
-    ctsiAddress = tx.address;
-  }
-
-  // Deploy CTSI faucet
-  if (ctsiFaucetAddress) {
-    console.log(`Using ${CTSI_FAUCET_CONTRACT} at ${ctsiFaucetAddress}`);
-  } else {
-    console.log(`Deploying ${CTSI_FAUCET_CONTRACT}`);
-    const tx = await deployments.deploy(CTSI_FAUCET_CONTRACT, {
-      ...opts,
-      args: [ctsiAddress],
-    });
-    ctsiFaucetAddress = tx.address;
-  }
-
-  // Add faucet as CTSI minter
-  const faucetIsMinter = await deployments.read(
-    CTSI_CONTRACT,
-    { from: deployer },
-    "isMinter",
-    ctsiFaucetAddress
-  );
-  if (!faucetIsMinter) {
-    console.log(`Adding ${CTSI_FAUCET_CONTRACT} as CTSI minter`);
-    await deployments.execute(
-      CTSI_CONTRACT,
-      { from: deployer, log: true },
-      "addMinter",
-      ctsiFaucetAddress
-    );
-  }
-
-  // Add CTSI to the faucet
-  const faucetBalance = await deployments.read(
-    CTSI_CONTRACT,
-    { from: deployer },
-    "balanceOf",
-    ctsiFaucetAddress
-  );
-  const deficit = CTSI_FAUCET_AMOUNT.sub(faucetBalance);
-  if (deficit.gt(0)) {
-    console.log(`Adding ${deficit} CTSI to ${CTSI_FAUCET_CONTRACT}`);
-    await deployments.execute(
-      CTSI_CONTRACT,
-      { from: deployer, log: true },
-      "transfer",
-      ctsiFaucetAddress,
-      deficit
-    );
   }
 
   // Deploy uniswapV3Factory
