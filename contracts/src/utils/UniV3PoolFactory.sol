@@ -8,8 +8,8 @@
 
 pragma solidity 0.8.16;
 
-import {IUniswapV3Factory} from "../interfaces/uniswap-v3-core/IUniswapV3Factory.sol";
-import {IUniswapV3Pool} from "../interfaces/uniswap-v3-core/IUniswapV3Pool.sol";
+import {IUniswapV3Factory} from "../../interfaces/uniswap-v3-core/IUniswapV3Factory.sol";
+import {IUniswapV3Pool} from "../../interfaces/uniswap-v3-core/IUniswapV3Pool.sol";
 
 /**
  * @dev Test contract to create a Uniswap-V3 pool using a provided Uni-V3 factory
