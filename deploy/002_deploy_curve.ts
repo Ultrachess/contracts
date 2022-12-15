@@ -442,13 +442,13 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   //////////////////////////////////////////////////////////////////////////////
 
   // Initial stablecoin amounts for Curve Aave MATIC pool. Values retrieved
-  // from https://curve.fi/#/polygon/pools/aave/deposit on 2022-11-22.
-  const INITIAL_DAI = ethers.utils.parseUnits("5687092", 18); // 5,687,092 DAI
-  const INITIAL_USDC = ethers.utils.parseUnits("6255520", 6); // 6,255,520 USDC
-  const INITIAL_USDT = ethers.utils.parseUnits("19583657", 6); // 19,583,657 USDT
+  // from https://curve.fi/#/polygon/pools/aave/deposit on 2022-12-10.
+  const INITIAL_DAI = ethers.utils.parseUnits("7396589", 18); // 7,396,589 DAI
+  const INITIAL_USDC = ethers.utils.parseUnits("8791920", 6); // 8,791,920 USDC
+  const INITIAL_USDT = ethers.utils.parseUnits("9418946", 6); // 9,418,946 USDT
   const INITIAL_CURVE_AAVE_LP_TOKENS = ethers.BigNumber.from(
-    "31522774262425669316161975"
-  ); // About 31,522,774 LP tokens
+    "25607389499110288943806496"
+  ); // About 25,607,389 LP tokens
 
   //
   // Mint DAI
