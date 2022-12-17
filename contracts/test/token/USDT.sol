@@ -46,7 +46,7 @@ contract USDT is TestERC20Mintable {
    * @dev See {IERC20Metadata-decimals}
    */
   // slither-disable-next-line external-function
-  function decimals() public view virtual override returns (uint8) {
+  function decimals() public view override returns (uint8) {
     return 6;
   }
 }
