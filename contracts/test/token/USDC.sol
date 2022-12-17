@@ -28,6 +28,11 @@ contract USDC is TestERC20Mintable {
    */
   string private constant TOKEN_SYMBOL = "USDC";
 
+  /**
+   * @dev The number of decimals, typically 18 for most ERC-20 tokens
+   */
+  uint8 private constant DECIMALS = 6;
+
   //////////////////////////////////////////////////////////////////////////////
   // Initialization
   //////////////////////////////////////////////////////////////////////////////
@@ -46,7 +51,7 @@ contract USDC is TestERC20Mintable {
    * @dev See {IERC20Metadata-decimals}
    */
   // slither-disable-next-line external-function
-  function decimals() public view override returns (uint8) {
-    return 6;
+  function decimals() public pure override returns (uint8) {
+    return DECIMALS;
   }
 }
