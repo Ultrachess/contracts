@@ -28,10 +28,8 @@ jobs:
         include:
           - os: ubuntu-20.04
             node-version: 14
-            python-version: "3.6"
           - os: ubuntu-22.04
             node-version: 18
-            python-version: "3.10"
 
     # Steps represent a sequence of tasks that will be executed as part of the
     # job
@@ -42,16 +40,16 @@ jobs:
         # Check-out the repository under $GITHUB_WORKSPACE, so the job can
         # access it
       - name: Checkout main repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Restore node modules
         id: restore-node
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             node_modules
@@ -59,7 +57,7 @@ jobs:
 
       - name: Restore Solidity compilers
         id: restore-solc
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.cache/hardhat-nodejs/compilers
@@ -67,7 +65,7 @@ jobs:
 
       - name: Restore smart contract dependencies
         id: restore-contract-depends
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             contracts/bytecode
@@ -78,7 +76,7 @@ jobs:
       - name: Restore Vyper compilers
         id: restore-vyper
         if: steps.restore-contract-depends.outputs.cache-hit != 'true'
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.vvm
@@ -87,7 +85,7 @@ jobs:
       - name: Restore Solidity compilers for Vyper
         id: restore-solcx
         if: steps.restore-contract-depends.outputs.cache-hit != 'true'
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.solcx
@@ -95,13 +93,13 @@ jobs:
 
       - name: Restores smart contract artifacts
         id: restore-contract-artifacts
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             artifacts
             src/abi
             src/types
-          key: restore-contract-artifacts-${{ hashFiles('tools/build-depends.sh', 'tools/depends/**') }}-${{ hashFiles('contracts/**') }}
+          key: restore-contract-artifacts-${{ hashFiles('contracts/**') }}
 
       - name: yarn install
         if: steps.restore-node.outputs.cache-hit != 'true'
@@ -110,26 +108,30 @@ jobs:
       - name: yarn audit-ci
         run: yarn audit-ci
 
-      - name: yarn lint-app
-        run: yarn lint-app
+      - name: yarn prettier
+        run: yarn prettier
 
-      # Set up static analysis
-      - name: Install Python dependencies
-        if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
-        run: |
-          pip3 install --upgrade pip setuptools
-          pip3 install -r requirements.txt
+      - name: yarn eslint
+        run: yarn eslint
 
       - name: yarn depends
         if: steps.restore-contract-depends.outputs.cache-hit != 'true'
         run: yarn depends
 
-      - name: yarn lint-chain
+      - name: yarn solhint
         if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
-        run: yarn lint-chain
+        run: yarn solhint
 
-      - name: yarn copy-dts
-        run: yarn copy-dts
+      # Set up static analysis
+      - name: Install Python dependencies for slither
+        if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
+        run: |
+          pip3 install --upgrade pip setuptools
+          pip3 install -r requirements.txt
+
+      - name: yarn slither
+        if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
+        run: yarn slither
 
       - name: yarn export
         if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
@@ -137,3 +139,6 @@ jobs:
 
       - name: yarn test
         run: yarn test
+
+      - name: yarn copy-dts
+        run: yarn copy-dts
