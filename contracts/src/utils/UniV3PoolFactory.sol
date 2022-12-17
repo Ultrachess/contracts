@@ -37,19 +37,25 @@ contract UniV3PoolFactory {
    * @dev Construct the test pool instance
    *
    * @param factory The contract address of the Uniswap V3 factory
-   * @param token0 The first token of the pool by address sort order
-   * @param token1 The second token of the pool by address sort order
-   * @param fee The fee collected upon every swap in the pool, denominated in hundredths of a bip
+   * @param baseToken The address of the base token
+   * @param assetToken The address of the asset token
+   * @param swapFee The fee collected upon every swap in the pool, denominated in
+   *                hundredths of a bip
    */
-  constructor(address factory, address token0, address token1, uint24 fee) {
+  constructor(
+    address factory,
+    address baseToken,
+    address assetToken,
+    uint24 swapFee
+  ) {
     // Validate parameters
     require(factory != address(0), "Invalid factory");
-    require(token0 != address(0), "Invalid token0");
-    require(token1 != address(0), "Invalid token1");
+    require(baseToken != address(0), "Invalid base");
+    require(assetToken != address(0), "Invalid asset");
 
     // Call external contracts
     uniswapV3Pool = IUniswapV3Pool(
-      IUniswapV3Factory(factory).createPool(token0, token1, fee)
+      IUniswapV3Factory(factory).createPool(baseToken, assetToken, swapFee)
     );
   }
 }
