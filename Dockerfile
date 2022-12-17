@@ -28,21 +28,30 @@ EOF
 # This stage copies the project and build it
 FROM builder as ultrachess-builder
 
-# Install yarn dependencies
 WORKDIR /app/contracts
-COPY package.json yarn.lock /app/contracts
-RUN yarn install --non-interactive
 
 # Build depends
-COPY tools /app/contracts/tools
-COPY .prettierrc /app/contracts
-RUN yarn depends
+COPY tools tools
+COPY .prettierrc .
+RUN ./tools/build-depends.sh
 
-# Build contracts
-COPY . /app/contracts
-RUN yarn package
+# Clean up depends
+RUN rm -rf tools
 
-# This stage is runtime image for rollups (hardhat)
+# Install yarn dependencies
+COPY package.json yarn.lock .
+RUN yarn install --non-interactive
+
+# Build contracts and typechain code
+COPY contracts/src contracts/src
+COPY contracts/test contracts/test
+COPY hardhat.config.ts .
+RUN yarn compile
+
+# Copy deployment scripts
+COPY deploy deploy
+
+# This stage is the runtime image
 FROM base as ultrachess-deployer
 
 # Copy yarn build

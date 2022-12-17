@@ -28,8 +28,9 @@
   ],
   "scripts": {
     "audit-ci": "audit-ci --config audit-ci.json",
-    "build": "hardhat compile && tsc",
+    "build": "run-s compile typescript",
     "clean": "rimraf artifacts cache contracts/bytecode contracts/depends contracts/interfaces deployments/hardhat deployments/localhost dist node_modules src/abi src/types tools/repos",
+    "compile": "hardhat compile",
     "copy-dts": "copyfiles -u 1 \"src/**/*.d.ts\" dist/src",
     "depends": "bash tools/build-depends.sh",
     "deploy": "run-s deploy:development",
@@ -53,7 +54,8 @@
     "slither": "slither .",
     "solhint": "solhint 'contracts/src/**/*.sol' 'contracts/test/**/*.sol' --max-warnings 0",
     "start": "hardhat node",
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "typescript": "tsc"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
