@@ -37,7 +37,7 @@ set -o nounset
 #
 
 UNISWAP_V3_STAKER_NAME="uniswap-v3-staker"
-UNISWAP_V3_STAKER_VERSION="bc460c03c431431d5b057dad37e6ecc1b3d14f9b" # v1.0.2
+UNISWAP_V3_STAKER_VERSION="4328b957701de8bed83689aa22c32eda7928d5ab" # main
 UNISWAP_V3_STAKER_REPO="https://github.com/Uniswap/v3-staker.git"
 
 #

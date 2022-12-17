@@ -37,7 +37,7 @@ set -o nounset
 #
 
 UNISWAP_V3_CORE_NAME="uniswap-v3-core"
-UNISWAP_V3_CORE_VERSION="8f3e4645a08850d2335ead3d1a8d0c64fa44f222" # master
+UNISWAP_V3_CORE_VERSION="05c10bf6d547d6121622ac51c457f93775e1df09" # main
 UNISWAP_V3_CORE_REPO="https://github.com/Uniswap/v3-core.git"
 
 #

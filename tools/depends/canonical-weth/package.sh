@@ -40,8 +40,8 @@ set -o nounset
 #
 
 WETH_NAME="canonical-weth"
-WETH_VERSION="0dd1ea3e295eef916d0c6223ec63141137d22d67"
-WETH_REPO="https://github.com/gnosis/${WETH_NAME}.git"
+WETH_VERSION="0dd1ea3e295eef916d0c6223ec63141137d22d67" # v1.4.0
+WETH_REPO="https://github.com/gnosis/canonical-weth.git"
 
 #
 # Environment paths

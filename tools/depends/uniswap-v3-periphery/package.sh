@@ -37,7 +37,7 @@ set -o nounset
 #
 
 UNISWAP_V3_PERIPHERY_NAME="uniswap-v3-periphery"
-UNISWAP_V3_PERIPHERY_VERSION="22a7ead071fff53f00d9ddc13434f285f4ed5c7d" # 1.4.1
+UNISWAP_V3_PERIPHERY_VERSION="6cce88e63e176af1ddb6cc56e029110289622317" # 1.4.3
 UNISWAP_V3_PERIPHERY_REPO="https://github.com/Uniswap/v3-periphery.git"
 
 #

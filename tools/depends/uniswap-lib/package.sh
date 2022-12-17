@@ -36,8 +36,8 @@ set -o nounset
 #
 
 UNISWAP_LIB_NAME="uniswap-lib"
-UNISWAP_LIB_VERSION="c01640b0f0f1d8a85cba8de378cc48469fcfd9a6"
-UNISWAP_LIB_REPO="https://github.com/Uniswap/${UNISWAP_LIB_NAME}.git"
+UNISWAP_LIB_VERSION="c01640b0f0f1d8a85cba8de378cc48469fcfd9a6" # 4.0.1-alpha
+UNISWAP_LIB_REPO="https://github.com/Uniswap/solidity-lib.git"
 
 #
 # Environment paths

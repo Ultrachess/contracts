@@ -42,7 +42,7 @@ set -o nounset
 #
 
 CURVE_NAME="curve"
-CURVE_VERSION="b0bbf77f8f93c9c5f4e415bce9cd71f0cdee960e"
+CURVE_VERSION="b0bbf77f8f93c9c5f4e415bce9cd71f0cdee960e" # master
 CURVE_REPO="https://github.com/curvefi/curve-contract.git"
 CURVE_LICENSE="MIT"
 
