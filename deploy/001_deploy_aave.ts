@@ -12,126 +12,43 @@
 import "hardhat-deploy";
 import "@nomiclabs/hardhat-ethers";
 
-import fs from "fs";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction, DeployOptions } from "hardhat-deploy/types";
 
-// TODO: Fully qualified contract names
-const AAVE_ADDRESS_CONFIG_CONTRACT = "LendingPoolAddressesProvider";
-const AAVE_INCENTIVES_CONTROLLER_CONTRACT = "MockIncentivesController";
-const AAVE_INTEREST_RATE_STRATEGY_CONTRACT =
-  "DefaultReserveInterestRateStrategy";
-const AAVE_LENDING_RATE_ORACLE_CONTRACT = "LendingRateOracle";
-const AAVE_POOL_CONFIG_CONTRACT = "LendingPoolConfigurator";
-const AAVE_POOL_CONTRACT = "LendingPool";
-const AAVE_STABLE_DEBT_TOKEN_CONTRACT = "StableDebtToken";
-const AAVE_TOKEN_CONTRACT = "AToken";
-const AAVE_VARIABLE_DEBT_TOKEN_CONTRACT = "VariableDebtToken";
-const ADAI_TOKEN_PROXY_CONTRACT = "ADAIProxy";
-const AUSDC_TOKEN_PROXY_CONTRACT = "AUSDCProxy";
-const AUSDT_TOKEN_PROXY_CONTRACT = "AUSDTProxy";
-const DAI_TOKEN_CONTRACT = "DAI";
-const USDC_TOKEN_CONTRACT = "USDC";
-const USDT_TOKEN_CONTRACT = "USDT";
-
-const GENERIC_LOGIC_LIBRARY = "GenericLogic";
-const RESERVE_LOGIC_LIBRARY = "ReserveLogic";
-const VALIDATION_LOGIC_LIBRARY = "ValidationLogic";
-
-// Deployed contract aliases
-const ADAI_STABLE_DEBT_TOKEN_CONTRACT = "ADAIStableDebt";
-const ADAI_TOKEN_CONTRACT = "ADAI";
-const ADAI_VARIABLE_DEBT_TOKEN_CONTRACT = "ADAIVariableDebt";
-const AUSDC_STABLE_DEBT_TOKEN_CONTRACT = "AUSDCStableDebt";
-const AUSDC_TOKEN_CONTRACT = "AUSDC";
-const AUSDC_VARIABLE_DEBT_TOKEN_CONTRACT = "AUSDCVariableDebt";
-const AUSDT_STABLE_DEBT_TOKEN_CONTRACT = "AUSDTStableDebt";
-const AUSDT_TOKEN_CONTRACT = "AUSDT";
-const AUSDT_VARIABLE_DEBT_TOKEN_CONTRACT = "AUSDTVariableDebt";
-
-// Contract ABIs
-import AavePoolAbi from "../src/abi/contracts/depends/aave-v2/protocol/lendingpool/LendingPool.sol/LendingPool.json";
-
-//
-// Address book
-//
-
-interface AddressBook {
-  daiToken: string;
-  usdcToken: string;
-  usdtToken: string;
-  aaveAddressConfig: string;
-  aavePoolConfig: string;
-  aavePool: string;
-  adaiToken: string;
-  ausdcToken: string;
-  ausdtToken: string;
-  adaiStableDebtToken: string;
-  ausdcStableDebtToken: string;
-  ausdtStableDebtToken: string;
-  adaiVariableDebtToken: string;
-  ausdcVariableDebtToken: string;
-  ausdtVariableDebtToken: string;
-  aaveInterestRateStrategy: string;
-  aaveIncentivesController: string;
-  aaveLendingRateOracle: string;
-}
-let addressBook: AddressBook | undefined;
-
-//
-// Utility functions
-//
-// TODO: Move to utils
-//
-
-function loadAddresses(network: string): void {
-  try {
-    addressBook = JSON.parse(
-      fs
-        .readFileSync(`${__dirname}/../src/addresses/${network}.json`)
-        .toString()
-    );
-  } catch (e) {}
-}
-
-function loadDeployment(network: string, contract: string): string | undefined {
-  try {
-    const deployment = JSON.parse(
-      fs
-        .readFileSync(`${__dirname}/../deployments/${network}/${contract}.json`)
-        .toString()
-    );
-    if (deployment.address) return deployment.address;
-  } catch (e) {}
-
-  return; // undefined
-}
-
-const getContractAddress = async (
-  contractSymbol: string,
-  contractName: string,
-  network: string
-): Promise<string | undefined> => {
-  // Look up address in address book
-  if (addressBook && addressBook[contractSymbol])
-    return addressBook[contractSymbol];
-
-  // Look up address if the contract has a known deployment
-  const deploymentAddress = loadDeployment(network, contractName);
-  if (deploymentAddress) return deploymentAddress;
-
-  return; // undefined
-};
-
-function writeAddress(
-  network: string,
-  contract: string,
-  address: string
-): void {
-  console.log(`Deployed ${contract} to ${address}`);
-  const addressFile = `${__dirname}/../deployments/${network}/${contract}.json`;
-  fs.writeFileSync(addressFile, JSON.stringify({ address }, undefined, 2));
-}
+import { getAddressBook, writeAddress } from "../src/addressBook";
+import {
+  AAVE_ADDRESS_CONFIG_CONTRACT,
+  AAVE_INCENTIVES_CONTROLLER_CONTRACT,
+  AAVE_INTEREST_RATE_STRATEGY_CONTRACT,
+  AAVE_LENDING_RATE_ORACLE_CONTRACT,
+  AAVE_POOL_CONFIG_CONTRACT,
+  AAVE_POOL_CONTRACT,
+  AAVE_STABLE_DEBT_TOKEN_CONTRACT,
+  AAVE_TOKEN_CONTRACT,
+  AAVE_VARIABLE_DEBT_TOKEN_CONTRACT,
+  aavePoolAbi,
+  ADAI_STABLE_DEBT_TOKEN_CONTRACT,
+  ADAI_TOKEN_CONTRACT,
+  ADAI_TOKEN_PROXY_CONTRACT,
+  ADAI_VARIABLE_DEBT_TOKEN_CONTRACT,
+  AUSDC_STABLE_DEBT_TOKEN_CONTRACT,
+  AUSDC_TOKEN_CONTRACT,
+  AUSDC_TOKEN_PROXY_CONTRACT,
+  AUSDC_VARIABLE_DEBT_TOKEN_CONTRACT,
+  AUSDT_STABLE_DEBT_TOKEN_CONTRACT,
+  AUSDT_TOKEN_CONTRACT,
+  AUSDT_TOKEN_PROXY_CONTRACT,
+  AUSDT_VARIABLE_DEBT_TOKEN_CONTRACT,
+  GENERIC_LOGIC_CONTRACT,
+  RESERVE_LOGIC_CONTRACT,
+  VALIDATION_LOGIC_CONTRACT,
+} from "../src/contracts/depends";
+import {
+  DAI_TOKEN_CONTRACT,
+  USDC_TOKEN_CONTRACT,
+  USDT_TOKEN_CONTRACT,
+} from "../src/contracts/testing";
+import { AddressBook } from "../src/interfaces";
 
 //
 // Deploy the Aave environment
@@ -155,101 +72,10 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   };
 
   // Get the network name
-  const network = hardhat_re.network.name;
+  const networkName = hardhat_re.network.name;
 
   // Get the contract addresses
-  loadAddresses(network);
-
-  let daiTokenAddress = await getContractAddress(
-    "daiToken",
-    DAI_TOKEN_CONTRACT,
-    network
-  );
-  let usdcTokenAddress = await getContractAddress(
-    "usdcToken",
-    USDC_TOKEN_CONTRACT,
-    network
-  );
-  let usdtTokenAddress = await getContractAddress(
-    "usdtToken",
-    USDT_TOKEN_CONTRACT,
-    network
-  );
-  let aaveAddressConfigAddress = await getContractAddress(
-    "aaveAddressConfig",
-    AAVE_ADDRESS_CONFIG_CONTRACT,
-    network
-  );
-  let aavePoolConfigAddress = await getContractAddress(
-    "aavePoolConfig",
-    AAVE_POOL_CONFIG_CONTRACT,
-    network
-  );
-  let aavePoolAddress = await getContractAddress(
-    "aavePool",
-    AAVE_POOL_CONTRACT,
-    network
-  );
-  let adaiTokenAddress = await getContractAddress(
-    "adaiToken",
-    ADAI_TOKEN_CONTRACT,
-    network
-  );
-  let ausdcTokenAddress = await getContractAddress(
-    "ausdcToken",
-    AUSDC_TOKEN_CONTRACT,
-    network
-  );
-  let ausdtTokenAddress = await getContractAddress(
-    "ausdtToken",
-    AUSDT_TOKEN_CONTRACT,
-    network
-  );
-  let adaiStableDebtTokenAddress = await getContractAddress(
-    "adaiStableDebtToken",
-    ADAI_STABLE_DEBT_TOKEN_CONTRACT,
-    network
-  );
-  let ausdcStableDebtTokenAddress = await getContractAddress(
-    "ausdcStableDebtToken",
-    AUSDC_STABLE_DEBT_TOKEN_CONTRACT,
-    network
-  );
-  let ausdtStableDebtTokenAddress = await getContractAddress(
-    "ausdtStableDebtToken",
-    AUSDT_STABLE_DEBT_TOKEN_CONTRACT,
-    network
-  );
-  let adaiVariableDebtTokenAddress = await getContractAddress(
-    "adaiVariableDebtToken",
-    ADAI_VARIABLE_DEBT_TOKEN_CONTRACT,
-    network
-  );
-  let ausdcVariableDebtTokenAddress = await getContractAddress(
-    "ausdcVariableDebtToken",
-    AUSDC_VARIABLE_DEBT_TOKEN_CONTRACT,
-    network
-  );
-  let ausdtVariableDebtTokenAddress = await getContractAddress(
-    "ausdtVariableDebtToken",
-    AUSDT_VARIABLE_DEBT_TOKEN_CONTRACT,
-    network
-  );
-  let aaveInterestRateStrategyAddress = await getContractAddress(
-    "aaveInterestRateStrategy",
-    AAVE_INTEREST_RATE_STRATEGY_CONTRACT,
-    network
-  );
-  let aaveIncentivesControllerAddress = await getContractAddress(
-    "aaveIncentivesController",
-    AAVE_INCENTIVES_CONTROLLER_CONTRACT,
-    network
-  );
-  let aaveLendingRateOracleAddress = await getContractAddress(
-    "aaveLendingRateOracle",
-    AAVE_LENDING_RATE_ORACLE_CONTRACT,
-    network
-  );
+  const addressBook: AddressBook = await getAddressBook(networkName);
 
   //////////////////////////////////////////////////////////////////////////////
   //
@@ -258,30 +84,36 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   //////////////////////////////////////////////////////////////////////////////
 
   // Deploy DAI
-  if (daiTokenAddress && network != "hardhat") {
-    console.log(`Using deployed ${DAI_TOKEN_CONTRACT} at ${daiTokenAddress}`);
+  if (addressBook.daiToken && networkName != "hardhat") {
+    console.log(
+      `Using deployed ${DAI_TOKEN_CONTRACT} at ${addressBook.daiToken}`
+    );
   } else {
     console.log(`Deploying ${DAI_TOKEN_CONTRACT}`);
     const tx = await deploy(DAI_TOKEN_CONTRACT, opts);
-    daiTokenAddress = tx.address;
+    addressBook.daiToken = tx.address;
   }
 
   // Deploy USDC
-  if (usdcTokenAddress && network != "hardhat") {
-    console.log(`Using deployed ${USDC_TOKEN_CONTRACT} at ${usdcTokenAddress}`);
+  if (addressBook.usdcToken && networkName != "hardhat") {
+    console.log(
+      `Using deployed ${USDC_TOKEN_CONTRACT} at ${addressBook.usdcToken}`
+    );
   } else {
     console.log(`Deploying ${USDC_TOKEN_CONTRACT}`);
     const tx = await deploy(USDC_TOKEN_CONTRACT, opts);
-    usdcTokenAddress = tx.address;
+    addressBook.usdcToken = tx.address;
   }
 
   // Deploy USDT
-  if (usdtTokenAddress && network != "hardhat") {
-    console.log(`Using deployed ${USDT_TOKEN_CONTRACT} at ${usdtTokenAddress}`);
+  if (addressBook.usdtToken && networkName != "hardhat") {
+    console.log(
+      `Using deployed ${USDT_TOKEN_CONTRACT} at ${addressBook.usdtToken}`
+    );
   } else {
     console.log(`Deploying ${USDT_TOKEN_CONTRACT}`);
     const tx = await deploy(USDT_TOKEN_CONTRACT, opts);
-    usdtTokenAddress = tx.address;
+    addressBook.usdtToken = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -291,9 +123,9 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   //////////////////////////////////////////////////////////////////////////////
 
   // Deploy Aave address config
-  if (aaveAddressConfigAddress) {
+  if (addressBook.aaveAddressConfig) {
     console.log(
-      `Using deployed ${AAVE_ADDRESS_CONFIG_CONTRACT} at ${aaveAddressConfigAddress}`
+      `Using deployed ${AAVE_ADDRESS_CONFIG_CONTRACT} at ${addressBook.aaveAddressConfig}`
     );
   } else {
     console.log(`Deploying ${AAVE_ADDRESS_CONFIG_CONTRACT}`);
@@ -301,7 +133,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       ...opts,
       args: ["", deployer],
     });
-    aaveAddressConfigAddress = tx.address;
+    addressBook.aaveAddressConfig = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -311,14 +143,14 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   //////////////////////////////////////////////////////////////////////////////
 
   // Deploy Aave pool config
-  if (aavePoolConfigAddress) {
+  if (addressBook.aavePoolConfig) {
     console.log(
-      `Using deployed ${AAVE_POOL_CONFIG_CONTRACT} at ${aavePoolConfigAddress}`
+      `Using deployed ${AAVE_POOL_CONFIG_CONTRACT} at ${addressBook.aavePoolConfig}`
     );
   } else {
     console.log(`Deploying ${AAVE_POOL_CONFIG_CONTRACT}`);
     const tx = await deploy(AAVE_POOL_CONFIG_CONTRACT, opts);
-    aavePoolConfigAddress = tx.address;
+    addressBook.aavePoolConfig = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -334,29 +166,31 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   // because it requires a library, and as a result deployment files are
   // not generated. This is a known issue with hardhat-deploy.
   //
-  if (aavePoolAddress && network != "hardhat") {
-    console.log(`Using deployed ${AAVE_POOL_CONTRACT} at ${aavePoolAddress}`);
+  if (addressBook.aavePool && networkName != "hardhat") {
+    console.log(
+      `Using deployed ${AAVE_POOL_CONTRACT} at ${addressBook.aavePool}`
+    );
   } else {
     // Deploy GenericLogic
-    console.log(`Deploying ${GENERIC_LOGIC_LIBRARY}`);
+    console.log(`Deploying ${GENERIC_LOGIC_CONTRACT}`);
     const GenericLogic = await ethers.getContractFactory(
-      GENERIC_LOGIC_LIBRARY,
+      GENERIC_LOGIC_CONTRACT,
       opts
     );
     const genericLogic = await GenericLogic.deploy();
 
     // Deploy ReserveLogic
-    console.log(`Deploying ${RESERVE_LOGIC_LIBRARY}`);
+    console.log(`Deploying ${RESERVE_LOGIC_CONTRACT}`);
     const ReserveLogic = await ethers.getContractFactory(
-      RESERVE_LOGIC_LIBRARY,
+      RESERVE_LOGIC_CONTRACT,
       opts
     );
     const reserveLogic = await ReserveLogic.deploy();
 
     // Deploy ValidationLogic
-    console.log(`Deploying ${VALIDATION_LOGIC_LIBRARY}`);
+    console.log(`Deploying ${VALIDATION_LOGIC_CONTRACT}`);
     const ValidationLogic = await ethers.getContractFactory(
-      VALIDATION_LOGIC_LIBRARY,
+      VALIDATION_LOGIC_CONTRACT,
       {
         ...opts,
         libraries: {
@@ -376,7 +210,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       },
     });
     const aavePool = await AavePool.deploy();
-    aavePoolAddress = aavePool.address;
+    addressBook.aavePool = aavePool.address;
   }
 
   // Mine the next block to commit contractfactory deployment
@@ -392,8 +226,10 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   // construction parameters, and all tokens use the same bytecode
 
   // Deploy Aave DAI token
-  if (adaiTokenAddress) {
-    console.log(`Using deployed ${ADAI_TOKEN_CONTRACT} at ${adaiTokenAddress}`);
+  if (addressBook.adaiToken) {
+    console.log(
+      `Using deployed ${ADAI_TOKEN_CONTRACT} at ${addressBook.adaiToken}`
+    );
   } else {
     console.log(`Deploying ${ADAI_TOKEN_CONTRACT}`);
     const tx = await deploy(ADAI_TOKEN_CONTRACT, {
@@ -401,13 +237,13 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       contract: AAVE_TOKEN_CONTRACT,
       deterministicDeployment: false,
     });
-    adaiTokenAddress = tx.address;
+    addressBook.adaiToken = tx.address;
   }
 
   // Deploy Aave USDC token
-  if (ausdcTokenAddress) {
+  if (addressBook.ausdcToken) {
     console.log(
-      `Using deployed ${AUSDC_TOKEN_CONTRACT} at ${ausdcTokenAddress}`
+      `Using deployed ${AUSDC_TOKEN_CONTRACT} at ${addressBook.ausdcToken}`
     );
   } else {
     console.log(`Deploying ${AUSDC_TOKEN_CONTRACT}`);
@@ -416,13 +252,13 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       contract: AAVE_TOKEN_CONTRACT,
       deterministicDeployment: false,
     });
-    ausdcTokenAddress = tx.address;
+    addressBook.ausdcToken = tx.address;
   }
 
   // Deploy Aave USDT token
-  if (ausdtTokenAddress) {
+  if (addressBook.ausdtToken) {
     console.log(
-      `Using deployed ${AUSDT_TOKEN_CONTRACT} at ${ausdtTokenAddress}`
+      `Using deployed ${AUSDT_TOKEN_CONTRACT} at ${addressBook.ausdtToken}`
     );
   } else {
     console.log(`Deploying ${AUSDT_TOKEN_CONTRACT}`);
@@ -431,7 +267,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       contract: AAVE_TOKEN_CONTRACT,
       deterministicDeployment: false,
     });
-    ausdtTokenAddress = tx.address;
+    addressBook.ausdtToken = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -441,9 +277,9 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   //////////////////////////////////////////////////////////////////////////////
 
   // Deploy Aave DAI stable debt token
-  if (adaiStableDebtTokenAddress) {
+  if (addressBook.adaiStableDebtToken) {
     console.log(
-      `Using deployed ${ADAI_STABLE_DEBT_TOKEN_CONTRACT} at ${adaiStableDebtTokenAddress}`
+      `Using deployed ${ADAI_STABLE_DEBT_TOKEN_CONTRACT} at ${addressBook.adaiStableDebtToken}`
     );
   } else {
     console.log(`Deploying ${ADAI_STABLE_DEBT_TOKEN_CONTRACT}`);
@@ -452,13 +288,13 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       contract: AAVE_STABLE_DEBT_TOKEN_CONTRACT,
       deterministicDeployment: false,
     });
-    adaiStableDebtTokenAddress = tx.address;
+    addressBook.adaiStableDebtToken = tx.address;
   }
 
   // Deploy Aave USDC stable debt token
-  if (ausdcStableDebtTokenAddress) {
+  if (addressBook.ausdcStableDebtToken) {
     console.log(
-      `Using deployed ${AUSDC_STABLE_DEBT_TOKEN_CONTRACT} at ${ausdcStableDebtTokenAddress}`
+      `Using deployed ${AUSDC_STABLE_DEBT_TOKEN_CONTRACT} at ${addressBook.ausdcStableDebtToken}`
     );
   } else {
     console.log(`Deploying ${AUSDC_STABLE_DEBT_TOKEN_CONTRACT}`);
@@ -467,13 +303,13 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       contract: AAVE_STABLE_DEBT_TOKEN_CONTRACT,
       deterministicDeployment: false,
     });
-    ausdcStableDebtTokenAddress = tx.address;
+    addressBook.ausdcStableDebtToken = tx.address;
   }
 
   // Deploy Aave USDT stable debt token
-  if (ausdtStableDebtTokenAddress) {
+  if (addressBook.ausdtStableDebtToken) {
     console.log(
-      `Using deployed ${AUSDT_STABLE_DEBT_TOKEN_CONTRACT} at ${ausdtStableDebtTokenAddress}`
+      `Using deployed ${AUSDT_STABLE_DEBT_TOKEN_CONTRACT} at ${addressBook.ausdtStableDebtToken}`
     );
   } else {
     console.log(`Deploying ${AUSDT_STABLE_DEBT_TOKEN_CONTRACT}`);
@@ -482,7 +318,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       contract: AAVE_STABLE_DEBT_TOKEN_CONTRACT,
       deterministicDeployment: false,
     });
-    ausdtStableDebtTokenAddress = tx.address;
+    addressBook.ausdtStableDebtToken = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -492,9 +328,9 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   //////////////////////////////////////////////////////////////////////////////
 
   // Deploy Aave DAI variable debt token
-  if (adaiVariableDebtTokenAddress) {
+  if (addressBook.adaiVariableDebtToken) {
     console.log(
-      `Using deployed ${ADAI_VARIABLE_DEBT_TOKEN_CONTRACT} at ${adaiVariableDebtTokenAddress}`
+      `Using deployed ${ADAI_VARIABLE_DEBT_TOKEN_CONTRACT} at ${addressBook.adaiVariableDebtToken}`
     );
   } else {
     console.log(`Deploying ${ADAI_VARIABLE_DEBT_TOKEN_CONTRACT}`);
@@ -503,13 +339,13 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       contract: AAVE_VARIABLE_DEBT_TOKEN_CONTRACT,
       deterministicDeployment: false,
     });
-    adaiVariableDebtTokenAddress = tx.address;
+    addressBook.adaiVariableDebtToken = tx.address;
   }
 
   // Deploy Aave USDC variable debt token
-  if (ausdcVariableDebtTokenAddress) {
+  if (addressBook.ausdcVariableDebtToken) {
     console.log(
-      `Using deployed ${AUSDC_VARIABLE_DEBT_TOKEN_CONTRACT} at ${ausdcVariableDebtTokenAddress}`
+      `Using deployed ${AUSDC_VARIABLE_DEBT_TOKEN_CONTRACT} at ${addressBook.ausdcVariableDebtToken}`
     );
   } else {
     console.log(`Deploying ${AUSDC_VARIABLE_DEBT_TOKEN_CONTRACT}`);
@@ -518,13 +354,13 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       contract: AAVE_VARIABLE_DEBT_TOKEN_CONTRACT,
       deterministicDeployment: false,
     });
-    ausdcVariableDebtTokenAddress = tx.address;
+    addressBook.ausdcVariableDebtToken = tx.address;
   }
 
   // Deploy Aave USDT variable debt token
-  if (ausdtVariableDebtTokenAddress) {
+  if (addressBook.ausdtVariableDebtToken) {
     console.log(
-      `Using deployed ${AUSDT_VARIABLE_DEBT_TOKEN_CONTRACT} at ${ausdtVariableDebtTokenAddress}`
+      `Using deployed ${AUSDT_VARIABLE_DEBT_TOKEN_CONTRACT} at ${addressBook.ausdtVariableDebtToken}`
     );
   } else {
     console.log(`Deploying ${AUSDT_VARIABLE_DEBT_TOKEN_CONTRACT}`);
@@ -534,7 +370,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       contract: AAVE_VARIABLE_DEBT_TOKEN_CONTRACT,
       deterministicDeployment: false,
     });
-    ausdtVariableDebtTokenAddress = tx.address;
+    addressBook.ausdtVariableDebtToken = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -547,16 +383,16 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   const RAY = ethers.BigNumber.from(10).pow(27);
 
   // Deploy Aave interest rate strategy
-  if (aaveInterestRateStrategyAddress) {
+  if (addressBook.aaveInterestRateStrategy) {
     console.log(
-      `Using deployed ${AAVE_INTEREST_RATE_STRATEGY_CONTRACT} at ${aaveInterestRateStrategyAddress}`
+      `Using deployed ${AAVE_INTEREST_RATE_STRATEGY_CONTRACT} at ${addressBook.aaveInterestRateStrategy}`
     );
   } else {
     console.log(`Deploying ${AAVE_INTEREST_RATE_STRATEGY_CONTRACT}`);
     const tx = await deploy(AAVE_INTEREST_RATE_STRATEGY_CONTRACT, {
       ...opts,
       args: [
-        aaveAddressConfigAddress, // provider
+        addressBook.aaveAddressConfig, // provider
         RAY.div(2), // optimal usage ratio
         0, // base variable borrow rate
         0, // variable rate slope 1
@@ -565,7 +401,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
         0, // stable rate slope 2
       ],
     });
-    aaveInterestRateStrategyAddress = tx.address;
+    addressBook.aaveInterestRateStrategy = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -575,14 +411,14 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   //////////////////////////////////////////////////////////////////////////////
 
   // Deploy mock Aave incentives controller
-  if (aaveIncentivesControllerAddress) {
+  if (addressBook.aaveIncentivesController) {
     console.log(
-      `Using deployed ${AAVE_INCENTIVES_CONTROLLER_CONTRACT} at ${aaveIncentivesControllerAddress}`
+      `Using deployed ${AAVE_INCENTIVES_CONTROLLER_CONTRACT} at ${addressBook.aaveIncentivesController}`
     );
   } else {
     console.log(`Deploying ${AAVE_INCENTIVES_CONTROLLER_CONTRACT}`);
     const tx = await deploy(AAVE_INCENTIVES_CONTROLLER_CONTRACT, opts);
-    aaveIncentivesControllerAddress = tx.address;
+    addressBook.aaveIncentivesController = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -592,9 +428,9 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   //////////////////////////////////////////////////////////////////////////////
 
   // Deploy mock Aave lending rate oracle
-  if (aaveLendingRateOracleAddress) {
+  if (addressBook.aaveLendingRateOracle) {
     console.log(
-      `Using deployed ${AAVE_LENDING_RATE_ORACLE_CONTRACT} at ${aaveLendingRateOracleAddress}`
+      `Using deployed ${AAVE_LENDING_RATE_ORACLE_CONTRACT} at ${addressBook.aaveLendingRateOracle}`
     );
   } else {
     console.log(`Deploying ${AAVE_LENDING_RATE_ORACLE_CONTRACT}`);
@@ -602,7 +438,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       ...opts,
       args: [deployer],
     });
-    aaveLendingRateOracleAddress = tx.address;
+    addressBook.aaveLendingRateOracle = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -638,7 +474,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     },
     "setAddress",
     LENDING_POOL,
-    aavePoolAddress
+    addressBook.aavePool
   );
 
   console.log("Setting Aave pool config address");
@@ -651,7 +487,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     },
     "setAddress",
     LENDING_POOL_CONFIGURATOR,
-    aavePoolConfigAddress
+    addressBook.aavePoolConfig
   );
 
   console.log("Setting Aave pool admin address");
@@ -690,7 +526,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     },
     "setAddress",
     LENDING_RATE_ORACLE,
-    aaveLendingRateOracleAddress
+    addressBook.aaveLendingRateOracle
   );
 
   //////////////////////////////////////////////////////////////////////////////
@@ -709,7 +545,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     AAVE_LENDING_RATE_ORACLE_CONTRACT,
     { from: deployer, log: true },
     "setMarketBorrowRate",
-    daiTokenAddress,
+    addressBook.daiToken,
     ethers.BigNumber.from(
       "39000000000000000000000000" // Taken from Polygon
     )
@@ -723,7 +559,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     AAVE_LENDING_RATE_ORACLE_CONTRACT,
     { from: deployer, log: true },
     "setMarketBorrowRate",
-    usdcTokenAddress,
+    addressBook.usdcToken,
     ethers.BigNumber.from(
       "39000000000000000000000000" // Taken from Polygon
     )
@@ -737,7 +573,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     AAVE_LENDING_RATE_ORACLE_CONTRACT,
     { from: deployer, log: true },
     "setMarketBorrowRate",
-    usdtTokenAddress,
+    addressBook.usdtToken,
     ethers.BigNumber.from(
       "35000000000000000000000000" // Taken from Polygon
     )
@@ -770,7 +606,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
         log: true,
       },
       "initialize",
-      aaveAddressConfigAddress
+      addressBook.aaveAddressConfig
     );
   }
 
@@ -787,12 +623,14 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
 
   // Construct the contract
   const aavePoolContract = new ethers.Contract(
-    aavePoolAddress,
-    AavePoolAbi,
+    addressBook.aavePool,
+    aavePoolAbi,
     deployerSigner
   );
 
-  const initTx = await aavePoolContract.initialize(aaveAddressConfigAddress);
+  const initTx = await aavePoolContract.initialize(
+    addressBook.aaveAddressConfig
+  );
   await initTx.wait();
 
   //////////////////////////////////////////////////////////////////////////////
@@ -827,20 +665,20 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   // aDAI
   //
 
-  if (reserves.includes(daiTokenAddress)) {
+  if (reserves.includes(addressBook.daiToken)) {
     console.log("aDAI token already initialized");
   } else {
     console.log("Initializing aDAI token");
 
     initInputParams.push({
-      aTokenImpl: adaiTokenAddress,
-      stableDebtTokenImpl: adaiStableDebtTokenAddress,
-      variableDebtTokenImpl: adaiVariableDebtTokenAddress,
+      aTokenImpl: addressBook.adaiToken,
+      stableDebtTokenImpl: addressBook.adaiStableDebtToken,
+      variableDebtTokenImpl: addressBook.adaiVariableDebtToken,
       underlyingAssetDecimals: 18,
-      interestRateStrategyAddress: aaveInterestRateStrategyAddress,
-      underlyingAsset: daiTokenAddress,
+      interestRateStrategyAddress: addressBook.aaveInterestRateStrategy,
+      underlyingAsset: addressBook.daiToken,
       treasury: aaveTreasury,
-      incentivesController: aaveIncentivesControllerAddress,
+      incentivesController: addressBook.aaveIncentivesController,
       underlyingAssetName: "DAI",
       aTokenName: `Funny Aave Matic Market DAI`,
       aTokenSymbol: `amDAI`,
@@ -856,20 +694,20 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   // aUSDC
   //
 
-  if (reserves.includes(usdcTokenAddress)) {
+  if (reserves.includes(addressBook.usdcToken)) {
     console.log("aUSDC token already initialized");
   } else {
     console.log("Initializing aUSDC token");
 
     initInputParams.push({
-      aTokenImpl: ausdcTokenAddress,
-      stableDebtTokenImpl: ausdcStableDebtTokenAddress,
-      variableDebtTokenImpl: ausdcVariableDebtTokenAddress,
+      aTokenImpl: addressBook.ausdcToken,
+      stableDebtTokenImpl: addressBook.ausdcStableDebtToken,
+      variableDebtTokenImpl: addressBook.ausdcVariableDebtToken,
       underlyingAssetDecimals: 6,
-      interestRateStrategyAddress: aaveInterestRateStrategyAddress,
-      underlyingAsset: usdcTokenAddress,
+      interestRateStrategyAddress: addressBook.aaveInterestRateStrategy,
+      underlyingAsset: addressBook.usdcToken,
       treasury: aaveTreasury,
-      incentivesController: aaveIncentivesControllerAddress,
+      incentivesController: addressBook.aaveIncentivesController,
       underlyingAssetName: "USDC",
       aTokenName: `Funny Aave Matic Market USDC`,
       aTokenSymbol: `amUSDC`,
@@ -885,20 +723,20 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   // aUSDT
   //
 
-  if (reserves.includes(usdtTokenAddress)) {
+  if (reserves.includes(addressBook.usdtToken)) {
     console.log("aUSDT token already initialized");
   } else {
     console.log("Initializing aUSDT token");
 
     initInputParams.push({
-      aTokenImpl: ausdtTokenAddress,
-      stableDebtTokenImpl: ausdtStableDebtTokenAddress,
-      variableDebtTokenImpl: ausdtVariableDebtTokenAddress,
+      aTokenImpl: addressBook.ausdtToken,
+      stableDebtTokenImpl: addressBook.ausdtStableDebtToken,
+      variableDebtTokenImpl: addressBook.ausdtVariableDebtToken,
       underlyingAssetDecimals: 6,
-      interestRateStrategyAddress: aaveInterestRateStrategyAddress,
-      underlyingAsset: usdtTokenAddress,
+      interestRateStrategyAddress: addressBook.aaveInterestRateStrategy,
+      underlyingAsset: addressBook.usdtToken,
       treasury: aaveTreasury,
-      incentivesController: aaveIncentivesControllerAddress,
+      incentivesController: addressBook.aaveIncentivesController,
       underlyingAssetName: "USDT",
       aTokenName: `Funny Aave Matic Market USDT`,
       aTokenSymbol: `amUSDT`,
@@ -941,43 +779,61 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   // aDAI
   //
 
-  const daiReserve = await aavePoolContract.getReserveData(daiTokenAddress);
+  const daiReserve = await aavePoolContract.getReserveData(
+    addressBook.daiToken
+  );
 
-  const adaiTokenProxyAddress = daiReserve[7];
-  const adaiStableDebtTokenProxyAddress = daiReserve[8];
-  const adaiVariableDebtTokenProxyAddress = daiReserve[9];
+  addressBook.adaiTokenProxy = daiReserve[7];
+  addressBook.adaiStableDebtTokenProxy = daiReserve[8];
+  addressBook.adaiVariableDebtTokenProxy = daiReserve[9];
 
   //
   // aUSDC
   //
 
-  const usdcReserve = await aavePoolContract.getReserveData(usdcTokenAddress);
+  const usdcReserve = await aavePoolContract.getReserveData(
+    addressBook.usdcToken
+  );
 
-  const ausdcTokenProxyAddress = usdcReserve[7];
-  const ausdcStableDebtTokenProxyAddress = usdcReserve[8];
-  const ausdcVariableDebtTokenProxyAddress = usdcReserve[9];
+  addressBook.ausdcTokenProxy = usdcReserve[7];
+  addressBook.ausdcStableDebtTokenProxy = usdcReserve[8];
+  addressBook.ausdcVariableDebtTokenProxy = usdcReserve[9];
 
   //
   // aUSDT
   //
 
-  const usdtReserve = await aavePoolContract.getReserveData(usdtTokenAddress);
+  const usdtReserve = await aavePoolContract.getReserveData(
+    addressBook.usdtToken
+  );
 
-  const ausdtTokenProxyAddress = usdtReserve[7];
-  const ausdtStableDebtTokenProxyAddress = usdtReserve[8];
-  const ausdtVariableDebtTokenProxyAddress = usdtReserve[9];
+  addressBook.ausdtTokenProxy = usdtReserve[7];
+  addressBook.ausdtStableDebtTokenProxy = usdtReserve[8];
+  addressBook.ausdtVariableDebtTokenProxy = usdtReserve[9];
 
   //////////////////////////////////////////////////////////////////////////////
   // Record addresses
   //////////////////////////////////////////////////////////////////////////////
 
-  writeAddress(network, AAVE_POOL_CONTRACT, aavePoolAddress);
-  writeAddress(network, DAI_TOKEN_CONTRACT, daiTokenAddress);
-  writeAddress(network, USDC_TOKEN_CONTRACT, usdcTokenAddress);
-  writeAddress(network, USDT_TOKEN_CONTRACT, usdtTokenAddress);
-  writeAddress(network, ADAI_TOKEN_PROXY_CONTRACT, adaiTokenProxyAddress);
-  writeAddress(network, AUSDC_TOKEN_PROXY_CONTRACT, ausdcTokenProxyAddress);
-  writeAddress(network, AUSDT_TOKEN_PROXY_CONTRACT, ausdtTokenProxyAddress);
+  writeAddress(networkName, AAVE_POOL_CONTRACT, addressBook.aavePool);
+  writeAddress(networkName, DAI_TOKEN_CONTRACT, addressBook.daiToken);
+  writeAddress(networkName, USDC_TOKEN_CONTRACT, addressBook.usdcToken);
+  writeAddress(networkName, USDT_TOKEN_CONTRACT, addressBook.usdtToken);
+  writeAddress(
+    networkName,
+    ADAI_TOKEN_PROXY_CONTRACT,
+    addressBook.adaiTokenProxy
+  );
+  writeAddress(
+    networkName,
+    AUSDC_TOKEN_PROXY_CONTRACT,
+    addressBook.ausdcTokenProxy
+  );
+  writeAddress(
+    networkName,
+    AUSDT_TOKEN_PROXY_CONTRACT,
+    addressBook.ausdtTokenProxy
+  );
 };
 
 module.exports = func;

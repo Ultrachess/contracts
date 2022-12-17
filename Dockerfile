@@ -50,6 +50,7 @@ RUN yarn compile
 
 # Copy deployment scripts
 COPY deploy deploy
+COPY src src
 
 # This stage is the runtime image
 FROM base as ultrachess-deployer

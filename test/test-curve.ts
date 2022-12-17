@@ -6,187 +6,46 @@
  * See the file LICENSE for more information.
  */
 
-/* eslint @typescript-eslint/no-explicit-any: "off" */
-/* eslint no-empty: "off" */
-
 import chai from "chai";
 import { solidity } from "ethereum-waffle";
 import { ethers } from "ethers";
-import fs from "fs";
 import * as hardhat from "hardhat";
 
+import { ContractLibrary } from "../src/interfaces";
+import { setupFixture } from "../src/utils/setupFixture";
+
+// Setup Mocha
 chai.use(solidity);
 
-// Contract ABIs
-import { abi as CurveTokenV3Abi } from "../contracts/bytecode/curve/CurveTokenV3.json";
-import { abi as StableSwapAaveAbi } from "../contracts/bytecode/curve/StableSwapAave.json";
-import { abi as LiquidityGaugeAbi } from "../contracts/bytecode/curve-dao/LiquidityGauge.json";
-import TestERC20MintableAbi from "../src/abi/contracts/test/token/utils/TestERC20Mintable.sol/TestERC20Mintable.json";
-
-// TODO: Fully qualified contract names
-const DAI_TOKEN_CONTRACT = "DAI";
-const USDC_TOKEN_CONTRACT = "USDC";
-const USDT_TOKEN_CONTRACT = "USDT";
-
-// Deployed contract aliases
-const CURVE_AAVE_GAUGE_CONTRACT = "CurveAaveGauge";
-const CURVE_AAVE_LP_TOKEN_CONTRACT = "CurveAaveLP";
-const CURVE_AAVE_POOL_CONTRACT = "CurveAavePool";
-
-// Address book
-interface AddressBook {
-  daiTokenAddress: string;
-  usdcTokenAddress: string;
-  usdtTokenAddress: string;
-  curveAaveLpTokenAddress: string;
-  curveAavePoolAddress: string;
-  curveAaveGaugeAddress: string;
-}
-let addressBook: AddressBook | undefined;
-
-// Utility functions
-function loadAddresses(network: string): void {
-  try {
-    addressBook = JSON.parse(
-      fs
-        .readFileSync(`${__dirname}/../src/addresses/${network}.json`)
-        .toString()
-    );
-  } catch (e) {}
-}
-function loadDeployment(network: string, contract: string): string | undefined {
-  try {
-    const deployment = JSON.parse(
-      fs
-        .readFileSync(`${__dirname}/../deployments/${network}/${contract}.json`)
-        .toString()
-    );
-    if (deployment.address) return deployment.address;
-  } catch (e) {}
-
-  return; // undefined
-}
-const getContractAddress = async (
-  contractSymbol: string,
-  contractName: string,
-  network: string
-): Promise<string | undefined> => {
-  // Look up address in address book
-  if (addressBook && addressBook[contractSymbol])
-    return addressBook[contractSymbol];
-
-  // Look up address if the contract has a known deployment
-  const deploymentAddress = loadDeployment(network, contractName);
-  if (deploymentAddress) return deploymentAddress;
-
-  return; // undefined
-};
+// Setup Hardhat
+const setupTest = hardhat.deployments.createFixture(setupFixture);
 
 //
-// Fixture setup
+// Test cases
 //
-
-const setupTest = hardhat.deployments.createFixture(async ({ deployments }) => {
-  // Ensure we start from a fresh deployment
-  await deployments.fixture();
-
-  // Get the Signers
-  const [, beneficiary] = await hardhat.ethers.getSigners();
-
-  // Get network name
-  const network: string = hardhat.network.name;
-
-  // Load contract addresses
-  loadAddresses(network);
-
-  const daiTokenAddress = await getContractAddress(
-    "daiToken",
-    DAI_TOKEN_CONTRACT,
-    network
-  );
-  const usdcTokenAddress = await getContractAddress(
-    "usdcToken",
-    USDC_TOKEN_CONTRACT,
-    network
-  );
-  const usdtTokenAddress = await getContractAddress(
-    "usdtToken",
-    USDT_TOKEN_CONTRACT,
-    network
-  );
-  const curveAaveLpTokenAddress = await getContractAddress(
-    "curveAaveLpToken",
-    CURVE_AAVE_LP_TOKEN_CONTRACT,
-    network
-  );
-  const curveAavePoolAddress = await getContractAddress(
-    "curveAavePool",
-    CURVE_AAVE_POOL_CONTRACT,
-    network
-  );
-  const curveAaveGaugeAddress = await getContractAddress(
-    "curveAaveGauge",
-    CURVE_AAVE_GAUGE_CONTRACT,
-    network
-  );
-
-  // Construct the contracts for admin wallet
-  const daiContract = new ethers.Contract(
-    daiTokenAddress,
-    TestERC20MintableAbi,
-    beneficiary
-  );
-  const usdcContract = new ethers.Contract(
-    usdcTokenAddress,
-    TestERC20MintableAbi,
-    beneficiary
-  );
-  const usdtContract = new ethers.Contract(
-    usdtTokenAddress,
-    TestERC20MintableAbi,
-    beneficiary
-  );
-  const curveAaveLpTokenContract = new ethers.Contract(
-    curveAaveLpTokenAddress,
-    JSON.stringify(CurveTokenV3Abi), // Work around TypeScript problem
-    beneficiary
-  );
-  const curveAavePoolContract = new ethers.Contract(
-    curveAavePoolAddress,
-    JSON.stringify(StableSwapAaveAbi), // Work around TypeScript problem
-    beneficiary
-  );
-  const curveAaveGaugeContract = new ethers.Contract(
-    curveAaveGaugeAddress,
-    JSON.stringify(LiquidityGaugeAbi), // Work around TypeScript problem
-    beneficiary
-  );
-
-  return {
-    daiContract,
-    usdcContract,
-    usdtContract,
-    curveAaveLpTokenContract,
-    curveAavePoolContract,
-    curveAaveGaugeContract,
-  };
-});
 
 describe("Curve Aave pool", function () {
   let beneficiaryAddress: string;
-  let contracts: any;
+  let contracts: ContractLibrary;
 
+  //////////////////////////////////////////////////////////////////////////////
   // Test parameters
+  //////////////////////////////////////////////////////////////////////////////
+
   const DAI_BALANCE = ethers.utils.parseUnits("1000", 18);
   const USDC_BALANCE = ethers.utils.parseUnits("1000", 6);
   const USDT_BALANCE = ethers.utils.parseUnits("1000", 6);
   const CURVE_AAVE_LP_BALANCE = ethers.BigNumber.from("2999963038010893115846"); // About 3,000 tokens
   const DAI_FINAL_BALANCE = ethers.BigNumber.from("2999255314545236860053"); // About 2,999 DAI
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Mocha setup
+  //////////////////////////////////////////////////////////////////////////////
+
   before(async function () {
     this.timeout(60 * 1000);
 
-    // Get the admin wallet
+    // Get the beneficiary wallet
     const { beneficiary } = await hardhat.getNamedAccounts();
     beneficiaryAddress = beneficiary;
 
@@ -205,8 +64,12 @@ describe("Curve Aave pool", function () {
       gasLimit: ethers.BigNumber.from("100000"), // 100K
     };
 
-    const { daiContract, usdcContract, usdtContract, curveAavePoolContract } =
-      contracts;
+    const {
+      daiTokenContract,
+      usdcTokenContract,
+      usdtTokenContract,
+      curveAavePoolContract,
+    } = contracts;
 
     // Check valid coins
     const underlyingCoins = [
@@ -214,9 +77,9 @@ describe("Curve Aave pool", function () {
       await curveAavePoolContract.underlying_coins(1, options),
       await curveAavePoolContract.underlying_coins(2, options),
     ];
-    chai.expect(underlyingCoins[0]).to.equal(daiContract.address);
-    chai.expect(underlyingCoins[1]).to.equal(usdcContract.address);
-    chai.expect(underlyingCoins[2]).to.equal(usdtContract.address);
+    chai.expect(underlyingCoins[0]).to.equal(daiTokenContract.address);
+    chai.expect(underlyingCoins[1]).to.equal(usdcTokenContract.address);
+    chai.expect(underlyingCoins[2]).to.equal(usdtTokenContract.address);
 
     // Check invalid coins
     const tx = curveAavePoolContract.underlying_coins(3, options);
@@ -226,15 +89,16 @@ describe("Curve Aave pool", function () {
   it("should mint stablecoins", async function () {
     this.timeout(60 * 1000);
 
-    const { daiContract, usdcContract, usdtContract } = contracts;
+    const { daiTokenContract, usdcTokenContract, usdtTokenContract } =
+      contracts;
 
-    let tx = daiContract.mint(beneficiaryAddress, DAI_BALANCE);
+    let tx = daiTokenContract.mint(beneficiaryAddress, DAI_BALANCE);
     await chai.expect(tx).to.not.be.reverted;
 
-    tx = usdcContract.mint(beneficiaryAddress, USDC_BALANCE);
+    tx = usdcTokenContract.mint(beneficiaryAddress, USDC_BALANCE);
     await chai.expect(tx).to.not.be.reverted;
 
-    tx = usdtContract.mint(beneficiaryAddress, USDT_BALANCE);
+    tx = usdtTokenContract.mint(beneficiaryAddress, USDT_BALANCE);
     await chai.expect(tx).to.not.be.reverted;
   });
 
@@ -245,19 +109,23 @@ describe("Curve Aave pool", function () {
   it("should approve Curve Aave pool to transfer stablecoins", async function () {
     this.timeout(60 * 1000);
 
-    const { daiContract, usdcContract, usdtContract, curveAavePoolContract } =
-      contracts;
+    const {
+      daiTokenContract,
+      usdcTokenContract,
+      usdtTokenContract,
+      curveAavePoolContract,
+    } = contracts;
 
-    let tx = daiContract.approve(
+    let tx = daiTokenContract.approve(
       curveAavePoolContract.address,
       DAI_BALANCE.add(300) // Add some dust for testing
     );
     await chai.expect(tx).to.not.be.reverted;
 
-    tx = usdcContract.approve(curveAavePoolContract.address, USDC_BALANCE);
+    tx = usdcTokenContract.approve(curveAavePoolContract.address, USDC_BALANCE);
     await chai.expect(tx).to.not.be.reverted;
 
-    tx = usdtContract.approve(curveAavePoolContract.address, USDT_BALANCE);
+    tx = usdtTokenContract.approve(curveAavePoolContract.address, USDT_BALANCE);
     await chai.expect(tx).to.not.be.reverted;
   });
 
@@ -413,9 +281,9 @@ describe("Curve Aave pool", function () {
   it("should check DAI balance after removing liquidity", async function () {
     this.timeout(60 * 1000);
 
-    const { daiContract } = contracts;
+    const { daiTokenContract } = contracts;
 
-    const balance = await daiContract.balanceOf(beneficiaryAddress);
+    const balance = await daiTokenContract.balanceOf(beneficiaryAddress);
     chai.expect(balance).to.eq(DAI_FINAL_BALANCE);
   });
 });

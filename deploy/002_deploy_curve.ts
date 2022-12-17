@@ -11,106 +11,32 @@
 import "hardhat-deploy";
 import "@nomiclabs/hardhat-ethers";
 
-import fs from "fs";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction, DeployOptions } from "hardhat-deploy/types";
 
-// Artifacts for Vyper contracts
-import CurveTokenV3Artifact from "../contracts/bytecode/curve/CurveTokenV3.json";
-import StableSwapAaveArtifact from "../contracts/bytecode/curve/StableSwapAave.json";
-import Erc20CrvArtifact from "../contracts/bytecode/curve-dao/ERC20CRV.json";
-import GaugeControllerArtifact from "../contracts/bytecode/curve-dao/GaugeController.json";
-import LiquidityGaugeArtifact from "../contracts/bytecode/curve-dao/LiquidityGauge.json";
-import MinterArtifact from "../contracts/bytecode/curve-dao/Minter.json";
-import VotingEscrowArtifact from "../contracts/bytecode/curve-dao/VotingEscrow.json";
-
-// TODO: Fully qualified contract names
-const AAVE_POOL_CONTRACT = "LendingPool";
-const DAI_TOKEN_CONTRACT = "DAI";
-const USDC_TOKEN_CONTRACT = "USDC";
-const USDT_TOKEN_CONTRACT = "USDT";
-
-// Deployed contract aliases
-const ADAI_TOKEN_PROXY_CONTRACT = "ADAIProxy";
-const AUSDC_TOKEN_PROXY_CONTRACT = "AUSDCProxy";
-const AUSDT_TOKEN_PROXY_CONTRACT = "AUSDTProxy";
-const CRV_CONTROLLER_CONTRACT = "CRVController";
-const CRV_MINTER_CONTRACT = "CRVMinter";
-const CRV_TOKEN_CONTRACT = "CRV";
-const CRV_VOTING_CONTRACT = "CRVVoting";
-const CURVE_AAVE_GAUGE_CONTRACT = "CurveAaveGauge";
-const CURVE_AAVE_LP_TOKEN_CONTRACT = "CurveAaveLP";
-const CURVE_AAVE_POOL_CONTRACT = "CurveAavePool";
-
-//
-// Address book
-//
-
-interface AddressBook {
-  curveAaveLpTokenAddress: string;
-  curveAavePoolAddress: string;
-  crvTokenAddress: string;
-  crvVotingAddress: string;
-  crvControllerAddress: string;
-  crvMinter: string;
-  curveAaveGauge: string;
-}
-let addressBook: AddressBook | undefined;
-
-//
-// Utility functions
-//
-// TODO: Move to utils
-//
-
-function loadAddresses(network: string): void {
-  try {
-    addressBook = JSON.parse(
-      fs
-        .readFileSync(`${__dirname}/../src/addresses/${network}.json`)
-        .toString()
-    );
-  } catch (e) {}
-}
-
-function loadDeployment(network: string, contract: string): string | undefined {
-  try {
-    const deployment = JSON.parse(
-      fs
-        .readFileSync(`${__dirname}/../deployments/${network}/${contract}.json`)
-        .toString()
-    );
-    if (deployment.address) return deployment.address;
-  } catch (e) {}
-
-  return; // undefined
-}
-
-const getContractAddress = async (
-  contractSymbol: string,
-  contractName: string,
-  network: string
-): Promise<string | undefined> => {
-  // Look up address in address book
-  if (addressBook && addressBook[contractSymbol])
-    return addressBook[contractSymbol];
-
-  // Look up address if the contract has a known deployment
-  const deploymentAddress = loadDeployment(network, contractName);
-  if (deploymentAddress) return deploymentAddress;
-
-  return; // undefined
-};
-
-function writeAddress(
-  network: string,
-  contract: string,
-  address: string
-): void {
-  console.log(`Deployed ${contract} to ${address}`);
-  const addressFile = `${__dirname}/../deployments/${network}/${contract}.json`;
-  fs.writeFileSync(addressFile, JSON.stringify({ address }, undefined, 2));
-}
+import { getAddressBook, writeAddress } from "../src/addressBook";
+import {
+  CRV_CONTROLLER_CONTRACT,
+  CRV_MINTER_CONTRACT,
+  CRV_TOKEN_CONTRACT,
+  CRV_VOTING_CONTRACT,
+  CURVE_AAVE_GAUGE_CONTRACT,
+  CURVE_AAVE_LP_TOKEN_CONTRACT,
+  CURVE_AAVE_POOL_CONTRACT,
+  curveTokenV3Artifact,
+  erc20CrvArtifact,
+  gaugeControllerArtifact,
+  liquidityGaugeArtifact,
+  minterArtifact,
+  stableSwapAaveArtifact,
+  votingEscrowArtifact,
+} from "../src/contracts/depends";
+import {
+  DAI_TOKEN_CONTRACT,
+  USDC_TOKEN_CONTRACT,
+  USDT_TOKEN_CONTRACT,
+} from "../src/contracts/testing";
+import { AddressBook } from "../src/interfaces";
 
 //
 // Deploy the Curve and Curve DAO environments
@@ -129,84 +55,10 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   };
 
   // Get the network name
-  const network = hardhat_re.network.name;
+  const networkName = hardhat_re.network.name;
 
   // Get the contract addresses
-  loadAddresses(network);
-
-  // Aave addresses
-  const adaiTokenProxyAddress = await getContractAddress(
-    "adaiTokenProxy",
-    ADAI_TOKEN_PROXY_CONTRACT,
-    network
-  );
-  const ausdcTokenProxyAddress = await getContractAddress(
-    "ausdcTokenProxy",
-    AUSDC_TOKEN_PROXY_CONTRACT,
-    network
-  );
-  const ausdtTokenProxyAddress = await getContractAddress(
-    "ausdtTokenProxy",
-    AUSDT_TOKEN_PROXY_CONTRACT,
-    network
-  );
-  const daiTokenAddress = await getContractAddress(
-    "daiToken",
-    DAI_TOKEN_CONTRACT,
-    network
-  );
-  const usdcTokenAddress = await getContractAddress(
-    "usdcToken",
-    USDC_TOKEN_CONTRACT,
-    network
-  );
-  const usdtTokenAddress = await getContractAddress(
-    "usdtToken",
-    USDT_TOKEN_CONTRACT,
-    network
-  );
-  const aavePoolAddress = await getContractAddress(
-    "aavePool",
-    AAVE_POOL_CONTRACT,
-    network
-  );
-
-  // Curve addresses
-  let curveAaveLpTokenAddress = await getContractAddress(
-    "curveAaveLpToken",
-    CURVE_AAVE_LP_TOKEN_CONTRACT,
-    network
-  );
-  let curveAavePoolAddress = await getContractAddress(
-    "curveAavePool",
-    CURVE_AAVE_POOL_CONTRACT,
-    network
-  );
-  let crvTokenAddress = await getContractAddress(
-    "crvToken",
-    CRV_TOKEN_CONTRACT,
-    network
-  );
-  let crvVotingAddress = await getContractAddress(
-    "crvVoting",
-    CRV_VOTING_CONTRACT,
-    network
-  );
-  let crvControllerAddress = await getContractAddress(
-    "crvController",
-    CRV_CONTROLLER_CONTRACT,
-    network
-  );
-  let crvMinterAddress = await getContractAddress(
-    "crvMinter",
-    CRV_MINTER_CONTRACT,
-    network
-  );
-  let curveAaveGaugeAddress = await getContractAddress(
-    "curveAaveGauge",
-    CURVE_AAVE_GAUGE_CONTRACT,
-    network
-  );
+  const addressBook: AddressBook = await getAddressBook(networkName);
 
   //////////////////////////////////////////////////////////////////////////////
   //
@@ -215,15 +67,15 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   //////////////////////////////////////////////////////////////////////////////
 
   // Deploy the Curve Aave LP token contract
-  if (curveAaveLpTokenAddress && network != "hardhat") {
+  if (addressBook.curveAaveLpToken && networkName != "hardhat") {
     console.log(
-      `Using deployed ${CURVE_AAVE_LP_TOKEN_CONTRACT} at ${curveAaveLpTokenAddress}`
+      `Using deployed ${CURVE_AAVE_LP_TOKEN_CONTRACT} at ${addressBook.curveAaveLpToken}`
     );
   } else {
     console.log(`Deploying ${CURVE_AAVE_LP_TOKEN_CONTRACT}`);
     const tx = await deploy(CURVE_AAVE_LP_TOKEN_CONTRACT, {
       ...opts,
-      contract: CurveTokenV3Artifact,
+      contract: curveTokenV3Artifact,
       args: [
         "Funny Curve.fi amDAI/amUSDC/amUSDT", // name
         "am3CRV", // symbol
@@ -231,7 +83,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
         deployer, // initial token holder
       ],
     });
-    curveAaveLpTokenAddress = tx.address;
+    addressBook.curveAaveLpToken = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -241,27 +93,31 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   //////////////////////////////////////////////////////////////////////////////
 
   // Deploy the Curve Aave pool contract
-  if (curveAavePoolAddress && network != "hardhat") {
+  if (addressBook.curveAavePool && networkName != "hardhat") {
     console.log(
-      `Using deployed ${CURVE_AAVE_POOL_CONTRACT} at ${curveAavePoolAddress}`
+      `Using deployed ${CURVE_AAVE_POOL_CONTRACT} at ${addressBook.curveAavePool}`
     );
   } else {
     console.log(`Deploying ${CURVE_AAVE_POOL_CONTRACT}`);
     const tx = await deploy(CURVE_AAVE_POOL_CONTRACT, {
       ...opts,
-      contract: StableSwapAaveArtifact,
+      contract: stableSwapAaveArtifact,
       args: [
-        [adaiTokenProxyAddress, ausdcTokenProxyAddress, ausdtTokenProxyAddress], // coins
-        [daiTokenAddress, usdcTokenAddress, usdtTokenAddress], // underlying coins
-        curveAaveLpTokenAddress, // pool token
-        aavePoolAddress, // Aave lending pool
+        [
+          addressBook.adaiTokenProxy,
+          addressBook.ausdcTokenProxy,
+          addressBook.ausdtTokenProxy,
+        ], // coins
+        [addressBook.daiToken, addressBook.usdcToken, addressBook.usdtToken], // underlying coins
+        addressBook.curveAaveLpToken, // pool token
+        addressBook.aavePool, // Aave lending pool
         ethers.BigNumber.from("2000"), // A
         ethers.BigNumber.from("3000000"), // fee
         ethers.BigNumber.from("5000000000"), // admin fee
         ethers.BigNumber.from("20000000000"), // offpeg fee multiplier
       ],
     });
-    curveAavePoolAddress = tx.address;
+    addressBook.curveAavePool = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -271,13 +127,15 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   //////////////////////////////////////////////////////////////////////////////
 
   // Deploy CRV token
-  if (crvTokenAddress) {
-    console.log(`Using deployed ${CRV_TOKEN_CONTRACT} at ${crvTokenAddress}`);
+  if (addressBook.crvToken) {
+    console.log(
+      `Using deployed ${CRV_TOKEN_CONTRACT} at ${addressBook.crvToken}`
+    );
   } else {
     console.log(`Deploying ${CRV_TOKEN_CONTRACT}`);
     const tx = await deploy(CRV_TOKEN_CONTRACT, {
       ...opts,
-      contract: Erc20CrvArtifact,
+      contract: erc20CrvArtifact,
       args: [
         "Curve DAO Token", // name
         "CRV", // symbol
@@ -286,19 +144,21 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
         deployer, // initial holder
       ],
     });
-    crvTokenAddress = tx.address;
+    addressBook.crvToken = tx.address;
   }
 
   // Deploy CRV voting
-  if (crvVotingAddress) {
-    console.log(`Using deployed ${CRV_VOTING_CONTRACT} at ${crvVotingAddress}`);
+  if (addressBook.crvVoting) {
+    console.log(
+      `Using deployed ${CRV_VOTING_CONTRACT} at ${addressBook.crvVoting}`
+    );
   } else {
     console.log(`Deploying ${CRV_VOTING_CONTRACT}`);
     const tx = await deploy(CRV_VOTING_CONTRACT, {
       ...opts,
-      contract: VotingEscrowArtifact,
+      contract: votingEscrowArtifact,
       args: [
-        crvTokenAddress, // token
+        addressBook.crvToken, // token
         "Vote-escrowed CRV", // name
         "veCRV", // symbol
         "veCRV_1.0.0", // version
@@ -306,42 +166,44 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
         deployer, // controller
       ],
     });
-    crvVotingAddress = tx.address;
+    addressBook.crvVoting = tx.address;
   }
 
   // Deploy CRV controller
-  if (crvControllerAddress) {
+  if (addressBook.crvController) {
     console.log(
-      `Using deployed ${CRV_CONTROLLER_CONTRACT} at ${crvControllerAddress}`
+      `Using deployed ${CRV_CONTROLLER_CONTRACT} at ${addressBook.crvController}`
     );
   } else {
     console.log(`Deploying ${CRV_CONTROLLER_CONTRACT}`);
     const tx = await deploy(CRV_CONTROLLER_CONTRACT, {
       ...opts,
-      contract: GaugeControllerArtifact,
+      contract: gaugeControllerArtifact,
       args: [
-        crvTokenAddress, // token
-        crvVotingAddress, // voting escrow
+        addressBook.crvToken, // token
+        addressBook.crvVoting, // voting escrow
         deployer, // admin
       ],
     });
-    crvControllerAddress = tx.address;
+    addressBook.crvController = tx.address;
   }
 
   // Deploy CRV minter
-  if (crvMinterAddress) {
-    console.log(`Using deployed ${CRV_MINTER_CONTRACT} at ${crvMinterAddress}`);
+  if (addressBook.crvMinter) {
+    console.log(
+      `Using deployed ${CRV_MINTER_CONTRACT} at ${addressBook.crvMinter}`
+    );
   } else {
     console.log(`Deploying ${CRV_MINTER_CONTRACT}`);
     const tx = await deploy(CRV_MINTER_CONTRACT, {
       ...opts,
-      contract: MinterArtifact,
+      contract: minterArtifact,
       args: [
-        crvTokenAddress, // token
-        crvControllerAddress, // controller
+        addressBook.crvToken, // token
+        addressBook.crvController, // controller
       ],
     });
-    crvMinterAddress = tx.address;
+    addressBook.crvMinter = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -351,22 +213,22 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   //////////////////////////////////////////////////////////////////////////////
 
   // Deploy the Curve Aave gauge contract
-  if (curveAaveGaugeAddress && network != "hardhat") {
+  if (addressBook.curveAaveGauge && networkName != "hardhat") {
     console.log(
-      `Using deployed ${CURVE_AAVE_GAUGE_CONTRACT} at ${curveAaveGaugeAddress}`
+      `Using deployed ${CURVE_AAVE_GAUGE_CONTRACT} at ${addressBook.curveAaveGauge}`
     );
   } else {
     console.log(`Deploying ${CURVE_AAVE_GAUGE_CONTRACT}`);
     const tx = await deploy(CURVE_AAVE_GAUGE_CONTRACT, {
       ...opts,
-      contract: LiquidityGaugeArtifact,
+      contract: liquidityGaugeArtifact,
       args: [
-        curveAaveLpTokenAddress, // LP address
-        crvMinterAddress, // minter
+        addressBook.curveAaveLpToken, // LP address
+        addressBook.crvMinter, // minter
         deployer, // admin
       ],
     });
-    curveAaveGaugeAddress = tx.address;
+    addressBook.curveAaveGauge = tx.address;
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -379,7 +241,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     CURVE_AAVE_LP_TOKEN_CONTRACT,
     { from: deployer, log: true },
     "set_minter",
-    curveAavePoolAddress
+    addressBook.curveAavePool
   );
 
   //////////////////////////////////////////////////////////////////////////////
@@ -401,7 +263,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       log: true,
     },
     "set_minter",
-    crvMinterAddress
+    addressBook.crvMinter
   );
 
   //
@@ -430,7 +292,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       log: true,
     },
     "add_gauge(address,int128,uint256)",
-    curveAaveGaugeAddress, // address
+    addressBook.curveAaveGauge, // address
     0, // gauge type,
     0 // weight (TODO)
   );
@@ -544,7 +406,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       log: true,
     },
     "approve",
-    curveAavePoolAddress,
+    addressBook.curveAavePool,
     INITIAL_DAI
   );
 
@@ -561,7 +423,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       log: true,
     },
     "approve",
-    curveAavePoolAddress,
+    addressBook.curveAavePool,
     INITIAL_USDC
   );
 
@@ -578,7 +440,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
       log: true,
     },
     "approve",
-    curveAavePoolAddress,
+    addressBook.curveAavePool,
     INITIAL_USDT
   );
 
@@ -630,7 +492,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
     { from: deployer },
     "allowance",
     deployer,
-    curveAaveGaugeAddress
+    addressBook.curveAaveGauge
   );
 
   //
@@ -647,7 +509,7 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
         log: true,
       },
       "approve",
-      curveAaveGaugeAddress,
+      addressBook.curveAaveGauge,
       curveAaveLpBalance.sub(curveAaveLpAllowance)
     );
   }
@@ -672,9 +534,21 @@ const func: DeployFunction = async (hardhat_re: HardhatRuntimeEnvironment) => {
   // Record addresses
   //////////////////////////////////////////////////////////////////////////////
 
-  writeAddress(network, CURVE_AAVE_LP_TOKEN_CONTRACT, curveAaveLpTokenAddress);
-  writeAddress(network, CURVE_AAVE_POOL_CONTRACT, curveAavePoolAddress);
-  writeAddress(network, CURVE_AAVE_GAUGE_CONTRACT, curveAaveGaugeAddress);
+  writeAddress(
+    networkName,
+    CURVE_AAVE_LP_TOKEN_CONTRACT,
+    addressBook.curveAaveLpToken
+  );
+  writeAddress(
+    networkName,
+    CURVE_AAVE_POOL_CONTRACT,
+    addressBook.curveAavePool
+  );
+  writeAddress(
+    networkName,
+    CURVE_AAVE_GAUGE_CONTRACT,
+    addressBook.curveAaveGauge
+  );
 };
 
 module.exports = func;
