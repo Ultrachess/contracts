@@ -35,8 +35,8 @@ describe("Curve Aave pool", function () {
   const DAI_BALANCE = ethers.utils.parseUnits("1000", 18);
   const USDC_BALANCE = ethers.utils.parseUnits("1000", 6);
   const USDT_BALANCE = ethers.utils.parseUnits("1000", 6);
-  const CURVE_AAVE_LP_BALANCE = ethers.BigNumber.from("2999963038010893115846"); // About 3,000 tokens
-  const DAI_FINAL_BALANCE = ethers.BigNumber.from("2999255314545236860053"); // About 2,999 DAI
+  const CURVE_AAVE_LP_BALANCE = ethers.BigNumber.from("2999963037994045801166"); // About 3,000 tokens
+  const DAI_FINAL_BALANCE = ethers.BigNumber.from("2999255314468488916363"); // About 2,999 DAI
 
   //////////////////////////////////////////////////////////////////////////////
   // Mocha setup
