@@ -2,9 +2,6 @@
 # Need to use Debian-based image because solc >= 0.6 requires modern glibc instead of musl
 FROM node:18.12.1-bullseye-slim as base
 
-# Pull in the latest npm to avoid update notices in the log
-RUN npm install -g npm
-
 # This stage installs system dependencies for building the node projects
 FROM base as builder
 
@@ -54,6 +51,9 @@ COPY src src
 
 # This stage is the runtime image
 FROM base as ultrachess-deployer
+
+# Pull in the latest npm to avoid update notices in the log
+RUN npm install -g npm
 
 # Copy yarn build
 COPY --from=ultrachess-builder /app /app
