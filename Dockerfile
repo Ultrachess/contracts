@@ -1,14 +1,14 @@
 # syntax=docker.io/docker/dockerfile:1.4
 # Need to use Debian-based image because solc >= 0.6 requires modern glibc instead of musl
-FROM node:18.12.1-bullseye-slim as base
+FROM node:18-bullseye as base
 
 # This stage installs system dependencies for building the node projects
 FROM base as builder
 
 # Install build dependencies
 RUN <<EOF
-apt-get update
-DEBIAN_FRONTEND="noninteractive" apt-get install -y \
+apt update
+DEBIAN_FRONTEND="noninteractive" apt install -y \
   bash \
   git \
   jq \
@@ -20,7 +20,6 @@ DEBIAN_FRONTEND="noninteractive" apt-get install -y \
   wget
 rm -rf /var/lib/apt/lists/*
 EOF
-
 
 # This stage copies the project and build it
 FROM builder as ultrachess-builder
