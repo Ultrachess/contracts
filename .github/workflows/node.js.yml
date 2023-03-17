@@ -99,7 +99,7 @@ jobs:
             artifacts
             src/abi
             src/types
-          key: restore-contract-artifacts-${{ hashFiles('contracts/**') }}
+          key: restore-contract-artifacts-${{ hashFiles('contracts/**', 'requirements.txt') }}
 
       - name: yarn install
         if: steps.restore-node.outputs.cache-hit != 'true'
