@@ -1,3 +1,5 @@
+# Ultrachess DeFi Tokenomics for non-zero-sum betting
+
 ## Yield-bearing LP SFTs (staked CHESS/ultra3CRV)
 
 ![Ultrachess screenshot](https://user-images.githubusercontent.com/15795328/217420293-bfca5517-c7bd-42bc-aa60-04ccb0bad0d8.png)
