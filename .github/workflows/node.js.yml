@@ -27,7 +27,7 @@ jobs:
       matrix:
         include:
           - os: ubuntu-20.04
-            node-version: 14
+            node-version: 16
           - os: ubuntu-22.04
             node-version: 18
 
@@ -136,6 +136,13 @@ jobs:
       - name: yarn export
         if: steps.restore-contract-artifacts.outputs.cache-hit != 'true'
         run: yarn export
+
+      - name: yarn compile
+        if: steps.restore-contract-artifacts.outputs.cache-hit == 'true'
+        run: yarn compile
+
+      - name: yarn typescript
+        run: yarn typescript
 
       - name: yarn test
         run: yarn test
