@@ -6,7 +6,7 @@
  * See the file LICENSE for more information.
  */
 
-pragma solidity 0.8.16;
+pragma solidity 0.8.18;
 
 /**
  * @dev Token router to add liquidity to the Curve Aave pool in exchange for

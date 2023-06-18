@@ -6,7 +6,7 @@
  * See the file LICENSE for more information.
  */
 
-pragma solidity 0.8.16;
+pragma solidity 0.8.18;
 
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {ERC1155} from "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";

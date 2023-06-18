@@ -6,7 +6,7 @@
  * See the file LICENSE for more information.
  */
 
-pragma solidity 0.8.16;
+pragma solidity 0.8.18;
 
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
