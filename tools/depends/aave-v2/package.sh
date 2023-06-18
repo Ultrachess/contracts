@@ -37,7 +37,7 @@ set -o nounset
 #
 
 AAVE_V2_NAME="aave-v2"
-AAVE_V2_VERSION="0829f97c5463f22087cecbcb26e8ebe558592c16" # master
+AAVE_V2_VERSION="ce53c4a8c8620125063168620eba0a8a92854eb8" # master
 AAVE_V2_REPO="https://github.com/aave/protocol-v2.git"
 
 #

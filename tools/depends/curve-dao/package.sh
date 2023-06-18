@@ -42,7 +42,7 @@ set -o nounset
 #
 
 CURVE_DAO_NAME="curve-dao"
-CURVE_DAO_VERSION="1ce6de401d47b28d977f24fb6b8f98ccfededa4a" # master
+CURVE_DAO_VERSION="86679ba5aa9d85a5b0a22b090c859b5cdefe3422" # master
 CURVE_DAO_REPO="https://github.com/curvefi/curve-dao-contracts.git"
 CURVE_DAO_LICENSE="MIT"
 
