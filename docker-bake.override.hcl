@@ -1,10 +1,10 @@
 
 variable "TAG" {
-  default = "devel"
+  default = "1.0.1"
 }
 
 variable "DOCKER_ORGANIZATION" {
-  default = "ultrachess"
+  default = "juztamau5"
 }
 
 target "ultrachess-deployer" {
