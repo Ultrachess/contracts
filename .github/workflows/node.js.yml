@@ -91,7 +91,7 @@ jobs:
             ~/.solcx
           key: restore-solcx-${{ hashFiles('tools/depends/curve/**', 'tools/depends/curve-dao/**') }}
 
-      - name: Restores smart contract artifacts
+      - name: Restore smart contract artifacts
         id: restore-contract-artifacts
         uses: actions/cache@v3
         with:
@@ -99,7 +99,7 @@ jobs:
             artifacts
             src/abi
             src/types
-          key: restore-contract-artifacts-${{ hashFiles('contracts/**', 'requirements.txt') }}
+          key: restore-contract-artifacts-${{ hashFiles('contracts/**', 'requirements.txt', 'tools/build-depends.sh', 'tools/depends/**') }}
 
       - name: yarn install
         if: steps.restore-node.outputs.cache-hit != 'true'

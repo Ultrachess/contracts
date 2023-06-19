@@ -1,6 +1,6 @@
 # syntax=docker.io/docker/dockerfile:1.4
 # Need to use Debian-based image because solc >= 0.6 requires modern glibc instead of musl
-FROM node:18-bullseye as base
+FROM node:18-bookworm as base
 
 # This stage installs system dependencies for building the node projects
 FROM base as builder
@@ -15,6 +15,7 @@ DEBIAN_FRONTEND="noninteractive" apt install -y \
   make \
   patch \
   python3 \
+  python3-dev \
   python3-venv \
   tar \
   wget

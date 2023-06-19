@@ -29,6 +29,7 @@
 #   * npx (installed with Node)
 #   * patch
 #   * python3
+#   * python3-dev
 #   * python3-venv
 #
 
@@ -45,6 +46,13 @@ CURVE_NAME="curve"
 CURVE_VERSION="b0bbf77f8f93c9c5f4e415bce9cd71f0cdee960e" # master
 CURVE_REPO="https://github.com/curvefi/curve-contract.git"
 CURVE_LICENSE="MIT"
+
+#
+# Tool versions
+#
+
+ETH_BROWNIE_VERSION="1.19.3"
+ETH_BROWNIE_REQUIREMENTS_URL="https://raw.github.com/eth-brownie/brownie/v${ETH_BROWNIE_VERSION}/requirements.in"
 
 #
 # Environment paths
@@ -110,13 +118,31 @@ function build_curve() {
   (
     cd "${REPO_DIR_CURVE}"
 
+    # Create virtual environment
     python3 -m venv .venv
 
-    set +o nounset # Bug in python3-venv that ships with Ubuntu 18.04
+    # Bug in python3-venv that ships with Ubuntu 18.04
+    set +o nounset
 
+    # Enter virtual environment
     source .venv/bin/activate
-    pip3 install eth-brownie
+
+    # Update Python dependencies
+    pip3 install --upgrade pip setuptools wheel
+
+    # Install brownie dependencies
+    pip3 install -r "${ETH_BROWNIE_REQUIREMENTS_URL}"
+
+    # Version >= 0.9.0 needed for Python 3.11 support
+    pip3 install --upgrade parsimonious
+
+    # Install brownie
+    pip3 install --no-deps eth-brownie==${ETH_BROWNIE_VERSION}
+
+    # Run brownie
     brownie compile
+
+    # Leave virtual environment
     deactivate
 
     set -o nounset
