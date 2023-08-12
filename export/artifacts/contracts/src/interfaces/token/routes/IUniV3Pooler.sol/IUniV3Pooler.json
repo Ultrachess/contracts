@@ -1,0 +1,454 @@
+{
+  "contractName": "IUniV3Pooler",
+  "sourceName": "contracts/src/interfaces/token/routes/IUniV3Pooler.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "nftAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "nftTokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "liquidityAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "baseTokensCollected",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "assetTokensCollected",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "stablesReturned",
+          "type": "uint256"
+        }
+      ],
+      "name": "NFTCollected",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "nftAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "nftTokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256[3]",
+          "name": "stableAmounts",
+          "type": "uint256[3]"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "baseTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "baseTokenShare",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "assetTokenShare",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "liquidityAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "NFTMinted",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "nftTokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "collectFromNFT",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stablesReturned",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "nftTokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "exitOneStable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stablesReturned",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[3]",
+          "name": "stableAmounts",
+          "type": "uint256[3]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "assetSwapAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "baseTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "baseSwapAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "mintNFT",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "nftTokenId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[3]",
+          "name": "stableAmounts",
+          "type": "uint256[3]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "baseTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "mintNFTImbalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "nftTokenId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "stableAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "mintNFTOneStable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "nftTokenId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "baseTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "mintNFTWithBaseToken",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "nftTokenId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[3]",
+          "name": "stableAmounts",
+          "type": "uint256[3]"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "mintNFTWithStables",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "nftTokenId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Token router to liquidity to the Uniswap V3 pool in exchange for an LP NFT",
+    "events": {
+      "NFTCollected(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256)": {
+        "details": "Emitted when fees are collected from a Uniswap V3 LP NFT",
+        "params": {
+          "assetTokensCollected": "The amount of asset token fees collected",
+          "baseTokensCollected": "The amount of base token fees collected",
+          "liquidityAmount": "The amount of liquidity in the NFT before collection",
+          "nftAddress": "The address of the NFT manager contract",
+          "nftTokenId": "The ID of the NFT",
+          "recipient": "The address of the recipient of the LP NFT",
+          "sender": "The sender of the collection requiest",
+          "stableIndex": "The index of the stablecoin to collect fees into                    (0 = DAI, 1 = USDC, 2 = USDT)",
+          "stablesReturned": "The amount of stablecoins returned to the recipient"
+        }
+      },
+      "NFTMinted(address,address,address,uint256,uint256[3],uint256,uint256,uint256,uint256)": {
+        "details": "Emitted when a Uniswap V3 LP NFT is minted",
+        "params": {
+          "assetTokenShare": "The amount of asset tokens in the NFT",
+          "baseTokenAmount": "The amount of base tokens spent on the NFT",
+          "baseTokenShare": "The amount of base tokens in the NFT",
+          "liquidityAmount": "The amount of liquidity created",
+          "nftAddress": "The address of the NFT manager contract",
+          "nftTokenId": "The ID of the NFT",
+          "recipient": "The address of the recipient of the LP NFT",
+          "sender": "The sender of the underlying stablecoins",
+          "stableAmounts": "The amounts of stablecoins spent on the NFT                      (0 = DAI, 1 = USDC, 2 = USDT)"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "collectFromNFT(uint256,uint256,address)": {
+        "details": "Collects the fees from an LP NFT and returns the underlying stablecoins and LP NFT to the recipient",
+        "params": {
+          "nftTokenId": "The ID of the LP NFT",
+          "recipient": "The recipient of the fees and the LP NFT",
+          "stableIndex": "The index of the stablecoin to receive                    (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "stablesReturned": "The amount of stablecoins returned to the recipient"
+        }
+      },
+      "exitOneStable(uint256,uint256)": {
+        "details": "Collects everything and returns the LP NFT in one transaction",
+        "params": {
+          "nftTokenId": "The ID of the LP NFT",
+          "stableIndex": "The index of the stablecoin to receive                    (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "stablesReturned": "The amount of stablecoins returned to the sender"
+        }
+      },
+      "mintNFT(uint256[3],uint256,uint256,uint256,address)": {
+        "details": "Mints a Uniswap V3 LP NFT and deposits liquidity into the pool A one-sided swap will occur, allowing unequal amounts of tokens to be deposited. The direction of the swap is determined by which of the swap amounts is non-zero.",
+        "params": {
+          "assetSwapAmount": "The amount of the asset token to swap for the base                        token",
+          "baseSwapAmount": "The amount of the base token to swap for the asset                       token",
+          "baseTokenAmount": "The amount of the base token to deposit",
+          "recipient": "The recient of the LP NFT",
+          "stableAmounts": "The amounts of underlying stablecoins to deposit                      (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "nftTokenId": "The ID of the minted NFT"
+        }
+      },
+      "mintNFTImbalance(uint256[3],uint256,address)": {
+        "details": "Mints a Uniswap V3 LP NFT and deposits liquidity into the pool without performing a one-sided token swap",
+        "params": {
+          "baseTokenAmount": "The amount of the base token to deposit",
+          "recipient": "The recient of the LP NFT",
+          "stableAmounts": "The amounts of underlying stablecoins to deposit                      (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "nftTokenId": "The ID of the minted NFT"
+        }
+      },
+      "mintNFTOneStable(uint256,uint256)": {
+        "details": "Mints an LP NFT and deposits liquidity into the pool using a single stablecoin",
+        "params": {
+          "stableAmount": "The amount of the stablecoin to use",
+          "stableIndex": "The index of the stablecoin to use                    (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "nftTokenId": "The ID of the minted NFT"
+        }
+      },
+      "mintNFTWithBaseToken(uint256,address)": {
+        "details": "Mints an LP NFT and deposits liquidity into the pool using base tokens",
+        "params": {
+          "baseTokenAmount": "The amounts of base tokens to deposit",
+          "recipient": "The recipient of the LP NFT"
+        },
+        "returns": {
+          "nftTokenId": "The ID of the minted NFT"
+        }
+      },
+      "mintNFTWithStables(uint256[3],address)": {
+        "details": "Mints an LP NFT and deposits liquidity into the pool using stablecoins",
+        "params": {
+          "recipient": "The recipient of the LP NFT",
+          "stableAmounts": "The amounts of stablecoins to use"
+        },
+        "returns": {
+          "nftTokenId": "The ID of the minted NFT"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "collectFromNFT(uint256,uint256,address)": "c2781f1f",
+      "exitOneStable(uint256,uint256)": "3f782e08",
+      "mintNFT(uint256[3],uint256,uint256,uint256,address)": "99c004bb",
+      "mintNFTImbalance(uint256[3],uint256,address)": "992cb189",
+      "mintNFTOneStable(uint256,uint256)": "b4d1e09d",
+      "mintNFTWithBaseToken(uint256,address)": "b3a65201",
+      "mintNFTWithStables(uint256[3],address)": "320ad071"
+    }
+  }
+}

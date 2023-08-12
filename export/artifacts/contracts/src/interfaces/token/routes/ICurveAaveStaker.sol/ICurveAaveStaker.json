@@ -1,0 +1,346 @@
+{
+  "contractName": "ICurveAaveStaker",
+  "sourceName": "contracts/src/interfaces/token/routes/ICurveAaveStaker.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256[3]",
+          "name": "stableAmounts",
+          "type": "uint256[3]"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "gaugeShares",
+          "type": "uint256"
+        }
+      ],
+      "name": "GaugeStaked",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "gaugeShares",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "stablesReturned",
+          "type": "uint256"
+        }
+      ],
+      "name": "GaugeUnstakedOneStable",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "exitOneStable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stablesReturned",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[3]",
+          "name": "stableAmounts",
+          "type": "uint256[3]"
+        },
+        {
+          "internalType": "bool",
+          "name": "isDeposit",
+          "type": "bool"
+        }
+      ],
+      "name": "getAssetAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "assetAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "assetAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "getStableAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stableAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getVirtualPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "virtualPrice",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "stableAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "stakeOneStable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "gaugeTokenAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[3]",
+          "name": "stableAmounts",
+          "type": "uint256[3]"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "stakeTokens",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "assetTokenAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "assetTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "unstakeOneStable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stablesReturned",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Token router to stake stablecoins to the Curve Aave gauge in exchange for asset tokens This contract provides an interface for staking and unstaking stablecoins in the Curve Aave gauge as a single transaction. TODO: Staking in the gauge generates rewards in the form of CRV tokens. These tokens are yet not managed by this contract.",
+    "events": {
+      "GaugeStaked(address,address,uint256[3],uint256)": {
+        "details": "Emitted when stablecoins are staked to the Curve Aave gauge",
+        "params": {
+          "gaugeShares": "The amount of gauge shares received",
+          "recipient": "The address of the recipient of the gauge shares",
+          "sender": "The sender of the underlying stablecoins",
+          "stableAmounts": "The amounts of stablecoins staked to the gauge                      (0 = DAI, 1 = USDC, 2 = USDT)"
+        }
+      },
+      "GaugeUnstakedOneStable(address,address,uint256,uint256,uint256)": {
+        "details": "Emitted when stablecoins are unstaked from the Curve Aave gauge",
+        "params": {
+          "gaugeShares": "The amount of gauge shares unstaked from the gauge",
+          "recipient": "The address of the recipient of the single stablecoin",
+          "sender": "The sender",
+          "stableIndex": "The index of the stablecoin to return                    (0 = DAI, 1 = USDC, 2 = USDT)",
+          "stablesReturned": "The amount of stablecoins returned to the recipient"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "exitOneStable(uint256)": {
+        "details": "Unstake everything as a single stablecoin in one function call",
+        "params": {
+          "stableIndex": "The index of the stablecoin to unstake                    (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "stablesReturned": "The amount of stablecoins returned to the sender"
+        }
+      },
+      "getAssetAmount(uint256[3],bool)": {
+        "details": "Get the amount of LP tokens that would be minted or burned for a given amount of underlying stablecoins",
+        "params": {
+          "isDeposit": "True if the amounts are being added to the pool, false                  if they are being removed",
+          "stableAmounts": "The amount of each underlying stablecoin to add or                      remove"
+        },
+        "returns": {
+          "assetAmount": "The amount of asset tokens that would be minted"
+        }
+      },
+      "getStableAmount(uint256,uint256)": {
+        "details": "Calculate the amount of underlying stablecoins that would be returned for a given amount of asset tokens",
+        "params": {
+          "assetAmount": "The amount of asset tokens to unstake",
+          "stableIndex": "The index of the stablecoin to receive                    (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "stableAmount": "The amount of the underlying stablecoin that would                      be returned"
+        }
+      },
+      "getVirtualPrice()": {
+        "details": "Get the current virtual price of the asset token The virtual price in Curve is obtained through taking the invariance of the pool, which by default takes every stablecoin as valued at 1.00 USD. The virtual price measures pool growth; this is not a dollar value.",
+        "returns": {
+          "virtualPrice": "The asset token virtual price normalized to 1e18"
+        }
+      },
+      "stakeOneStable(uint256,uint256)": {
+        "details": "Stake a single underlying stablecoin to the gauge and return the gauge shares",
+        "params": {
+          "stableAmount": "The amount of the underlying stablecoin to stake",
+          "stableIndex": "The index of the stablecoin to stake                    (DAI = 0, USDC = 1, USDT = 2)"
+        },
+        "returns": {
+          "gaugeTokenAmount": "The amount of gauge shares minted and returned"
+        }
+      },
+      "stakeTokens(uint256[3],address)": {
+        "details": "Stake an amount of underlying stablecoins to the gauge and return the asset token representing the staked amount",
+        "params": {
+          "recipient": "The recipient of the asset tokens",
+          "stableAmounts": "The amounts of the underlying stablecoins to stake                      (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "assetTokenAmount": "The amount of gauge shares minted and returned to the recipient"
+        }
+      },
+      "unstakeOneStable(uint256,uint256,address)": {
+        "details": "Unstake an amount of gauge shares from the gauge and return the amount as a single underlying stablecoin",
+        "params": {
+          "assetTokenAmount": "The amount of asset tokens being redeemed",
+          "recipient": "The recipient of the underlying stablecoin",
+          "stableIndex": "The index of the stablecoin to receive                    (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "stablesReturned": "The amount of the underlying stablecoin returned                         to the recipient"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "exitOneStable(uint256)": "4bde21f9",
+      "getAssetAmount(uint256[3],bool)": "bf45ddba",
+      "getStableAmount(uint256,uint256)": "81f251b9",
+      "getVirtualPrice()": "e25aa5fa",
+      "stakeOneStable(uint256,uint256)": "0eb9fc96",
+      "stakeTokens(uint256[3],address)": "40a25c56",
+      "unstakeOneStable(uint256,uint256,address)": "88215ca7"
+    }
+  }
+}

@@ -1,0 +1,351 @@
+{
+  "contractName": "IUniV3Swapper",
+  "sourceName": "contracts/src/interfaces/token/routes/IUniV3Swapper.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256[3]",
+          "name": "stableAmounts",
+          "type": "uint256[3]"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "assetTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "baseTokenReturned",
+          "type": "uint256"
+        }
+      ],
+      "name": "TokensBought",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "baseTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "assetTokensReturned",
+          "type": "uint256"
+        }
+      ],
+      "name": "TokensSoldForAsset",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "baseTokenSpent",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "assetTokensUnstaked",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "stablesReturned",
+          "type": "uint256"
+        }
+      ],
+      "name": "TokensSoldForStable",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[3]",
+          "name": "stableAmounts",
+          "type": "uint256[3]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "assetTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "buyTokens",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "baseTokensReturned",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "stableAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "buyTokensOneStable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "baseTokensReturned",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "exitOneStable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stablesReturned",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "baseTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "sellTokensForAsset",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "assetTokensReturned",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "baseTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "sellTokensForStable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stablesReturned",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Token router to swap between the base token and a yielding asset token",
+    "events": {
+      "TokensBought(address,address,uint256[3],uint256,uint256)": {
+        "details": "Emitted when base tokens are purchased on Uniswap",
+        "params": {
+          "assetTokenAmount": "The amount of asset tokens being spent",
+          "baseTokenReturned": "The amount of base tokens received",
+          "recipient": "The address of the recipient of the base token",
+          "sender": "The sender of the underlying stablecoins",
+          "stableAmounts": "The amounts of stablecoins to spend                      (0 = DAI, 1 = USDC, 2 = USDT)"
+        }
+      },
+      "TokensSoldForAsset(address,address,uint256,uint256)": {
+        "details": "Emitted when base tokens are sold on Uniswap for asset tokens",
+        "params": {
+          "assetTokensReturned": "The amount of asset tokens returned to the                            recipient Note that due to dust, assetTokensReturned may be more than assetTokenAmount.",
+          "baseTokenAmount": "The amount of base tokens spent",
+          "recipient": "The address of the recipient of the underlying stablecoins",
+          "sender": "The sender of the base token"
+        }
+      },
+      "TokensSoldForStable(address,address,uint256,uint256,uint256,uint256)": {
+        "details": "Emitted when base tokens are sold on Uniswap for stablecoins",
+        "params": {
+          "assetTokensUnstaked": "The amount of asset tokens unstaked from the                            Curve Aave pool",
+          "baseTokenSpent": "The amount of base tokens spent",
+          "recipient": "The address of the recipient of the underlying stablecoins",
+          "sender": "The sender of the base token",
+          "stableIndex": "The index of the stablecoin to receive                    (0 = DAI, 1 = USDC, 2 = USDT)",
+          "stablesReturned": "The amount of stablecoins returned to the recipient Note that due to dust, stablesReturned may be more than stablesUnstaked."
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "buyTokens(uint256[3],uint256,address)": {
+        "details": "Swaps the underlying stablecoins or the asset token for the base token",
+        "params": {
+          "assetTokenAmount": "The ammount of the asset tokens to include in the swap",
+          "recipient": "The recient of the swapped tokens",
+          "stableAmounts": "The amounts of underlying stablecoins to include in                      the swap (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "baseTokensReturned": "The amount of base tokens sent to the recipient"
+        }
+      },
+      "buyTokensOneStable(uint256,uint256)": {
+        "details": "Swaps a single underlying stablecoin for the base token",
+        "params": {
+          "stableAmount": "The amount of the underlying stablecoin to swap",
+          "stableIndex": "The index of the stablecoin to swap                    (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "baseTokensReturned": "The amount of base tokens sent to the sender"
+        }
+      },
+      "exitOneStable(uint256)": {
+        "details": "Swap everything to a single underlying stablecoin in one function call",
+        "params": {
+          "stableIndex": "The index of the stablecoin to unstake ]                  (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "stablesReturned": "The amount of stablecoins returned"
+        }
+      },
+      "sellTokensForAsset(uint256,address)": {
+        "details": "Swaps the base token for the asset token",
+        "params": {
+          "baseTokenAmount": "The amount of the base token to swap",
+          "recipient": "The recient of the swapped tokens"
+        },
+        "returns": {
+          "assetTokensReturned": "The amount of asset tokens sent to the                             recipient"
+        }
+      },
+      "sellTokensForStable(uint256,uint256,address)": {
+        "details": "Swaps the base token for the underlying stablecoin",
+        "params": {
+          "baseTokenAmount": "The amount of the base token to swap",
+          "recipient": "The recient of the stab",
+          "stableIndex": "The index of the stablecoin to swap                    (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "stablesReturned": "The amount of stablecoins returned to recipient"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "buyTokens(uint256[3],uint256,address)": "35f0b741",
+      "buyTokensOneStable(uint256,uint256)": "127dbc4f",
+      "exitOneStable(uint256)": "4bde21f9",
+      "sellTokensForAsset(uint256,address)": "a9b4b19f",
+      "sellTokensForStable(uint256,uint256,address)": "bf6ffc0c"
+    }
+  }
+}

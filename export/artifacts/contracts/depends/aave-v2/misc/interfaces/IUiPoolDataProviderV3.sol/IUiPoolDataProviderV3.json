@@ -205,6 +205,11 @@
               "type": "bool"
             },
             {
+              "internalType": "bool",
+              "name": "isSiloedBorrowing",
+              "type": "bool"
+            },
+            {
               "internalType": "uint128",
               "name": "accruedToTreasury",
               "type": "uint128"
@@ -218,6 +223,11 @@
               "internalType": "uint128",
               "name": "isolationModeTotalDebt",
               "type": "uint128"
+            },
+            {
+              "internalType": "bool",
+              "name": "flashLoanEnabled",
+              "type": "bool"
             },
             {
               "internalType": "uint256",

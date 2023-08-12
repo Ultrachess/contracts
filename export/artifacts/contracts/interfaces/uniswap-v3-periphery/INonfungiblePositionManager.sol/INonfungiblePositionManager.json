@@ -809,7 +809,7 @@
         },
         {
           "internalType": "bool",
-          "name": "_approved",
+          "name": "approved",
           "type": "bool"
         }
       ],
@@ -996,6 +996,12 @@
   "deployedLinkReferences": {},
   "devdoc": {
     "events": {
+      "Approval(address,address,uint256)": {
+        "details": "Emitted when `owner` enables `approved` to manage the `tokenId` token."
+      },
+      "ApprovalForAll(address,address,bool)": {
+        "details": "Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets."
+      },
       "Collect(uint256,address,uint256,uint256)": {
         "details": "The amounts reported may not be exactly equivalent to the amounts transferred, due to rounding behavior",
         "params": {
@@ -1021,6 +1027,9 @@
           "liquidity": "The amount by which liquidity for the NFT position was increased",
           "tokenId": "The ID of the token for which liquidity was increased"
         }
+      },
+      "Transfer(address,address,uint256)": {
+        "details": "Emitted when `tokenId` token is transferred from `from` to `to`."
       }
     },
     "kind": "dev",

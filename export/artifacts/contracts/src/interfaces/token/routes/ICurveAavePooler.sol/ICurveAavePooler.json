@@ -1,0 +1,358 @@
+{
+  "contractName": "ICurveAavePooler",
+  "sourceName": "contracts/src/interfaces/token/routes/ICurveAavePooler.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256[3]",
+          "name": "stableAmounts",
+          "type": "uint256[3]"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "lpTokenAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "LiquidityAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "lpTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "stablesReturned",
+          "type": "uint256"
+        }
+      ],
+      "name": "LiquidityRemovedOneStable",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[3]",
+          "name": "stableAmounts",
+          "type": "uint256[3]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "minMintAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "addLiquidity",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "lpTokenAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "stableAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "addLiquidityOneStable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "lpTokenAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "exitOneStable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stablesReturned",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[3]",
+          "name": "stableAmounts",
+          "type": "uint256[3]"
+        },
+        {
+          "internalType": "bool",
+          "name": "isDeposit",
+          "type": "bool"
+        }
+      ],
+      "name": "getLpAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "mintAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "lpTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "getStableAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stableAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getVirtualPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "virtualPrice",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "lpTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "stableIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "minTokenAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "removeLiquidityOneStable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "stablesReturned",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "devdoc": {
+    "details": "Token router to add liquidity to the Curve Aave pool in exchange for LP tokens This contract provides an interface for adding and removing liquidity in the Curve Aave pool as a single transaction.",
+    "events": {
+      "LiquidityAdded(address,address,uint256[3],uint256)": {
+        "details": "Emitted when liquidity is added to the Curve Aave pool",
+        "params": {
+          "lpTokenAmount": "The amount of LP tokens received",
+          "recipient": "The address of the recipient of the LP tokens",
+          "sender": "The sender of the underlying stablecoins",
+          "stableAmounts": "The amounts of stablecoins added to the pool                      (0 = DAI, 1 = USDC, 2 = USDT)"
+        }
+      },
+      "LiquidityRemovedOneStable(address,address,uint256,uint256,uint256)": {
+        "details": "Emitted when liquidity is removed from the Curve Aave pool",
+        "params": {
+          "lpTokenAmount": "The amount of LP tokens burned",
+          "recipient": "The recipient of the underlying stablecoin",
+          "sender": "The sender",
+          "stableIndex": "The index of the stablecoin returned                    (0 = DAI, 1 = USDC, 2 = USDT)",
+          "stablesReturned": "The amount of stablecoins returned to the                        recipient"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "addLiquidity(uint256[3],uint256,address)": {
+        "details": "Add an amount of underlying stablecoins to the pool and return the LP tokens",
+        "params": {
+          "minMintAmount": "The minimum amount of the LP token to mint",
+          "recipient": "The recipient of the CurveLP tokens",
+          "stableAmounts": "The amounts of the underlying stablecoins to add                      (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "lpTokenAmount": "The amount of LP tokens minted and returned to the                       recipient"
+        }
+      },
+      "addLiquidityOneStable(uint256,uint256)": {
+        "details": "Add an amount of a single underlying stablecoin to the pool return the LP tokens",
+        "params": {
+          "stableAmount": "The amount of the underlying stablecoin to add",
+          "stableIndex": "The index of the stablecoin to add                    (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "lpTokenAmount": "The amount of LP tokens minted and returned to the                       recipient"
+        }
+      },
+      "exitOneStable(uint256)": {
+        "details": "Remove all liquidity as a single token in one function call",
+        "params": {
+          "stableIndex": "The index of the stablecoin to withdraw (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "stablesReturned": "The amount of stablecoins returned to the sender"
+        }
+      },
+      "getLpAmount(uint256[3],bool)": {
+        "details": "Get the amount of LP tokens that would be minted or burned for a given amount of underlying stablecoins",
+        "params": {
+          "isDeposit": "True if the amounts are being added to the pool, false                   if they are being removed",
+          "stableAmounts": "The amount of each underlying stablecoin to add                      or remove"
+        },
+        "returns": {
+          "mintAmount": "The amount of LP tokens that would be minted"
+        }
+      },
+      "getStableAmount(uint256,uint256)": {
+        "details": "Calculate the amount of underlying stablecoins that would be returned for a given amount of LP tokens",
+        "params": {
+          "lpTokenAmount": "The amount of LP tokens to remove",
+          "stableIndex": "The index of the stablecoin to receive                    (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "stableAmount": "The amount of the underlying stablecoin that would                      be returned"
+        }
+      },
+      "getVirtualPrice()": {
+        "details": "Get the current virtual price of the pool LP token The virtual price in Curve is obtained through taking the invariance of the pool, which by default takes every stablecoin as valued at 1.00 USD. The virtual price measures pool growth; this is not a dollar value.",
+        "returns": {
+          "virtualPrice": "The LP token virtual price normalized to 1e18"
+        }
+      },
+      "removeLiquidityOneStable(uint256,uint256,uint256,address)": {
+        "details": "Remove an amount of LP tokens from the pool and return the amount as a single token",
+        "params": {
+          "lpTokenAmount": "The amount of the LP token to remove",
+          "minTokenAmount": "The minimum amount of the token to receive",
+          "recipient": "The recipient of the underlying stablecoin",
+          "stableIndex": "The index of the stablecoin to receive                    (0 = DAI, 1 = USDC, 2 = USDT)"
+        },
+        "returns": {
+          "stablesReturned": "The amount of the underlying stablecoin returned                         to the recipient"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "evm": {
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "addLiquidity(uint256[3],uint256,address)": "58d96674",
+      "addLiquidityOneStable(uint256,uint256)": "4482f6c3",
+      "exitOneStable(uint256)": "4bde21f9",
+      "getLpAmount(uint256[3],bool)": "f38e2df5",
+      "getStableAmount(uint256,uint256)": "81f251b9",
+      "getVirtualPrice()": "e25aa5fa",
+      "removeLiquidityOneStable(uint256,uint256,uint256,address)": "233a1d51"
+    }
+  }
+}
