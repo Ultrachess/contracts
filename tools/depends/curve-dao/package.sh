@@ -43,7 +43,7 @@ set -o nounset
 #
 
 CURVE_DAO_NAME="curve-dao"
-CURVE_DAO_VERSION="86679ba5aa9d85a5b0a22b090c859b5cdefe3422" # master
+CURVE_DAO_VERSION="567927551903f71ce5a73049e077be87111963cc" # master
 CURVE_DAO_REPO="https://github.com/curvefi/curve-dao-contracts.git"
 CURVE_DAO_LICENSE="MIT"
 
@@ -139,13 +139,19 @@ function build_curve_dao() {
     source .venv/bin/activate
 
     # Update Python dependencies
-    pip3 install --upgrade pip setuptools wheel
-
-    # Install brownie dependencies
-    pip3 install -r "${ETH_BROWNIE_REQUIREMENTS_URL}"
+    pip3 install --upgrade Cython pip setuptools wheel
 
     # Version >= 0.9.0 needed for Python 3.11 support
     pip3 install --upgrade parsimonious
+
+    # Update PyYAML to fix cython error
+    pip3 install --upgrade PyYAML
+
+    # Install brownie dependencies
+    echo "Downloading requirements from ${ETH_BROWNIE_REQUIREMENTS_URL}"
+    wget "${ETH_BROWNIE_REQUIREMENTS_URL}" -O requirements.in
+    sed -i 's/^pyyaml.*//g' requirements.in
+    pip3 install -r requirements.in
 
     # Install brownie
     pip3 install --no-deps eth-brownie==${ETH_BROWNIE_VERSION}
@@ -163,7 +169,7 @@ function build_curve_dao() {
   (
     cd "${REPO_DIR_CURVE_DAO}"
 
-    npm install --save-dev \
+    npm install --save-dev --update \
       abi-to-sol \
       prettier \
       prettier-plugin-solidity
@@ -184,7 +190,7 @@ function build_curve_dao() {
     # Format interfaces
     cd "../.."
     cp "${ROOT_DIR}/.prettierrc" .
-    npx prettier -w "build/interfaces"
+    npx prettier -w "build/interfaces" || true
 
     # We aren't able to use abi-to-sol with version ">=0.6.0" due to the
     # following error:
