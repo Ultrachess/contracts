@@ -3,6 +3,9 @@
 /node_modules
 /yarn-*.log
 
+# Python environments
+/.venv
+
 # Dependencies build system
 /contracts/bytecode
 /contracts/depends

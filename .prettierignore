@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+# Python environments
+/.venv
+
 # Dependencies build system
 /contracts/bytecode
 /contracts/depends
