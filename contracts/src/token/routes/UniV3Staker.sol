@@ -453,6 +453,7 @@ contract UniV3Staker is
     require(incentiveCreated, "Incentive not created");
 
     // Call external contract
+    // slither-disable-next-line unused-return
     return uniswapV3Staker.incentives(incentiveId);
   }
 
@@ -501,6 +502,7 @@ contract UniV3Staker is
     require(incentiveCreated, "Incentive not created");
 
     // Call external contract
+    // slither-disable-next-line unused-return
     return uniswapV3Staker.stakes(tokenId, incentiveId);
   }
 
@@ -527,6 +529,7 @@ contract UniV3Staker is
     require(incentiveCreated, "Incentive not created");
 
     // Call external contract
+    // slither-disable-next-line unused-return
     return uniswapV3Staker.getRewardInfo(incentiveKey, tokenId);
   }
 

@@ -358,6 +358,7 @@ contract UniV3Pooler is
     require(recipient != address(0), "Invalid recipient");
 
     // Read state
+    // slither-disable-next-line unused-return
     (, , , , , , , uint128 uniV3LiquidityAmount, , , , ) = uniswapV3NftManager
       .positions(nftTokenId);
 
