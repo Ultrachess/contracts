@@ -6,21 +6,19 @@ FROM node:18-bookworm as base
 FROM base as builder
 
 # Install build dependencies
-RUN <<EOF
-apt update
-DEBIAN_FRONTEND="noninteractive" apt install -y \
-  bash \
-  git \
-  jq \
-  make \
-  patch \
-  python3 \
-  python3-dev \
-  python3-venv \
-  tar \
-  wget
-rm -rf /var/lib/apt/lists/*
-EOF
+RUN apt update && \
+  DEBIAN_FRONTEND="noninteractive" apt install -y \
+    bash \
+    git \
+    jq \
+    make \
+    patch \
+    python3 \
+    python3-dev \
+    python3-venv \
+    tar \
+    wget && \
+  rm -rf /var/lib/apt/lists/*
 
 # This stage copies the project and build it
 FROM builder as ultrachess-builder
