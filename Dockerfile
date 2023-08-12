@@ -1,6 +1,6 @@
 # syntax=docker.io/docker/dockerfile:1.4
 # Need to use Debian-based image because solc >= 0.6 requires modern glibc instead of musl
-FROM node:18-bookworm as base
+FROM node:20-bookworm as base
 
 # This stage installs system dependencies for building the node projects
 FROM base as builder
@@ -13,12 +13,23 @@ RUN apt update && \
     jq \
     make \
     patch \
-    python3 \
-    python3-dev \
-    python3-venv \
     tar \
     wget && \
   rm -rf /var/lib/apt/lists/*
+
+# Build and install Python from source
+ENV PYTHON_VERSION="3.11.4"
+RUN wget "https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz"
+RUN tar -zvxf "Python-${PYTHON_VERSION}.tgz" # --directory="${PYTHON_EXTRACT_DIR}"
+RUN cd "Python-${PYTHON_VERSION}" && \
+  ./configure \
+    --prefix="/usr" \
+    --with-pydebug \
+    --enable-shared
+RUN make -C "Python-${PYTHON_VERSION}" -j$(getconf _NPROCESSORS_ONLN) install
+
+# Update Python dependencies
+RUN python3 -m pip install --upgrade --break-system-packages Cython pip setuptools wheel
 
 # This stage copies the project and build it
 FROM builder as ultrachess-builder
