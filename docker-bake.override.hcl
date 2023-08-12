@@ -1,6 +1,6 @@
 
 variable "TAG" {
-  default = "1.0.1"
+  default = "1.0.2"
 }
 
 variable "DOCKER_ORGANIZATION" {
