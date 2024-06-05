@@ -51,7 +51,7 @@ CURVE_DAO_LICENSE="MIT"
 # Tool versions
 #
 
-ETH_BROWNIE_VERSION="1.19.3"
+ETH_BROWNIE_VERSION="1.20.5"
 ETH_BROWNIE_REQUIREMENTS_URL="https://raw.github.com/eth-brownie/brownie/v${ETH_BROWNIE_VERSION}/requirements.in"
 
 #
@@ -145,10 +145,7 @@ function build_curve_dao() {
     echo "Downloading requirements from ${ETH_BROWNIE_REQUIREMENTS_URL}"
     wget "${ETH_BROWNIE_REQUIREMENTS_URL}" -O requirements.in
     sed -i 's/^pyyaml.*//g' requirements.in
-    pip3 install -r requirements.in
-
-    # Version >= 0.9.0 needed for Python 3.11 support
-    pip3 install "parsimonious==0.9.0"
+    pip3 install --upgrade -r requirements.in
 
     # Update PyYAML to fix Cython error
     pip3 install --upgrade PyYAML
