@@ -5,5 +5,5 @@
   "high": true,
   "critical": true,
   "package-manager": "yarn",
-  "allowlist": ["GHSA-p8p7-x288-28g6"]
+  "allowlist": []
 }
